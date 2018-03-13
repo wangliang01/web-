@@ -1,0 +1,105 @@
+在了解websocket之前，先扔几个问题
+
+1.websocket是什么？
+
+2.为什么需要websocket?
+
+3.websocket如何工作？
+
+先来解答一下这几个问题吧
+
+websocket是什么？  
+
+简单点说，websocket是一种持久化网络通信协议
+
+websocket可以在单个TCP连接上进行全双工通迅的协议
+
+为什么需要websocket?
+
+http协议是一种无状态，无连接的，单向的应用层协议，它由客户端发起，服务端作出响应
+
+这种通信有一个弊端，不能由服务器向客户端发送消息，
+
+如果服务器有连续的状态变化 ，客户端要获知就非常麻烦，
+
+过去通过ajax请求实现长轮询来处理类似的问题，但是效率低下，
+
+非常浪费资源，因此在h5,websocket应运而生，websocket只要求建立
+
+一次连接，就可以实现服务器与客户端的全双工通信，效率大大提高
+
+websocket如何工作？
+
+web浏览器和服务器都必须实现websocket协议来建立和维护连接，由于
+
+websocket连接长期存在，与典型的http协议连接不同，对服务器有重
+
+要的影响。
+
+基于多线程或多进程的服务器无法适用于websocket，因为它旨在打开
+
+连接，尽可能快地处理请求，然后关闭连接，任何实际的websocket服
+
+务器端实现都需要一个异步服务器
+
+
+客户端 	API
+
+var socket = new WebSocket(url, [protocol])
+
+url: 表示连接的url
+
+protocol: 表示可接受的子协议，为可选参数
+
+
+
+websocket的属性
+
+readyState: 表示websocket的连接状态，0-表示连接尚未建立。1-
+
+表示 连接已建立， 可以进行通信。2-表示连接正在关闭。3-
+
+表示连接已经关闭或者连接不能打开。
+
+bufferedAmount: 只读属性已被send()
+
+放入在在队列中等待传输，但是还没有发出的UTF-8文本字节数
+
+
+websocket事件
+
+onopen: 连接建立时触发
+
+onmessage: 客户端接受服务端数据时触发
+
+onerror: 通信发生错误时触发
+
+onclose: 连接关闭时触发
+
+websocket方法
+
+open()  使用连接发送数据
+
+close() 关闭连接
+
+
+// 初始化一个 WebSocket 对象
+var ws = new WebSocket("ws://localhost:9998/echo");
+
+// 建立 web socket 连接成功触发事件
+ws.onopen = function () {
+  // 使用 send() 方法发送数据
+  ws.send("发送数据");
+  alert("数据发送中...");
+};
+
+// 接收服务端数据时触发事件
+ws.onmessage = function (evt) {
+  var received_msg = evt.data;
+  alert("数据已接收...");
+};
+
+// 断开 web socket 连接成功触发事件
+ws.onclose = function () {
+  alert("连接已关闭...");
+};
