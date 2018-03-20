@@ -1,0 +1,87 @@
+如何使用vue-cli搭建一个系统呢？
+
+// 创建一个项目
+1. vue init webpack vue-element-cms
+
+// 进入项目vue-element-cms
+2 cd vue-element-cms
+
+//安装依赖
+3 npm install (现在vue-cli在第1步已经完成这个工作)
+
+//启动项目
+4 npm run dev
+
+项目启动后，开始管理我们的文件结构吧
+
+5.当项目逐渐变大之后，文件与文件直接的引用关系会很复杂，这时候就需要使用alias 了。
+我们所有的源代码都放在src文件夹下，有时候为了方便引用，我们可以利用webpack修改别名：
+
+module.exports = {
+  context: path.resolve(__dirname, '../'),
+  entry: {
+    app: './src/main.js'
+  },
+  output: {
+    //...
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'components': path.resolve(__dirname, '../src/components'),
+      'api': path.resolve(__dirname, '../src/api'),
+      'utils': path.resolve(__dirname, '../src/utils'),
+      'store': path.resolve(__dirname, '../src/store'),
+      'router': path.resolve(__dirname, '../src/router'),
+      'src': path.resolve(__dirname, '../src'),
+      'pages': path.resolve(__dirname, '../src/pages')
+    } 
+  },
+  module: {
+  	// ...
+  }
+}
+
+6.创建一个utils的文件夹
+	为了方便操作cookie,引入了一个js-cookie
+	npm install js-cookie -s
+	1)创建一个cookie.js //封闭操作cookie的js文件
+	2)常用的方法index.js
+
+7.封闭axios
+	npm install axios -s // 安装axios
+
+	在utils中创建一个名为network.js的文件
+
+8.引入项目中需要用到的图片
+	在assets中创建一个images的文件夹，将图片放在这里面，如果图片数量太多，可以再分类存放
+
+9.引入less,less-loader
+	npm install less less-loader -s
+
+10. 在webpack中进行配置
+	{
+        test: /\.less$/,
+        use: [{
+          loader: "style-loader" 
+        }, {
+          loader: "css-loader" 
+        , {
+          loader: "less-loader"
+        }]
+      },
+
+11. 开始写登录页login.vue,在pages中创建一个文件夹login，文件夹下存放index.vue
+
+12. 将login页面添加到路由
+
+13.安装element-ui  npm install element-ui -s, 在main.js中引入
+	import 'element-ui/lib/theme-chalk/index.css'
+	这里可能会报错，This dependency was not found
+	这时，请将webpack中处理css的loader删除掉
+	原因：现在vue脚手架的css(less,scss等)是不需要配的，在utils.js里都是配好了的，再配一遍反而会出错。
+
+14.利用element-ui写好简单的样式结构，准备mock数据，测试登录
+
