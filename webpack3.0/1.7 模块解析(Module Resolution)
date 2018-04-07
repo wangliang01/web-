@@ -1,0 +1,52 @@
+模块解析(Module Resolution)
+resolver 是一个库，用于帮助找到模块的绝对路径。一个模块可以作为另一个模块的依赖模块，然后被后者引用，如下：
+import foo from 'path/to/module'
+// 或者
+require('path/to/module')
+
+所依赖的模块可以是来自应用程序代码或第三方的库。resolver帮助找到bundle中需要引入的模块代码，这些代码在包含在每个require/import语句中。当打包模块时,webpack使用enhanced-resolve来解析文件路径
+
+webpack中的解析规则
+
+绝对路径
+import '/home/me/file'
+
+import 'C:\\Users\\me\\file'
+
+由于我们已经取得文件的绝对路径，因此不需要进一步再做解析。
+
+相对路径
+import '../src/file1'
+import './file2'
+
+在这种情况下，使用import或require的资源文件所在的目录被认为是上下文目录。在import/require中给定的相对路径，会添加此上下文路径，以产生模块的绝对路径
+
+模块路径
+
+import 'module'
+
+import 'module/lib/file'
+
+模块将在resolve.modules中指定的所在目录内搜索。你可以替换初始模块路径。此替换路径通过使用resolve.alias配置选项来创建一个别名。
+
+一是根据上述规则解析路径后，解析器(resolver)将检查路径是否指向文件或者目录。如果路径指向一个文件：
+
+如果路径具有文件扩展名，则被直接将文件打包。
+
+否则，将使用[resolve.extensions]选项作为文件扩展名来解析，此选项告诉解析器在解析中能够接受哪些扩展名(例如 .js , .jsx)
+
+如果路径指向一个文件夹，则采取以下步骤找到具有正确扩展名的正确文件：
+
+如果文件夹中包含package.json文件，则按照顺序查找resolve.mainFields配置选项中指定的字段。并且 package.json中的第一个这样的字段确定文件路径。
+
+如果package.json文件不存在或者package.json文件中的main字段没有返回一个有效路径，则按照顺序查找resolve.mainFiles配置选项中指定的文件名，看是否能在import/require目录下匹配到一个存在 的文件名
+
+文件扩展名通过resolve.extensions选项采用类似的方法进行解析。
+
+解析Loader(Resolving Loaders)
+
+Loader解析遵循与文件解析器指定的规则相同的规则，但是resolveLoader配置选项可以用来为loader提供独立的解析规则。
+
+缓存
+
+每个文件系统访问都被缓存，以便更快触发对同一文件的多个并行或穿行请求。在观察模式下，只有修改过的文件会从缓存中摘出。如果关闭观察模式，在每次编译前清理缓存。
