@@ -1,0 +1,19 @@
+本地安装
+要安装最新版本
+npm install webpack --save-dev
+安装指定版本
+npm install webpack@<version> --save-dev
+
+对于大多数项目，我们建议本地安装。这可以使我们在引入破坏式变更的依赖时，更容易分别升级项目。通常，webpack通过运行一个或多个npm scripts，会在本地node_modules目录中查找安装的webpack
+
+package.json
+
+"scripts": {
+  "start": "webpack --config webpack.config.js"
+}
+
+全局安装
+npm install webpack --global
+
+最新体验版本
+npm install webpack@beta
