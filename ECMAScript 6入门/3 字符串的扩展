@@ -14,4 +14,8 @@ ES6对这一点做出了改进，只要将码点放入大括号，就能正确�
 
 2.codePointAt()
 JavaScript内部，字符以UTF-16的格式储存，每个字符固定为2个字节。对于那些需要4个字节储存的字符(Unicode码点大于0xFFFF的字符)，JavaScript会认为它们是两个字符。
+返回一个字符的码点
 
+codePointAt方法的参数，是字符在字符串中的位置，返回它的十进制码点，如果想要十六进制的值，可以使用toString方法转换一下
+
+s.codePointAt(0).toString(16)
