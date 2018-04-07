@@ -1,0 +1,38 @@
+构建目标(Targets)
+因为服务器和浏览器代码都可以用JavaScript编写，所以webpack提供了多种构建目标(Target),你可以在你的webpack配置中设置。
+
+webpack的target属性不要和output.libraryTarget属性混淆
+
+用法
+要设置target属性，只需要在你的webpack配置中设置target的值。
+
+webpack.config.js
+
+module.export = {
+  target: 'node'
+}
+
+在上面的例子中，使用node webpack会编译为用于[类node.js]环境
+
+多个Target
+尽管webpack不支持向target传入多个字符串，你可以通过打包两份分离的配置来创建同构的库
+
+var path = require('path')
+
+var serverConfig = {
+  target: 'node',
+  output:{
+    filename: 'lib.node.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+}
+
+var clientConfig = {
+  target: 'web', //默认是web，可省略
+  output:{
+    filename: 'lib.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+}
+
+module.exports = {serverConfig, clientConfig}
