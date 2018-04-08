@@ -1,0 +1,65 @@
+开发
+先来看看如何建立一个开发环境，使我们的开发变得更容易一些。
+本指南中的工具仅用于开发环境，请不要在生产环境中使用它们！
+
+使用source map
+当webpack 打包源代码时，可能会很难追踪到错误和警告在源代码中的原始位置。例如，如果将三个源文件(a.js, b.js, 和 c.js)打包到一个bundle.js中，而其中一个源文件包含一个错误，那么堆栈跟踪就会简单地指向到bundle.js。这并通常没有太多帮助，因为你可能需要准确地知道错误来自于哪个源文件。
+为了更容易地追踪错误和警告，JavaScript提供了source map功能，将编译后的代码映射回原始源代码。如果一个错误来自于b.js，source map就会明确告诉你。
+source map有很多不同的选项可用
+
+对于本指南，我们使用inline-source-map选项，这有助于解释说明我们的目的（仅解释说明，不要用于生产环境）
+
+webpack.config.js
+
+module.exports = {
+  devtool: 'inline-source-map'
+}
+
+选择一个开发工具
+一些文本编辑器具有“安全写入”功能，可能会干扰以下某些工具。
+每次要编译代码时，手动运行npm run build 就会变得很麻烦
+webpack中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：
+  1.webpack's Watch Mode
+  2.webpack-dev-server
+  3.webpack-dev-middleware
+多数场景中，你可能需要使用webpack-dev-server，但是不妨探讨一下以上的所有选项
+
+使用观察模式
+我们添加一个用于启动 webpack的观察模式的npm script
+我们添加一个用地启动webpack的观察模式的npm script 脚本
+
+package.json
+
+"scripts": {
+  "watch": "webapck --watch"
+}
+
+现在，你可以在命令行中运行npm run watch ,就会看到webapck编译代码，然而却不会退出命令行。这是因为script脚本还在观察文件。
+
+现在，保存文件并检查终端窗口，应该可以看到webpack自动重新编译修改后的模块。
+
+唯一的缺点是，为了看到修改后的实际效果，你需要刷新浏览器。如果能够自动刷新浏览器就更好了，可以尝试使用webpack-dev-server，愉好可以实现我们想要的功能。
+
+使用webpack-dev-server
+
+webpack-dev-server 为你提供了一个简单的web服务器，并且能够实时重新加载(live reloading)。让我们设置以下：
+npm install --save-dev webpack-dev-server
+修改配置文件，告诉开发服务器，在哪里查找文件
+webpack.config.js
+
+module.exports = {
+  devServer: {
+    contentBase: './dist'
+  }
+}
+
+以上配置告知webpack-dev-server，在localhost:8080下建立服务，将dist目录下的文件，作为可访问文件。
+
+让我们添加一个script脚本，可以直接运行开发服务器
+package.json
+
+"scripts": {
+  "start": "webpack-dev-server --open"
+}
+
+现在，我们可以在命令行中运行npm start，就会看到浏览器自动加载页面。
