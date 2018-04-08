@@ -1,0 +1,231 @@
+生产环境构建
+使用webpack构建生产环境中的站点或应用程序时，所使用的工具。
+
+自动方式
+
+运行webpack -p(也可以运行 webpack --optimize-minimize --define process.env.NODE_ENV='production' , 他们是等效的)。它会执行如下步骤：
+使用UglifiJsPlugin进行JS文件压缩
+运行LoaderOptionsPlugin，查看其文档
+设置NodeJS环境变量，触发某些packageqn ,以不同的方式进行编译。
+
+JS文件压缩
+webpack自带了UglifyJsPlugin，它运行UglifyJs来压缩输出文件。此插件支持所有的UglifyJS选项。
+在命令行中指定--optimize-minimize,或在plugins配置中添加：
+webpack.config.js
+
+const webpack = require('webpack')
+
+module.exports = {
+  plugins: [
+    webpack.optimize.UglifyJsPlugin({
+      sourceMap: options.devtool && (options.devtool.indexOf('sourcemap') >= 0 || options.devtool.indexOf('source-map') >= 0)
+    })
+  ]
+}
+
+因此，通过设置devtool options可以生成Source Maps
+
+Source Maps
+我们推荐你在生产环境中使用source map, 因为Source Maps对于debug和运行基准测试(benchmark tests)非常有用。webpack可以在bundle中生成内联的source map或生成到独立文件。
+
+在你的配置中，使用devtool对象来设置Source Maps类型。我们现在支持七种类型的source map.
+
+Node环境变量
+运行webpack -p(或者 --define process.env.NODE_ENV='production')会通过如下方式调用DefinePlugin
+
+webpack.config.js
+
+const webpack = require('webpack')
+
+module.exports = {
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':JSON.stringify('production')
+    })
+  ]
+}
+
+DefinePlugin在原始的源码中执行查找和替换操作，在导入的代码中，任何出现process.env.NODE_ENV的地方都会被替换为'production'。因此，形如if(process.env.NODE_ENV !== 'production') {
+  console.log('...')
+}的代码就会等价于if(false) {console.log('...')},并且最终通过UglifyJS等价替换掉。
+
+从技术角度而言。NODE_ENV是一个Node.js暴露给运行脚本的系统环境变量。服务端的工具/构建脚本以及客户端都可以方便的使用该环境变量确定自己的开发-生产行为。然而与期望的相反，构建脚本条件判定，形如 process.env.NODE_ENV === 'production' ? '[name].[hash].bundle.js' : '[name].bundle.js' 并不会按预想的起作用。查看如何使用环境变量。
+
+手动方式
+
+当我们确实有为针对多种环境而分别配置的需求时，最简单的途径就是，为不同的环境编写独立的webpack配置文件。
+
+简单途径
+最简单的方式是，定义两个完全独立的配置文件，就像这样：
+webpack.dev.js
+
+module.exports = {
+  devtool: 'cheap-module-source-map',
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: '[name].bundle.js',
+    publicPath: publicPath,
+    sourceMapFilename: '[name].map'
+  },
+  devServer: {
+    port: 7777,
+    host: 'localhost',
+    historyApiFallback: true,
+    noInfo: false,
+    stats: 'minimal',
+    publicPath: publicPath
+  }
+}
+
+webpack.prod.js
+
+module.exports = {
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: '[name].bundle.js',
+    publicPath: publicPath,
+    sourceMapFilename: '[name].map'
+  },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
+        screw_ie8: true
+      },
+      comments: false
+    })
+  ]
+}
+
+然后，在package.json中调整scripts，就像这样：
+
+package.json 
+
+"scripts": {
+  "dev": "webpack --env=dev --progerss --profile --colors",
+  "build": "webpack --env=prod --progress --profile --colors"
+}
+
+现在你可以将我们的基本配置转为一个函数，然后接受env参数，并在两个配置之间切换(通过 --env设置)
+
+webpack.config.js
+
+module.exports = function(env) {
+  return require(`/webpack.${env}.js`)
+}
+
+高级途径
+一个更复杂的方法是，有一个基本配置文件，其中包含两个环境通用的配置，然后将其与特定于环境的配置进行合并。这将为每个环境产生完整配置，并防止重复公共部分代码。
+
+用于执行此“合并”工作的工具简称为webpack-merge,提供了各种合并选项，但下面我们只使用最简单的版本。
+
+公共部分：webpack.common.js
+module.exports = {
+  entry: {
+    polyfills: './src/polyfills.ts',
+    vendor: './src/vendor.ts',
+    main: './src/main.ts'
+  },
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: '[name].bundle.js',
+    publicPath: publicPath,
+    sourceMapFilename: '[name].map'
+  },
+  resolve: {
+    extensions: ['.js', '.js', '.json'],
+    modules: [path.join(__dirname, 'src'), 'node_modules']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        exclude: [/\.(spec|e2e).ts$/],
+        use: [
+          'awesome-typescript-loader',
+          'angular2-template-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(gif|jpg|jpeg|svg|png)$/,
+        use: 'file-loader'
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg)/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        }
+      }
+    ]
+  },
+  plugins: [
+    new ForkCheckPlugin(),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['polyfills', 'vendor'].revrese()
+    }),
+
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      chunkSortMode: 'dependency'
+    })
+  ]
+}
+
+然后，使用webpack-merge，把通用配置和环境特定配置合并在一起。让我们看一个合并生产环境文件的简单示例：
+
+webpack.prod.js
+
+const Merge = require('webpack-merge')
+
+const CommonConfig = require('./webpack.common.js')
+
+module.exports = Merge(CommonConfig, {
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
+        screw_ie8: true
+      },
+      comments: false
+    })
+  ]
+})
+
+你将会注意到webpack.prod.js文件的三点主要变化：
+  使用webpack-merge合并webpack.common.js 
+  我们把output属性放到webpack.common.js文件中，因为它是所有环境通用的。
+  我们只在webpack.prod.js中使用DefinePlugin,并把'process.env.NODE_ENV'定义为'production'
+
+
