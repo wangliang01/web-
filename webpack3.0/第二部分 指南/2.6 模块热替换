@@ -1,0 +1,14 @@
+模块热替换
+模块热替换(Hot Module Replacement 或 NMR)是webpack提供的最有用的功能之一。它允许在运行时更新各种模块，而无需进行完全刷新。
+
+启用HMR
+启用此功能 实际上相当的简单。而我们要做的，就是更新webpack-dev-server的配置，和使用webpack内置的HMR插件。
+webpack.config.js
+module.exports = {
+  devServer: {
+    hot: true
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
+}
