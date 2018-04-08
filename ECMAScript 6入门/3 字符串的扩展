@@ -19,3 +19,197 @@ JavaScript内部，字符以UTF-16的格式储存，每个字符固定为2个字
 codePointAt方法的参数，是字符在字符串中的位置，返回它的十进制码点，如果想要十六进制的值，可以使用toString方法转换一下
 
 s.codePointAt(0).toString(16)
+
+codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法
+
+function is32Bit(c) {
+  return c.codePointAt(0) > 0xFFFF
+}
+
+3.String.fromCodePoint()  //通过码点得到对应的字符
+
+ES5提供String.fromCodepoint方法，用于从码点返回对应字符，但是这个方法不能识别32位的UTF-16字符(Unicode 编号大于0xFFFF)
+String.fromCharCode(0x20BB7)
+上面代码中，String.fromCharCode不能识别大于oxFFFF的码点，所以ox20BB7就发生了溢出，最高位2被舍弃了，最后返回码点U+0BB7对应的字符，而不是码点U+20BB7对应的字符。
+
+ES6提供了String.fromCodePoint方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt()方法相反。
+如果String.fromCodePoint方法有多个参数，则它们会被合并成一个字符串返回。
+
+注意，fromCodePoint方法定义在String对象上，而codePointAt方法定义在字符串的实例对象上。
+
+4.字符串的遍历器接口
+ES6为字符中添加了遍历器接口，使得字符串可以被for...of循环遍历。
+for (let codePoint of 'foo') {
+  console.log(codePoint)
+}
+
+除了遍历字符串，这个遍历器最大的优点是可以识别大于oxFFFF的码点，传统的for循环无法识别这样的码点。
+let text = String.fromCodePoint(0x20BB7)
+
+for (let i = 0; i < text.length; i++) {
+  console.log(text[i])
+}
+
+// ' '
+// ' '
+
+for (let i of text) {
+  console.log(i)
+}
+// 𠮷
+上面代码中，字符串text只有一个字符，但是for循环会认为它包含两个字符，而for...of循环会正确识别出这一个字符。
+
+5. at()
+ES5对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。
+'abc'.charAt(0) // a
+'𠮷'.charAt(0) // \uD842
+上面代码中的第二条语句，charAt方法期望返回的是用2个字节表示的字符，但汉字‘𠮷’占用了4个字节，charAt(0)表示获取这4个字节中的前2个字节，很显然，这是无法正常显示的。
+
+6.normalize()
+许多欧洲语言有语调符号和重音符号，为了表示它们，Unicode提供了两种方法。一种是直接提供带重音符号的字符，比如Ǒ（\u01D1）。另一种是提供合成符号，即原字符与重音符号的合成，两个字符合成一个字符，比如O（\u004F）和ˇ（\u030C）合成Ǒ（\u004F\u030C）
+
+这两种表示方法，在视觉和语义上都等价，但是javaScript不能识别。
+
+'\u01D1'==='\u004F\u030C' //false
+
+'\u01D1'.length // 1
+'\u004F\u030C'.length // 2
+
+上面代码表示，javaScript将合成字符视为两个字符，导致两种表示方法不相等。
+
+ES6提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为Unicode正规化。
+
+'\u01D1'.normalize() === '\u004F\u030C'.normalize()
+// true
+
+normalize 方法接收一个参数来指定normalize的方式，参数的四个可选值如下。
+  -NFC, 默认参数，表示“标准等价合成”(Normalization form Canonical Composition),返回多个简单字符的合成字符。所谓"标准等价"指的是视觉和语义上的等价。
+
+  -NFD,表示"标准等价分解"(Normalization form Canonical Decomposition),即在标准等价的前提下，返回合成字符分解的多个简单字符。
+
+  -NFKC,表示"兼容等价合成"(Normalization form Compatibility Composition),返回合成字符。所谓"兼容等价"指的是语义上的等价，但视觉上不等价，比如“囍”和“喜喜”。
+
+  -NFKD,表示“兼容等价分解”(Normalization Form Compatibility Decomposition),即在兼容等价的前提下，返回合成字符分解的多个简单字符。
+
+7.includes(), startsWith(), endsWith() 
+传统上，JavaScript只有indexOf方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6又提供了三种新方法。
+  -includes(): 返回布尔值，表示是否找到了参数字符串
+  -startWith(): 返回布尔值，表示参数字符串是否在原字符串的头部
+  -endsWith(): 返回布尔值，表示参数字符串是否在原字符串的尾部
+
+  String.prototype.includes = function(str, startIndex = 0) {
+    let _that = this.slice(startIndex)
+    return _that.indexOf(str) > -1
+  }
+
+  String.prototype.startsWith1 = function(str, startIndex = 0) {
+    let _that = this.slice(startIndex)
+    return _that.indexOf(str) === 0
+  }
+
+  String.prototype.endsWith = function(str, startIndex = 0) {
+    let endIndex = this.length - startIndex
+    let _that = this.slice(0, endIndex).split('').reverse().join('')
+    return _that.lastIndexOf(str) === 0
+  }
+
+  8.repeat()
+  repeat方法返回一个新字符串，表示将原字符串重复n次
+
+  'x'.repeat(3) // xxx
+
+  String.prototype.repeat1 = function(num) {
+    let count = +num
+    if (isNaN(count) || count === 0) {
+      return ''
+    }
+    if (count < 0 || count === Infinity) {
+      throw new Error('RangeError')
+    }
+    count = Math.floor(count)
+    let result = this.toString()
+    for (let i = 0; i < count - 1; i++) {
+       result = result.concat(this)
+    }
+    return result
+  }
+
+  9.padStart(), padEnd()
+  ES2017引入字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或者尾部补全。padStart()用于头部补全，padEnd()用于尾部补全。
+  padStart和padEnd一共接收两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。
+
+  如果原字符串的长度，等于或大于指定的最小长度，则返回原字符串。
+  'xxx'.padStart(2, 'ab') // 'xxx'
+  'xxx'.padEnd(2, 'ab') // 'xxx'
+
+  如果用来补全的字符串与原字符串，两者的长度之各超过了指定的最小长度，则会截去超出位数的补全字符串。
+  'abc'.padStart(10, '0123456789') // '0123456abc'
+
+  如果省略第二个参数，默认使用空格补全长度
+  'x'.padStart(4) // '   x'
+  'x'.padEnd(4) // 'x   '
+
+padStart的常见用途是为数值补全指定位数。下面代码生成10位的数值字符串。 
+'1'.padStart(10, '0') // '0000000001'
+
+另一个用途是提示字符串格式
+'12'.padStart(10, 'YYYY-MM-DD') // 'YYYY-MM-12'
+'09-12'.padStart(10, 'YYYY-MM-DD') // 'YYYY-09-12'
+
+10.matchAll()
+matchAll方法返回一个正则表达式在当前字符串的所有匹配
+
+11.模板字符串
+模板字符串用反引号标识，它可以当作变通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+
+//变通字符串
+`hello world`
+
+// 多行字符串
+`hello
+world`
+
+// 字符串中嵌入变量
+`hello ${a} world`
+模板字符串中嵌入变量，需要将变量名写在${}之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
+let x = 1
+let y = 2
+`${x} + ${y} = ${x + y}`
+// '1 + 2 = 3'
+
+`${x} + ${y * 2} = ${x + y * 2}`
+// '1 + 4 = 5'
+
+let obj = {x: 1, y: 2}
+`${obj.x + obj.y}` // '3'
+
+模板字符串之中还能调用函数。
+function fn() {
+  return 'hello world'
+}
+
+`foo ${fn()} bar`
+// 'foo hello world bar'
+
+如果大括号中的值不是字符串，按照一般的方法将其转为字符串。
+
+如果模板字符串中的变量没有声明，将报错。
+
+12.String.raw()
+ES6还为原生的String对象，提供了一个raw方法。
+String.raw方法，往往用来充当模板字符串的处理函数，返回一个斜杠都被转义(斜杠前面再加一个斜杠)的字符串，对应于替换变量后的模板字符串。
+
+String.raw `Hi\n${2 + 3}!` Hi\\n5!
+
+如果原字符串斜杠已经转义，那么String.raw会进行再次转义。
+String.raw `Hi\\n` // 'Hi\\\n'
+
+String.raw方法可以作为处理模板字符串的基本方法。它会将所有变量替换，而且对斜杠进行转义，方便下一步作为字符串来使用。
+
+String.raw方法也可以作为正常的函数使用。这时，它的第一个参数，应该是一个具有raw属性的对象，且raw属性的值应该是一个数组。
+
+String.raw({
+  raw: 'test'
+}, 0, 1, 2)
+
+// 't0e1s2t'
