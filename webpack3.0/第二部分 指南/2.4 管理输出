@@ -1,0 +1,66 @@
+管理输出
+到目前为止，我们在index.html文件中手动引入所有资源，然而随着应用程序增长，并且一旦开始对文件名使用哈希(hash)并输出多个bundle,手动地对index.html文件进行管理，一切就会变得困难起来。然而，可以通过一些插件，会使这个过程更容易操控。
+
+现在调整配置，我们将entry添加src/print.js作为新的入口起点，然后修改output,以便根据入口起点名称动态生成bundle名称：
+const path = require('path')
+
+module.exports = {
+  entry: {
+    app: path.resolve(__dirname, './src/index.js'),
+    print: path.resolve(__dirname, './src/print.js')
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+}
+
+我们可以看到，webpack生成print.bundle.js和app.bundle.js文件，这也和我们在index.html文件中指定的文件名称相对应。如果你在浏览器中打开index.html，就可以看到在点击按钮时会发生什么。
+
+但是，如果我们更改了我们的一个入口起点的名称，甚至添加了一个新的名称，会发生什么?生成的包将被重命名在一个构建中，但是我们的index.html文件仍然会引用旧的名字。我们用HtmlWebpackPlugin来解决这个问题。
+
+设定HtmlWebpackPlugin
+
+首先安装插件，并且调整webpack.config.js文件：
+
+npm install html-webpack-plugin --save-dev
+
+webpack.config.js
+
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Output Management' 
+    })
+  ]
+}
+
+在我们构建之前，你应该了解，虽然在dist文件夹我们已经有index.html这个文件，然而HtmlWebpackPlugin还是会默认生成index.html文件。这就是说，它会用新生成的index.html文件，把我们的原来的替换。
+
+如果你在代码编辑器中index.html打开，你就会看到HtmlWebpackPlugin创建了一个全新的文件，所有的bundle会自动添加到html中。
+
+清理/dist文件夹
+
+你可能已经注意到，由于过去的指南和代码示例遗留下来，导致我们的/dist文件夹相当杂乱。webpack会生成文件，然后将这些文件放置在/dist文件夹中，但是webpack无法追踪哪些文件是实际在项目中用到的。
+
+通常，在每次构建前清理/dist文件夹，是比较推荐的做法，因此只会生用到文件。让我们完成这个需求。
+
+clean-webpack-plugin 是一个比较普及的管理插件，让我们安装和配置下。
+npm install clean-webpack-plugin --save-dev
+
+const path = require('path')
+
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+
+module.exports = {
+  plugins: [
+    new CleanWebpackPlugin(['dist'])
+  ]
+}
+
+Manifest
+
+你可能会感兴趣，webpack及其插件似乎知道应该哪些文件生成。答案是，通过manifest,webpack能够对[你的模块映射到输出bundle的过程]保持追踪。如果你对通过其他方式 来管理webpack的输出更感兴趣，那么首先了解manifest是个好的开始。
+通过WebpackManifestPlugin，可以直接将数据提取到一个json文件，以供使用。
