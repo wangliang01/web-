@@ -1,0 +1,60 @@
+动态路由匹配
+我们经常需要把某种模式匹配到所有路由，全都映射到同个组件。例如，我们有一个User组件，对于所有ID各不相同的用户，都要使用这个组件来浸染。那么，我们可以在uve-router的路由路径中使用[动态路径参数]
+
+const User = {
+  template: '<div>User</div>'
+}
+
+const router = new VueRouter({
+  routes: [
+    path: '/user/:id', // 动态路径参数 以冒号开头
+    component: User
+  ]
+})
+
+现在呢，像/user/foo和/user/bar都将映射到相同的路由。
+
+一个[路径参数]使用冒号:标记。当匹配到一个路由时，参数值会被设置到this.$route.params,可以在每个组件内使用。于是，我们可以更新User的模板，输出当前用户的ID:
+
+const User = {
+  templat: `<div>User: {{$route.params.id}}</div>`
+}
+
+模式	                            匹配路径	                      $route.params
+/user/:username	                  /user/evan	                  { username: 'evan' }
+/user/:username/post/:post_id	    /user/evan/post/123	          { username: 'evan', post_id: 123 }
+
+除了$route.params外，$route对象还提供了其它有用的信息，例如，$route.query（如果URL中有查询参数），$route.hash等等。
+
+响应路由参数的变化 
+提醒一下，当使用路由参数时，例如从/user/foo导航到/user/bar，原来的组件实例会被复用，因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着组件的生命周期钩子不会再被调用。
+
+问题： 如果不想复用原组件实例，该怎么办？
+
+复用组件时，想对路由参数的变化作出响应的话，你可以简单地watch（监测变化）$route对象：
+
+const User = {
+  template: '...',
+  watch: {
+    '$route'(to, from) {
+      //对路由变化作出响应
+    }
+  }
+}
+
+或者使用2.2引入的beforeRouteUpdate守卫
+
+const User = {
+  template: '...',
+  beforeRouteUpdate(to, from, next) {
+    // route change 
+  }
+}
+
+高级匹配模式
+
+vue-router使用path-to-regexp作为路径匹配引擎，所以支持很多高级的匹配模式，例如：可选的动态路径参数、匹配零个或多个，一个或多个，甚至是自定义正则匹配。
+
+匹配优先级
+
+有时候，同一个路径可以匹配多个路由，此时，匹配的优先级就按照路由的定义顺序：谁先定义的，谁的优先级就最高。
