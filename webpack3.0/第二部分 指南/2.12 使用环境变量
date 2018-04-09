@@ -1,0 +1,21 @@
+使用环境变量
+要在开发和生产构建之间，消除webpack.config.js的差异。你可能需要环境变量。
+可以使用Node.js模块的标准方式 ：在运行webpack时设置环境变量，并且使用Node.js的process.env来引用变量。NODE_ENV变量通常被视为事实标准。
+webpack.config.js
+
+module.exports = {
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compres: process.env.NODE_ENV === 'production'
+    })
+  ]
+}
+
+使用 cross-env包跨平台设置（cross-platform-st）环境变量：
+package.json
+
+{
+  "scripts": {
+    "build": "cross-env NODE_ENV=production PLATFORM=web webpack"
+  }
+}
