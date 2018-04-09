@@ -1,0 +1,144 @@
+创建库(Library)
+webpack是一人用来打包应用程序和library的代码的工具。如果你是一个JavaScript library的作者，并且想要流水线化你的打包逻辑，那么这篇文章将会帮助到你。
+
+创建一个library
+
+假设你正在写一个名为webpack-numbers的library,可以将数字1到5转换为文本表示，或者反之将文本表示数字。它使用ES6模块实现 ，看起来像这样：
+
+import _ from 'lodash'
+import numRef from './ref.json'
+
+export function numToWord(num) {
+  return _.reduce(numRef, (accum, ref) => {
+    return ref.num === num ? ref.word : accum
+  }, '')
+}
+
+export function wordToNum(word) {
+    return _.reduce(numRef, (accum, ref) => {
+        return ref.word === word && word.toLowerCase() ? ref.num : accum;
+    }, -1);
+};
+
+该library的使用方式如下：
+import * as webpackNumbers from 'webpack-numbers'
+
+webpackNumbers.wordToNum('Two') // 2
+
+// 使用CommonJs模块引入
+
+const webpackNumbers = require('webpack-numbers')
+
+webpackNumbers.numToWord(3) // Three
+
+// 或者使用script引入
+
+配置webpack
+现在需要打包这个library,同时要完成以下要求
+  不要打包lodash,而是require用户加载好的lodash。
+  library的名字是webpack-numbers,其变量名为webpackNumbers。
+  library可以用两种方式来引入：import webpackNumbers from 'webpack-numbers' 或者require('webpack-numbers')。
+  当library通过script标签引入的时候，可以通过全局变量webpackNumbers来使用。
+  library可以在Node.js中使用
+
+增加webpack
+增加基本的webpack配置
+webpack.config.js 
+
+const path = require('path')
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'webpack-numbers.js'
+  }
+}
+
+以上代码是打包该library的基本配置。
+
+增加externals
+现在，如果执行webpack,你会发现输出了一个非常巨大的文件。进一步观察该文件，你会发现lodash和你的代码被一起打包了。然而对于你的library本身来说，并不需要打包lodash。因此你可能会想将该外部扩展(external)的控制权交给你的用户。
+
+这一点可以通过配置externals来实现：
+webpack.config.js 
+module.export = {
+  ...
+  externals: {
+    "lodash": {
+      commonjs: "lodash",
+      commonjs2: "lodash",
+      amd: "lodash",
+      root: "_"
+    }
+  }
+}
+
+这意味着你的library需要一个名为lodash依赖，这个依赖在用户的环境中必须存在且可用。
+
+如果你计划只是将library用作另一个webpack bundle 中的依赖模块，则可以将外部扩展(external)指定为数组。
+
+module.exports = {
+  ...
+  externals: ['react', 'react-dom']
+}
+
+请注意：对于如下，bundle使用了一个包(package)中的多个文件
+import A from 'library/A'
+import B from 'library/B'
+
+你无法通过在externals中指定library目录的方式，将它们从bundle中排除。
+需要逐个排除它们，或者使用正则表达式排除。
+
+module.exports = {
+  ...
+  externals: [
+    'library/A',
+    'library/B',
+    /^library\/.+$/
+  ]
+}
+
+增加libraryTarget
+
+为了让此library能够被广泛使用，你需要让它兼容不同的环境，例如CommonJS,AMD,Node.js或者作为一个全局变量。
+为了让你的代码能够被重用，需要在webpack配置中增加一个library属性
+
+webpack.config.js
+
+module.exports = {
+  ...
+  output: {
+    ...
+    library: 'webpackNumbers'
+  }
+}
+
+这能让你的library被引入后，可以通这全局变量来使用。为了让library可以兼容其他环境，还需要在配置中增加libraryTarget属性。
+
+webpack.config.js  
+
+module.exports = {
+  ...
+  output: {
+    ...
+    library: 'webpackNumbers',
+    libraryTarget: 'umd'
+  }
+}
+
+如果设置了library但没设置libraryTarget，则libraryTarget默认为var。
+
+最终步骤
+
+使用webpack打包你的生产代码
+在package.json中指定主文件为你生成的文件路径
+package.json 
+
+{
+  "main": "dist/webpack-number.js",
+  "module": "src/index.js"
+}
+
+键(key)main是指package.json标准，以及module是一个提案，此提案允许JavaScript生态系统升级使用ES2015模块，而不会破坏向后兼容性。
+
