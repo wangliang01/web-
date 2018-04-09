@@ -1,0 +1,101 @@
+Shimming
+webpack作为模块打包工具可以支持ES2015模块，根据CommonJS或者AMD规范编写的模块。但是很多时候，当使用第三方library的时候，可以看出我们还期望有一些全局依赖，比如对于大家都知道 ，jquery的$。这可能也会创建一些需要被导出的全局变量。在此，我们会看到通这不同的方式去帮助webpack支持这些彼此割裂的模块。
+
+未压缩的CommonJS/AMD文件优先于dist打包版本。
+多数模块会在package.json的main字段中链接到library的dist版本。虽然对多数开发者来说这是有用的，但对于webpack来说更好的方式是链接到src版本的别名上，因为这样webpack能够更好地优化依赖，然而多数情况下dist版本也能正常运行。
+
+webpack.config.js 
+
+module.exports = {
+  resolve: {
+    jquery: "jquery/src/jquery"
+  }
+}
+
+ProvidePlugin
+ProvidePlugin可以将模块作为一个变量，被webpack在其他每个模块中引用。只有你需要使用此变量的时候，这个模块才会被require进来。多数之前遗留的模块，会依赖于已经存在的某些特定全局变量，比如jQuery插件中的$或者jQuery。在这种场景，你可以在每次遇到全局标识符$的时候，在webpack中预先设置var $ = require("jquery")
+
+module.exports = {
+ plugins: [
+   new webpack.ProvidePlugin({
+     $: 'jquery',
+     jQuery: 'jquery'
+   })
+ ]
+}
+
+imports-loader
+
+imports-loader在引用了之前的遗留模块中，插入必需的全局变量。例如，某些遗留模块依赖于this作为window对象，而在CommonJS上下文中执行的this等同于module.exports 。在这种情况下，你可以使用imports-loader来替换重写this。
+
+webpack.config.js 
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: require.resolve("some-module"),
+        use: 'imports-loader?this=>window'
+      }
+    ]
+  }
+}
+
+webpack中的模块支持不同的模块风格，比如AMD，CommonJS以及之前的遗留模块。然而，通常会先检查define,然后使用一些比较怪异的代码来导出属性。在这些情况下，可以通过设置 define = false,有助于强制使用CommonJS路径：
+
+webpack.config.js 
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: require.resolve('some-module'),
+        use: 'imports-loader?define=>false'
+      }
+    ]
+  }
+}
+
+
+exports-loader 
+
+比如说，一个library创建一个全局变量，它期望使用者通过全局变量去使用；在这种情况下，我们能够使用exports-loader,将全局变量导出为CommonJS格式。比如，为了将file导出为file以及将helpers.parse导出为parse:
+
+webpack.config.js
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: require.resolve('some-module'),
+        use: 'exports-loader?file,parse=helpers.parse'
+      }
+    ]
+  }
+}
+
+script-loader
+script-loader 在全局上下文中执行代码，如同你在script标签中加入代码。在这种模式下，普通的library都能够正常运行。访问require,module等变量则是undefined。
+
+文件作为字符串添加到bundle中。它不会被webpack压缩，因此如果使用了一个压缩后的版本，没有开发工具支持调试此loader添加的library。
+
+假设你有一个legacy.js文件包含......
+
+GLOBAL_CONFIG = {}
+
+使用script-loader 
+require('script-loader!legacy.js')
+
+基本上会成生
+eval('GLOBAL_CONFIG = {}')
+
+noParse 选项
+当模块没有 AMD/CommonJS 的版本时，并且你希望直接引入 dist版本，你可以将这个模块标记为 noParse。然后 webpack 将会直接引入这个模块并且不会解析它，这样可以用来改善构建时间。
+
+W> 任何用到 AST 特性（比如 ProvidePlugin）都不会工作。
+
+module.exports = {
+  module: {
+    noParse: /jquery|backbone/
+  }
+};
