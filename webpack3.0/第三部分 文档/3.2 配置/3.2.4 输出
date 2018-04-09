@@ -1,0 +1,79 @@
+输出(Output)
+output位于对象最顶级键(key),包括了一组选项，指示webpack如何去输出、以及在哪里输出你的[bundle,asset和其他你所打包或者使用webpack载入的任何内容]
+
+output.auxiliaryComment
+在和output.library和outputlibraryTarget一起使用时，这选项允许用户向导出容器(export wrapper)中插入注释。要为libraryTarget每种类型都插入相同的注释，只需将auxiliaryComment设置为一个字符串：
+
+{
+  output: {
+    library: "someLibName",
+    libraryTarget: "umd",
+    filename: "someLibName.js",
+    auxiliaryComment: "Test Comment"
+  }
+}
+
+output.chunkFilename
+此选项决定了非入口(non-entry)chunk文件的名称。
+
+注意，这此文件名需要在runtime根据chunk发送的请求去生成。因此，需要在webpack runtime输出 bundle值时，将chunk id的值对应映射到点位符（如[name]和[chunkhash]）。这会增加文件的大小，并且在任何chunk的点位符修改后，都会使bundle失效。
+
+output.chunkLoadTimeout
+integer
+
+chunk 请求到期之前的毫秒数，默认为 120 000。从 webpack 2.6.0 开始支持此选项。
+
+
+output.crossOriginLoading
+boolean string
+
+只用于 target 是 web，使用了通过 script 标签的 JSONP 来按需加载 chunk。
+
+启用 cross-origin 属性 加载 chunk。以下是可接收的值……
+
+crossOriginLoading: false - 禁用跨域加载（默认）
+
+crossOriginLoading: "anonymous" - 不带凭据(credential)启用跨域加载
+
+crossOriginLoading: "use-credentials" - 带凭据(credential)启用跨域加载 with credentials
+
+
+output.devtoolFallbackModuleFilenameTemplate
+string | function(info)
+
+当上面的模板字符串或函数产生重复时使用的备用内容。
+
+output.filename
+string
+
+此选项决定了每个输出 bundle 的名称。这些 bundle 将写入到 output.path 选项指定的目录下。
+
+对于单个入口起点，filename 会是一个静态名称。
+
+filename: "bundle.js"
+然而，当通过多个入口起点(entry point)、代码拆分(code splitting)或各种插件(plugin)创建多个 bundle，应该使用以下一种替换方式，来赋予每个 bundle 一个唯一的名称……
+使用入口名称：
+
+filename: "[name].bundle.js"
+使用内部 chunk id
+
+filename: "[id].bundle.js"
+使用每次构建过程中，唯一的 hash 生成
+
+filename: "[name].[hash].bundle.js"
+使用基于每个 chunk 内容的 hash：
+
+filename: "[chunkhash].bundle.js"
+
+模板	描述
+[hash]	模块标识符(module identifier)的 hash
+[chunkhash]	chunk 内容的 hash
+[name]	模块名称
+[id]	模块标识符(module identifier)
+[query]	模块的 query，例如，文件名 ? 后面的字符串
+
+
+[hash] 和 [chunkhash] 的长度可以使用 [hash:16]（默认为20）来指定。或者，通过指定output.hashDigestLength 在全局配置长度。
+
+output.hashDigestLength
+散列摘要的前缀长度，默认为 20。
