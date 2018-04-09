@@ -1,0 +1,81 @@
+使用不同语言进行配置(Configuration Languages)
+webpack接受以多种编程和数据语言编写的配置文件。支持的文件扩展名列表，可以在node-interpret包中找到。使用node-interpret,webpack可以处理许多不同类型的配置文件。
+
+TypeScript
+
+为了用TypeScript书写webpack配置文件，必须安装相关依赖：
+npm installl typescript ts-node @types/node @types/webpack --save-dev
+
+之后就可以使用TypeScript书写相关webpack的配置文件了：
+webpack.config.ts
+
+import * as webpack from 'webpack'
+
+import * as path from 'path'
+
+declare var __dirname
+
+const config =: webpack.Configuration = {
+  entry: './foo.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'foo.bundle.js'
+  }
+}
+
+export default config
+
+
+webpack.config.coffee
+
+HtmlWebpackPlugin = require('html-webpack-plugin')
+webpack = require('webpack')
+path = require('path')
+
+config =
+  entry: './path/to/my/entry/file.js'
+  output:
+    path: path.resolve(__dirname, 'dist')
+    filename: 'my-first-webpack.bundle.js'
+  module: rules: [ {
+    test: /\.(js|jsx)$/
+    use: 'babel-loader'
+  } ]
+  plugins: [
+    new (webpack.optimize.UglifyJsPlugin)
+    new HtmlWebpackPlugin(template: './src/index.html')
+  ]
+
+module.exports = config
+
+
+Babel and JSX
+
+webpack.config.babel.js
+
+import jsxobj from 'jsxobj';
+
+// example of an imported plugin
+const CustomPlugin = config => ({
+  ...config,
+  name: 'custom-plugin'
+});
+
+export default (
+  <webpack target="web" watch>
+    <entry path="src/index.js" />
+    <resolve>
+      <alias {...{
+        react: 'preact-compat',
+        'react-dom': 'preact-compat'
+      }} />
+    </resolve>
+    <plugins>
+      <uglify-js opts={{
+        compression: true,
+        mangle: false
+      }} />
+      <CustomPlugin foo="bar" />
+    </plugins>
+  </webpack>
+);
