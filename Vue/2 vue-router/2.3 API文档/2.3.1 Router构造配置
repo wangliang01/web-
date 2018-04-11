@@ -1,0 +1,107 @@
+Router构造配置
+
+1.routes
+类型 Array<RouteConfig>
+
+  RouteConfig的类型定义：
+
+  declare type RouteConfig = {
+    path: string,
+    component?:Component;(可选)
+    name?:string; (可选)
+    components?: {[name:string]: Component}; // 命名视图  (可选)
+    redirect?:string | Location | Function;  (可选)
+    props?: boolean | string | Function;  (可选)
+    alias?: string | Array<string>; (可选)
+    children?: Array<RouteConfig>; // 嵌套路由 (可选)
+    beforeEnter?: (to: Route, from: Route, next: Function) => void;
+    meta?: any;
+
+     // 2.6.0+
+    caseSensitive?: boolean; // 匹配规则是否大小写敏感？(默认值：false)
+    pathToRegexpOptions?: Object; // 编译正则的选项
+  }
+
+2.mode
+
+类型： string
+
+默认值： “hast”(浏览器环境) | "abstract"(Node.js环境)
+
+可选值： "hash" | "history" | "abstract"
+
+配置路由模式：
+
+  hash: 使用URL hash值来作路由。支持所有浏览器，包括不持HTML5 History APi的浏览器。
+  history: 依赖HTML5 History Api和服务器配置。
+  abstract: 支持所有JavaScript运行环境，如Node.js服务器端。如果发现没有浏览器的API，路由会自动强制进入这个模式。
+
+
+3.base
+
+类型： String
+
+默认值： "/"
+
+应用的基路径。例如，如果整个单页应用服务在/app/下，然后base就应该设为"/app/"
+
+
+4.linkActiveClass
+
+类型： String
+
+默认值： "router-link-active"
+
+全局配置<router-link>的默认[激活class类名]。
+
+
+5.linkExactActiveClass
+
+类型：String
+
+默认值： "router-link-exact-active"
+
+全局配置<router-link>精确激活 的城市化的class。
+
+
+6.scrollBehavior
+
+类型： Function
+
+签名:
+
+type PositionDescriptor =
+  { x: number, y: number } |
+  { selector: string } |
+  ?{}
+
+type scrollBehaviorHandler = (
+  to: Route,
+  from: Route,
+  savedPosition?: { x: number, y: number }
+) => PositionDescriptor | Promise<PositionDescriptor>
+
+
+scrollBehavior(to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    return {x: 0, y: 0}
+  }
+}
+
+
+7.parseQuery/stringifyQuery
+
+类型: Function
+
+提供自定义查询字符串的解析/反解析函数。覆盖默认行为。
+
+
+8.fallback
+
+类型: boolean
+
+当浏览器不支持 history.pushState 控制路由是否应该回退到 hash 模式。默认值为 true。
+
+在 IE9 中，设置为 false 会使得每个 router-link 导航都触发整页刷新。它可用于工作在 IE9 下的服务端渲染应用，因为一个 hash 模式的 URL 并不支持服务端渲染。
