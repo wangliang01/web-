@@ -1,0 +1,15 @@
+起步
+
+建议：官方指南假设你已经了解了HTML,CSS,和JavaScript的中级知识。如果你刚开始学习前端开发，将框架作为你的第一步可能不是最好的主意--掌握好基础知识再来吧！
+
+创建一个.html文件，例如： hello.html  然后引入vue
+
+<!-- 开发环境版本，包含了用帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+或者：
+
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+不推荐新手直接使用vue-cli,尤其是在你还不熟悉基于node.js的构建工具时。
