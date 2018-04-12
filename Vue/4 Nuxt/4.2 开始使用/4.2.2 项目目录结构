@@ -1,0 +1,68 @@
+目录
+
+资源目录
+
+资源目录assets用于组织未编译的静态资源如LESS,SASS或JavaScript。
+
+组件目录
+
+组件目录componnets用于组织应用的Vue.js组件。Nuxt.js不会扩展增强该目录下Vue.js组件，即这些组件下会像页面组件那样asyncData方法的特性。
+
+布局目录
+
+布局目录layouts用于组织应用的布局组件 
+
+该目录名为Nuxt.js保留的，不可更改。
+
+中间件目录
+
+middleware目录用于存放应用的中间件。
+
+页面目录
+
+页面目录pages用于组织应用的路由及视图。Nuxt.js框架读取该目录下所有的.vue文件并自动生成对应的路由配置。
+
+该目录名为Nuxt.js保留的，不可更改。
+
+插件目录
+
+插件目录plugins用于组织那些需要在根vue.js应用 实例化之前需要运行的javaScript插件。
+
+静态文件目录
+
+静态文件目录 static用于存放应用的静态文件，此类文件不会被Nuxt.js调用webpack进行构建编译处理。服务器启动的时候，该目录下的文件会映射至应用的根路径 / 下。
+
+举个例子: /static/robots.txt 映射至 /robots.txt
+
+该目录名为Nuxt.js保留的，不可更改。
+
+Store 目录
+store 目录用于组织应用的 Vuex 状态树 文件。 Nuxt.js 框架集成了 Vuex 状态树 的相关功能配置，在 store 目录下创建一个 index.js 文件可激活这些配置。
+
+
+nuxt.config.js 文件
+nuxt.config.js 文件用于组织Nuxt.js 应用的个性化配置，以便覆盖默认配置。
+
+该文件名为Nuxt.js保留的，不可更改。
+
+package.json 文件
+package.json 文件用于描述应用的依赖关系和对外暴露的脚本接口。
+
+该文件名为Nuxt.js保留的，不可更改。
+
+
+
+别名
+别名	                                                             目录
+~	/
+~assets	                                                           /assets
+~components	                                                       /components
+~pages	                                                           /pages
+~plugins	                                                         /plugins
+~static	                                                           /static
+~store	                                                           /store
+文件别名：
+
+别名	                                  使用方法	                                  描述
+~store	                    const store = require('~store')	                导入 vuex 状态树实例。
+~router	                    const router = require('~router')	              导入 vue-router 实例。

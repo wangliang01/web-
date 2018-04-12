@@ -9,3 +9,20 @@
 
 问题4：
   怎么区别HTML标签的属性和特性？
+
+问题5：
+  const instance = axios.create({
+    baseURL:'',
+    timeout: 15000,  //请求超时的毫秒数
+    // withCredentials: true,   //跨域请求时是否需要使用凭证
+    headers: {"Content-Type": "application/json;charset=utf-8"}
+})
+会产生跨域问题，其原因就是withCredentials属性值为true引起。
+
+问题6：
+  如何实现数字滚动效果？
+  1.countup.js
+
+问题7：
+  如何实现SSR(服务端渲染)?
+  vue之nuxt
