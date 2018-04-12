@@ -1,0 +1,22 @@
+创建一个Vue实例
+
+每个Vue应用都是通过用Vue函数创建一个新的Vue实例开始的：
+
+var vm = new Vue({
+  // 选项
+})
+
+虽然没有完全遵循MVVM模型，但是Vue的设计也受到了它的启发。因此在文档中经常会使用vm（viewModel的缩写）这个变量来表示Vue的实例。
+
+当创建一个Vue实例时，你可以传入一个选项对象。这篇教程主要描述的就是如何使用这些选项来创建你想要的行为。
+
+一个Vue应用由一个通过new Vue创建的要Vue实例，以及可选的嵌套的，可复用的组件树组成。举个例子，一个todo应用的组件树可以是这样的：
+
+根实例
+└─ TodoList
+   ├─ TodoItem
+   │  ├─ DeleteTodoButton
+   │  └─ EditTodoButton
+   └─ TodoListFooter
+      ├─ ClearTodosButton
+      └─ TodoListStatistics
