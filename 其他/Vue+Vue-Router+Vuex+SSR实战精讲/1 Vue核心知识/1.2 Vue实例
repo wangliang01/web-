@@ -1,0 +1,21 @@
+Vue实例 
+
+
+var vm = new Vue({
+  el: '#app',
+  template: '<div>12</div>'
+})
+Vue实例的创建与作用
+
+Vue实例的属性
+
+Vue实例的方法
+
+<div id="app"></div>
+
+template（模板）会替换掉根节点(el所指向的dom节点)的内容，也就是指<div id="app"></div>的代码会被template中的内容替换掉。
+
+如果没有传el,可以挂载到dom节点吗？
+new Vue({
+  template: '<div>12</div>'
+}).$mount('#app')
