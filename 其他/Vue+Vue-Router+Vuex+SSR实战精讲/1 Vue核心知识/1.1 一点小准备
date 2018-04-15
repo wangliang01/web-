@@ -1,0 +1,19 @@
+1.单独的配置文件
+    运行我们的DEMO程序
+2.单独的源码目录
+    跟项目没有太大的关系
+
+  practice目录  （实践）
+
+  resolve: {
+    alias: {
+      'vue': path.resolve(__dirname, '../node_modules/vue/dist/vue.esm.js')
+    }
+  }
+
+  vue.esm.js 与vue.runtime.esm.js的区别
+  vue.runtime.esm.js不允许在Vue实例中使用template属性，而vue.esm.js允许在Vue实例中使用template属性
+
+
+
+在搭建practice项目的时候，webpack版本定义为3.x.x，webpack-dev-server版本为2.x.x，否则会报错
