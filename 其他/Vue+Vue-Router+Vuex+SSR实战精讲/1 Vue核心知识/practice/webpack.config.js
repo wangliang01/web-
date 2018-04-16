@@ -1,8 +1,10 @@
 const path = require('path')
 
+const vuxLoader = require('vux-loader')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
+const webpackConfig = {
   entry: path.resolve(__dirname, 'main.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -10,8 +12,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue': path.resolve(__dirname, './node_modules/vue/dist/vue.esm.js')
-    }
+      'vue$': path.resolve(__dirname, './node_modules/vue/dist/vue.esm.js')
+    },
+    extensions: ['.js', '.vue', '.json']
   },
   devServer: {
     host: '0.0.0.0',
@@ -29,6 +32,13 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
@@ -38,3 +48,9 @@ module.exports = {
     })
   ]
 }
+
+let config = vuxLoader.merge(webpackConfig, {
+  plugins: ['vux-ui']
+})
+
+module.exports = config

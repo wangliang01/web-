@@ -1,0 +1,45 @@
+用v-for把一个数xeg 对应为一组元素
+
+我们用v-for指令根据一组数据的选项列表进行渲染。v-for指令需要使用item in items形式的特殊语法，items是源数据数组并且item是数组元素迭代的别名。
+
+<ul id="example-1">
+  <li v-for="item in items">
+    {{item.message}}
+  </li>
+</ul>
+
+
+var example1 = new Vue({
+  el: '#example-1',
+  data: {
+    items: [
+      { message: 'Foo' },
+      { message: 'Bar' }
+    ]
+  }
+})
+
+在v-for块中，我们拥有对父作用域属性的完全访问权限。v-for还支持一个可选的第二个参数为当前选项的索引。
+
+<ul id="example-2">
+  <li v-for="(item, index) in items">
+    {{item.message}}
+  </li>
+</ul>
+
+var example2 = new Vue({
+  el: '#example-2',
+  data: {
+    parentMessage: 'Parent',
+    items: [
+      { message: 'Foo' },
+      { message: 'Bar' }
+    ]
+  }
+})
+
+你也可以用of替代in作为分隔符，因为它是最接近JavaScript迭代器的语法：
+
+<div v-for="item of items"></div>
+
+

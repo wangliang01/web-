@@ -1,0 +1,34 @@
+一个对象的v-for
+
+你也可以用v-for通过一个对象的属性来迭代。
+
+<ul id="v-for-object" class="demo">
+  <li v-for="value in object">
+    {{value}}
+  </li>
+</ul>
+
+new Vue({
+  el: '#v-for-object',
+  data: {
+    object: {
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 30
+    }
+  }
+})
+
+你也可以提供第二个参数为键名：
+<div v-for="(value, key) in object">
+  {{key}}: {{value}}
+</div>
+
+注意：第一个参数为值，第二个参数为键
+
+第三个参数为索引
+<div v-for="(value, key, index) in object">
+  {{index}} . {{key}} : {{value}}
+</div>
+
+在遍历对象时，是按Object.keys()的结果遍历，但是不能保证它的结果在不同的JavaScript引擎下是一致的。

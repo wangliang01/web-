@@ -12,11 +12,21 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-loader": "^7.1.4",
+    "css-loader": "^0.28.11",
     "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.20.3",
     "vue": "^2.5.16",
-    "vue-loader": "^14.2.2",
+    "vue-loader": "^12.2.2",
+    "vue-router": "^3.0.1",
+    "vue-style-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.16",
     "webpack": "^3.11.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^2.11.2"
+  },
+  "dependencies": {
+    "mint-ui": "^2.2.13",
+    "vux": "^2.8.1",
+    "vux-loader": "^1.2.8"
   }
 }
