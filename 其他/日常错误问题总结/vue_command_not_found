@@ -1,0 +1,17 @@
+报错结果：
+bash: vue: command not found
+
+操作步骤：
+
+npm i vue-cli -g
+
+vue init webapck mint-ui-demo
+
+原因：
+npm路径没有加入到系统环境变量path中去
+
+解决办法：
+npm root -g  //找到npm 的绝对路径
+
+将路径添加到环境变量path中去
+
