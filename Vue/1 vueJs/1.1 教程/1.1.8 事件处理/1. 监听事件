@@ -1,0 +1,17 @@
+监听事件
+
+可以用v-on指令监听DOM事件，并在触发时运行一些JavaScript代码。
+
+示例：
+
+<div id="example-1">
+  <button v-on:click="count += 1">Add 1</button>
+  <p>The button above has been clicked {{counter}} times. </p>
+</div>
+
+var example1 = new Vue({
+  el: '#example-1',
+  data: {
+    counter: 0
+  }
+})
