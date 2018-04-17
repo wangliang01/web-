@@ -1,0 +1,42 @@
+按键修饰符
+
+在监听键盘事件时，我们经常需要检查常见的键值。Vue允许在监听键盘事件时添加按键修饰符：
+
+<!-- 只有在 `keyCode` 是 13 时调用 `vm.submit()` -->
+<input v-on:keyup.13="submit">
+
+记住所有keyCode比较困难，所以Vue为最常见的按键提供了别名：
+
+<!-- 同上 -->
+<input v-on:keyup.enter="submit">
+
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+
+全部的的按键别名：
+
+.enter
+.tab
+.delete
+.esc
+.space
+.up
+.down
+.left
+.right
+
+
+可以通过全局config.keyCodes 对象自定义按键修饰符别名：
+// 可以使用 `v-on:keyup.f1`
+
+Vue.config.keyCodes.f1 = 112
+
+自动匹配按键修饰符
+
+你也可直接将KeyboardEvent.key暴露的任意有效按键名转换为kebab-case来作为修饰符：
+
+<input @keyup.page-down>
+
+在上面的例子中，处理函数仅在 $event.key === 'PageDown' 时被调用。
+
+有一些按键 (.esc 以及所有的方向键) 在 IE9 中有不同的 key 值, 如果你想支持 IE9，它们的内置别名应该是首选。
