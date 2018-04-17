@@ -1,0 +1,30 @@
+事件处理方法
+
+然而许多事件处理逻辑会更为复杂，所以直接把JavaScript代码写在v-on指令中是不可行的。因此v-on还可以接收一个需要调用的方法名称。
+
+示例：
+
+<div id="example-2">
+  <button v-on:click="great">Greet</button>
+</div>
+
+// 在methods对象中定义方法
+var example2 = new Vue({
+  el: '#example-2',
+  data: {
+    name: 'vue.js'
+  },
+  methods: {
+    greet() {
+      // this在方法里指向当前Vue实例
+      alert('Hello' + this.name + '!')
+      //event是原生DOM事件
+      if (event) {
+        alert(event.target.tagName)
+      }
+    }
+  }
+})
+
+//也可以用javaScript直接调用方法
+example2.greet() // 'Hello vue.js!'
