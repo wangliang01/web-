@@ -1,0 +1,55 @@
+值绑定
+
+对于单选按钮，复选框及选择框的选项，v-model绑定的值通常是静态字符串(对于复选框也可以是布尔值)：
+
+<!-- 当选中时，`picked` 为字符串 "a" -->
+<input type="radio" v-model="picked" value="a">
+
+<!-- `toggle` 为 true 或 false -->
+<input type="checkbox" v-model="toggle">
+
+<!-- 当选中第一个选项时，`selected` 为字符串 "abc" -->
+<select v-model="selected">
+  <option value="abc">ABC</option>
+</select>
+
+但是有时候我们可能想把值绑定到Vue实例的一个动态属性上，这时可以用v-bind实现，并且这个属性可以不是字符串。
+
+
+复选框
+
+<input
+  type="checkbox"
+  v-model="toggle"
+  true-value="yes"
+  false-value="no"
+>
+
+// 当选中时
+vm.toggle === 'yes'
+
+// 没有选中时
+vm.toggle === 'no'
+这里true-value和false-value特性并不会影响
+
+
+单选按钮
+
+<input type="radio" v-model="pick" v-bind:value="a">
+
+// 当选中时
+vm.pick = vm.a
+
+选择框的选项
+
+<select v-model="selected">
+  <!-- 内联对象字面量 -->
+  <option v-bind:value="{number: 123}">123</option>
+</select>
+
+// 当选中时
+
+typeof vm.selected // object
+vm.selected.number // 123
+
+
