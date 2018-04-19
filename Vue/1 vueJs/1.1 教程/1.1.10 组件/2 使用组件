@@ -1,0 +1,88 @@
+使用组件 
+
+1.全局注册
+
+我们已经知道，可以通过以下方式创建一个Vue实例：
+
+new Vue({
+  el: '#some-element'
+})
+
+要注册一个全局组件，可以使用Vue.component(tagName, options)
+tagName: 组件名
+options: 选项
+
+Vue.component('my-component', {
+  // 选项
+})
+
+清注意：对于自定义标签的命名Vue.js不强制遵循W3C
+
+组件在注册之后，便可以作为自定义元素<my-component></my-component>在一个实例的模板中使用，注意确保在初始化要实例之前注册组件：
+
+<div id="example">
+  <my-component></my-component>
+</div>
+
+// 注册
+Vue.component('my-component', {
+  template: '<div>a custom component'</div>
+})
+
+//创建根实例
+new Vue({
+  el: '#example'
+})
+
+
+2.局部注册
+
+你不必把每个组件都注册到全局。你可以通过某个实例的components选项注册仅在其作用域可用的组件：
+
+var Child = {
+  template: '<div>A custom component</div>'
+}
+
+new Vue({
+  components: {
+    'my-component': Child
+  }
+})
+
+DOM模板解析注意事项
+
+当使用DOM作为模板时，你会受到HTML本身的一些限制，因为Vue只有在浏览器解析、规范化模板之后才能获取其内容。尤其要注意，像<ul>,<ol>, <table>, <select>这样的元素里允许包含的元素有限制，而另一些像<option>这样的元素只能出现在某些特定元素的内部。
+
+在自定义组件中使用这些受限制的元素会导致一些问题，例如：
+<table>
+  <my-row>...</my-row>
+</table>
+
+自定义组件<my-row>会被当作无效的内容，因此会导致错误的渲染结果。变通的方案是使用特殊的is特性：
+<table>
+  <tr is="my-row"></tr>
+</table>
+
+应当注意，如果使用来自以下来源之一的字符串模板，则没有这些限制：
+<script type="text/x-template">
+javaScript内联模板字符串
+.vue组件
+因此，请尽可能使用字符串模板
+
+data必须是函数
+
+构造Vue实例时传入的各种选项大多数都可以在组件里使用，只有一个例外：data必须是函数。实际上，如果你这么做：
+Vue.component('my-component', {
+  template: '<span>{{message}}</span>',
+  data: {
+    message: 'hello'
+  }
+})
+
+那么Vue会停止运行，并在控制台发出警告，告诉你在组件实例中data必须是一个函数。但理解这种规则为何存在也是很有益处的，
+
+组件结合
+
+组件设计初衷就是要配合使用的，最常见的就是形成父子组件的关系：组件A在它的模板中使用组件B。它们之间必然需要相互通信：父组件可能要给子组件下发数据，子组件则可能要将它内部发生的事情告知交组件。然而，通过一个良好定义的接口尽可能将父子组件解耦也是很重要的。这保证了每个组件的代码可以在相对隔离的环境中书写和理解，从而提高了其可维护性和复用性。
+
+在Vue中，父子组件的关系可以总结为prop向下传递，事件向上传递，父组件通过prop给子组件下发数据，子组件通过事件给交组件发送消息。
