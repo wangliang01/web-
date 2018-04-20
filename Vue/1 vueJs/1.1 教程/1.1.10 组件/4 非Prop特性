@@ -1,0 +1,29 @@
+非Prop特性
+
+所谓非Prop特性，就是指它可以直接传入组件，而不需要定义相应的prop。
+
+尽管为组件定义明确的prop是推荐的传参方式，组件的作者却并不总能预见到组件被使用的场景。所以，组件可以接收任意传入的特性，这些特性都会被添加到组件的根元素上。
+
+例如：假如我们使用了第三方组件bs-data-input，它包含一个Bootstrap插件，该插件需要在input添加data-3d-date-picker这个特性。这时可以把特性直接添加到组件上(不需要事先定义prop):
+
+<bs-date-input data-3d-date-picker="true"></bs-date-input>
+
+添加属性data-3d-date-picker="true"之后，它会被自动添加到bs-date-input的根元素上。
+
+1.替换/合并现有的特性
+
+假设这是bs-date-input的模板：
+
+<input type="date" class="form-control">
+
+为了给该日期选择器插件增加一个特殊的主题，我们可能需要增加一个特殊的class,比如：
+<bs-date-input
+  data-3d-date-picker
+  class="date-picker-theme-dark"
+></bs-date-input>
+
+在这个例子当中，我们定义两个不同的class值：
+form-control,来自组件自身的模板
+date-picker-theme-dard,来自父组件
+
+对于多数特性来说，传递给组件的值会覆盖组件本身设定的值。即例如传递 type="large" 将会覆盖 type="date" 且有可能破坏该组件！所幸我们对待 class 和 style 特性会更聪明一些，这两个特性的值都会做合并 (merge) 操作，让最终生成的值为：form-control date-picker-theme-dark。
