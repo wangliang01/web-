@@ -1,0 +1,13 @@
+概述
+
+Vue在插入、更新或者移除DOM时，提供多种不同方式的应用过渡效果。
+
+包括以下工具：
+
+在CSS过渡和动画中自动应用class
+
+可以配合使用第三方CSS动画库，如Animate.css 
+
+在过渡钩子函数中使用javaScript直接操作DOM
+
+可以配合使用第三方javaScript动画库如Velocity.js
