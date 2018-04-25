@@ -1,0 +1,19 @@
+全局注册
+到目前为止，我们只用过 Vue.component 来创建组件：
+
+Vue.component('my-component-name', {
+  // ... 选项 ...
+})
+这些组件是全局注册的。也就是说它们在注册之后可以用在任何新创建的 Vue 根实例 (new Vue) 的模板中。比如：
+
+Vue.component('component-a', { /* ... */ })
+Vue.component('component-b', { /* ... */ })
+Vue.component('component-c', { /* ... */ })
+
+new Vue({ el: '#app' })
+<div id="app">
+  <component-a></component-a>
+  <component-b></component-b>
+  <component-c></component-c>
+</div>
+在所有子组件中也是如此，也就是说这三个组件在各自内部也都可以相互使用。
