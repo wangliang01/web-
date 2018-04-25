@@ -1,0 +1,65 @@
+CSS3 动画Animation的8大属性
+animation复合属性。检索或设置对象所应用的动画特效。 
+如果有多个属性值时以”，”隔开，适用于所有元素，包含伪对象:after和:before
+
+1.animation-name 检索或设置对象所应用的动画名称
+必须与规则@keyframes配合使用，eg:@keyframes animations animation-name:animations;
+
+2.animation-duration 检索或设置对象动画的持续时间
+animation-duration:3s; 动画完成使用的时间为3s
+
+3.animation-timing-function 检索或设置对象动画的过渡类型
+linear：线性过渡。等同于贝塞尔曲线(0.0, 0.0, 1.0, 1.0)
+
+ease：平滑过渡。等同于贝塞尔曲线(0.25, 0.1, 0.25, 1.0)
+
+ease-in：由慢到快。等同于贝塞尔曲线(0.42, 0, 1.0, 1.0)
+
+ease-out：由快到慢。等同于贝塞尔曲线(0, 0, 0.58, 1.0)
+
+ease-in-out：由慢到快再到慢。等同于贝塞尔曲线(0.42, 0, 0.58, 1.0)
+
+step-start：等同于 steps(1, start)
+
+step-end：等同于 steps(1, end)
+
+steps([, [ start | end ] ]?)：接受两个参数的步进函数。第一个参数必须为正整数，指定函数的步数。第二个参数取值可以是start或end，指定每一步的值发生变化的时间点。第二个参数是可选的，默认值为end。
+
+cubic-bezier(, , , )：特定的贝塞尔曲线类型，4个数值需在[0, 1]区间内
+
+4.animation-delay 检索或设置对象动画延迟的时间
+animation-delay:0.5s; 动画开始前延迟的时间为0.5s
+
+5.animation-iteration-count 检索或设置对象动画的循环次数
+animation-iteration-count: infinite | number;
+
+infinite：无限循环
+
+number: 循环的次数
+
+6.animation-direction 检索或设置对象动画在循环中是否反向运动
+normal：正常方向
+
+reverse：反方向运行
+
+alternate：动画先正常运行再反方向运行，并持续交替运行
+
+alternate-reverse：动画先反运行再正方向运行，并持续交替运行
+
+7.animation-play-state 检索或设置对象动画的状态
+animation-play-state:running | paused;
+
+running:运动
+
+paused: 暂停
+
+animation-play-state:paused; 当鼠标经过时动画停止，鼠标移开动画继续执行
+
+8.animation-fill-mode 检索或设置对象动画时间之外的状态
+none:默认值，不设置对象动画之外的状态
+
+forwards:设置对象状态为动画结束时的状态
+
+backwards:设置对象状态为动画开始时的状态
+
+both:设置对象状态为动画开始或结束时的状态
