@@ -33,3 +33,37 @@ function debounce(fn, delay) {
     timer = setTimeout(later, delay)
   }
 }
+
+
+
+throttle 节流
+
+throttle（节流）， 当持续触发事件时，保证间隔时间触发一次事件。
+
+持续触发事件时，throttle会合并一定时间内的事件，并在该时间结束时真正去触发一次事件。
+
+function throttle(fn, delay) {
+  var ctx;
+  var args;
+  // 记录上次触发事件
+  var previous = Date.now();
+
+  var later = function () {
+    fn.apply(ctx, args);
+  };
+
+  return function () {
+    ctx = this;
+    args = arguments;
+    var now = Date.now();
+    // 本次事件触发与上一次的时间比较
+    var diff = now - previous - delay;
+
+    // 如果隔间时间超过设定时间，即再次设置事件触发的定时器
+    if (diff >= 0) {
+      // 更新最近事件触发的时间
+      previous = now;
+      setTimeout(later, delay);
+    }
+  };
+}
