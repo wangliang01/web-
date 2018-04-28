@@ -1,0 +1,77 @@
+导入和设置
+
+1.浏览器兼容性
+jsPlumb 1.7.x运行于IE6以上的所有应用程序中。jsPlumb 2.x运行于IE9以上的所有应用程序中。
+
+2.文档类型
+text/html的
+
+如果您使用的是内容类型的网页text/html,正如大多数人一样，那么您应该使用些文档类型：
+<!doctype html>
+这为您提供了所有浏览器中的标准模式及对HTML5的访问
+
+3.必需的导入
+<script src="PATH_TO/jsplumb.min.js "></script>
+
+//es6
+import {jsPlumb} from 'jsplumb'
+
+4.初始化jsPlumb
+在DOM被初始化之前，你不应该开始调用jsPlumb--可能没有什么意外。要处理这个问题，你应该绑定到ready jsPlumb上的事件
+
+jsPlumb.bind('ready', function(){
+  ...
+})
+
+有一个帮手方法可以为你节省一些代码：
+jsPlumb.ready(function() {
+  ...
+})
+
+如果您ready在jsPlumb已经初始化之后绑定到事件，那么您的回调将立即执行。
+
+5.多个jsPlumb实例
+jsPlumb默认在浏览器的窗口中注册，为整个页面提供一个静态实例。您还可以使用该getInstance方法实例化jsPlumb的独立实例，例如：
+var firstInstance = jsPlumb.getInstance()
+
+变量firstInstance现在可以确切地当作你会认为jsPlumb变量-你可以设置默认值，调用connect方法，无论什么：
+firstInstance.importDefaults({
+  Connector : [ "Bezier", { curviness: 150 } ],
+  Anchors : [ "TopCenter", "BottomCenter" ]
+});
+
+firstInstance.connect({
+  source:"element1", 
+  target:"element2", 
+  scope:"someScope" 
+});
+
+getInstance 可选地提供一个提供默认值的对象：
+
+var secondInstance = jsPlumb.getInstance({
+  PaintStyle:{ 
+    strokeWidth:6, 
+    stroke:"#567567", 
+    outlineStroke:"black", 
+    outlineWidth:1 
+  },
+  Connector:[ "Bezier", { curviness: 30 } ],
+  Endpoint:[ "Dot", { radius:5 } ],
+  EndpointStyle : { fill: "#567567"  },
+  Anchor : [ 0.5, 0.5, 1, 1 ]
+});
+
+secondInstance.connect({ 
+  source:"element4", 
+  target:"element3", 
+  scope:"someScope"   
+});
+
+6.元素ID
+jsPlumb使用id它与之交互的任何元素的属性。如果id未设置，jsPlumb将为该元素创建一个id。建议您自己为UI中的元素设置适当的ID。
+更改元素ID
+由于jsPlumb使用元素标识的事实，您需要告诉jsPlumb元素标识是否更改。有两种方法可以帮助你做到这一点：
+
+jsPlumb.setId(el, newId)如果您希望jsPlumb处理更改DOM中的id，请使用此选项。它会这样做，然后相应地更新其参考。
+
+jsPlumb.setIdChanged(oldId, newId) 如果您已经更改了元素的ID，并且您只是希望jsPlumb更新其引用，请使用此方法。

@@ -1,0 +1,176 @@
+https://github.com/rysinal/jsPlumb  中文文档
+1.jsPlumb概述
+jsPlumb是一个在dom元素之间绘制连接线的javascript框架，它使用svg技术绘制连接线。
+
+2.基本概念
+
+  很明显，一个连接线主要解决的问题包括谁和谁连，在哪里连（连接点在哪里），连接点长啥样，如何画线等问题
+
+  1）：Anchor, 锚点，它是一个逻辑概念，解决连线的连接点位置问题。
+
+  2）：Endpoint, 端点，它是一个可视化的点，解决连接点长啥样的问题。
+
+  3）：Connector, 连线， 解决如何画线的问题
+
+  4）：Overlay, 覆盖物， 它主要为连接添加一些装饰物，比如标签文本，连接点的箭头。 
+
+  Anchor: 锚点的定义方式主要有下面几种
+
+    1）用数组来定义
+      [x位置, y位置, x方向, y方向]
+      [x位置, y位置, x方向, y方向, x像素偏移, y像素偏移]
+      位置的值在0~1之间
+      方向的值为0, 1, -1
+      9个静态的值为：Top TopRight Right BottomRight Bottom BottomLeft Left TopLeft Center
+      AutoDefault 包括Top, Right, Bottom, Left
+
+      需要注意的是，坐标使用第四象限的坐标
+
+      一个常用的组合是：
+      var defaultAnchors = ["Top", "Right", "Bottom", "Left", [0.25, 0, 0, -1], [0.75, 0, 0, -1], [0.25, 1, 0, 1], [0.75, 1, 0, 1], [0, 0.25, 0, -1], [0, 0.75, 0, -1], [1, 0.25, 0, 1], [1, 0.75, 0, 1]];
+
+    2)几何图形的周边
+      
+      Circle Ellipse TRiangle Diamond Rectangle Square
+      anchor: [{shape: "TRiangle", anchorCount: 150, rotation: 25}]
+
+    3)连续
+
+      anchor: ["Continuous", {faces: ["top", "left"]]
+
+  Endpoint
+
+    jsPlumb提供了四种类型的端点，
+
+      Dot, Rectangle,
+      Blank,
+      Image,
+
+      instance.addEndpoint(el, option)
+      el: 元素（通过instance.getSelector()得到）
+      option: 下面所列项：
+        Anchor : "BottomCenter",//端点的定位点的位置声明（锚点）：left，top，bottom等
+        Anchors : [ null, null ],//多个锚点的位置声明
+        ConnectionsDetachable   : true,//连接是否可以使用鼠标默认分离
+        ConnectionOverlays  : [],//附加到每个连接的默认重叠
+        Connector : "Bezier",//要使用的默认连接器的类型：折线，流程等
+        Container : null,//设置父级的元素，一个容器
+        DoNotThrowErrors  : false,//如果请求不存在的Anchor，Endpoint或Connector，是否会抛出
+        DragOptions : { },//用于配置拖拽元素的参数
+        DropOptions : { },//用于配置元素的drop行为的参数
+        Endpoint : "Dot",//端点（锚点）的样式声明（Dot）
+        Endpoints : [ null, null ],//多个端点的样式声明（Dot）
+        EndpointOverlays : [ ],//端点的重叠
+        EndpointStyle : { fill : "#456" },//端点的css样式声明
+        EndpointStyles : [ null, null ],//同上
+        EndpointHoverStyle : null,//鼠标经过样式
+        EndpointHoverStyles : [ null, null ],//同上
+        HoverPaintStyle : null,//鼠标经过线的样式
+        LabelStyle : { color : "black" },／／标签的默认样式。
+        LogEnabled : false,//是否打开jsPlumb的内部日志记录
+        Overlays : [ ],//重叠
+        MaxConnections : 1,//最大连接数
+        PaintStyle : { lineWidth : 8, stroke : "#456" },//连线样式
+        ReattachConnections : false,//是否重新连接使用鼠标分离的线
+        RenderMode : "svg",//默认渲染模式
+        Scope : "jsPlumb_DefaultScope"//范围，标识
+  Connectors
+
+    jsPlumb提供了四种类型的连线：
+      Bezier, StateMachine, Flowchart, Straight
+
+  Overlay
+
+    jsPlumb提供了3种类型的覆盖物：
+    Arrow: 箭头
+    Label: 标签
+    Custom: 自定义的html元素
+    ConnectionOverlays: [
+      ["Arrow", {
+        location: 1,
+        foldback: 0.618,  // 0.618: 普通箭头， 1：平底箭头， 2：钻石箭头
+        visible: true,
+        id: "arrow"
+      }],
+      ["Label", {
+        location: 0.5,
+        cssClass: "endpointTargetLabel",
+        visible: true,
+        id: "label"
+      }]
+    ]
+
+3.几个需要注意的地方：
+  1）：所有的子元素在一个父容器中，并且子元素都要使用绝对布局
+  position: absolute
+
+  2): 端点可以通过样式隐藏，直接使用“Blank”报错了。
+
+  3）：性能，在多个连接的时候，需要使用批处理模式来绘制。
+  sintoonUx.jsPlumbInstance.setSuspendDrawing(true)
+  sintoonUx.jsPlumbInstance.setSuspendDrawing(false, true)
+
+  4)：设置可拖拽
+  sintoonUx.jsPlumbInstance.draggable(btnDoms);
+
+4.使用范例
+
+  drawConnectLine: function () {
+    var sintoonUx = this
+
+    // 定义锚点的位置
+    var defaultAnchors = ["Top", "Right", "Bottom", "Left", [0.25, 0, 0, -1], [0.75, 0, 0, -1], [0.25, 1, 0, 1], [0.75, 1, 0, 1] , [0, 0.25, 0, -1], [0, 0.75, 0, -1], [1, 0.25, 0, 1], [1, 0.75, 0, 1]];
+
+    // 创建实例，配置默认的绘制属性，建立通用绘图方式等
+    sintoonUx.jsPlumbInstance = jsPlumb.getInstance({
+      PaintStyle: {
+        lineWidth: 2,
+        strokeStyle: 'blue',
+        outlineColor: 'blue',
+        dashStyle: '4.2',
+        outlineWidth: 1
+      },
+      Connector: ["Straight", {stub: [20, 50], gap: 0}],
+      Endpoint: ["Dot", {radius: 5, cssClass: "displaynone"}], //通过样式来隐藏锚点
+      EndpointStyle: {fileStyle: "#567567"},
+      Anchor: [defaultAnchors],
+      Container: sintooUx.flowchartContainerId,
+      DragOptions: {cursor: 'pointer', zIndex: 2000},
+      ConnectionOverlays: [
+         ["Arrow", {
+                location: 1,
+                //foldback: 1,
+                foldback: 0.618,
+                visible: true,
+                id: "arrow"
+          }],
+          ["Label", { location: 0.5, label: "zhu", cssClass: "endpointTargetLabel", visible: true, id: "label" }]
+      ]
+    })
+
+
+    // 绘制标签
+    sintoonUx.jsPlumbInstance.bind('connection', function(connInfo, originalEvent) {
+      var connection = connInfo.connection
+      var labelText = connection.sourceId.substring(0, 15) + '-' + connection.targetId.substring(0, 15)
+      labelText = Ext.String.format("{0}---{1}", Ext.getCmp(connection.sourceId).flowStage, Ext.getCmp(connection.targetId).flowStage)
+      connection.getOverlay('label').setLabel(labelText)
+    })
+
+    //批处理绘制
+    sintoonUx.jsPlumbInstance.setSuspendDrawing(true)
+    var searchPat = Ext.String.format("#{0} .btnDraggable", sintoonUx.flowchartContainerId)
+    var btnDoms = sintoonUx.jsPlumbInstance
+
+     /// 设置dom元素的可拖拽性
+    sintoonUx.jsPlumbInstance.draggable(btnDoms);
+ 
+    /// 建立dom元素之间的连接，绘制连接线，锚点，覆盖物等
+    for (var i = 0; i < sintoonUx.btnConfigs.length - 1; i++) {
+        sintoonUx.jsPlumbInstance.connect({ reattach: true, source: sintoonUx.btnConfigs[i].btnId, target: sintoonUx.btnConfigs[i + 1].btnId });
+    }
+ 
+    /// 强制绘制整个界面
+    sintoonUx.jsPlumbInstance.setSuspendDrawing(false, true);
+  }
+

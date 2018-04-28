@@ -130,3 +130,45 @@ new Vue({
     transform: scale(1);
   }
 }
+
+
+
+
+自定义过渡的类名
+我们可以通过以下特性来自定义过渡类名：
+
+enter-class
+enter-active-class
+enter-to-class (2.1.8+)
+leave-class
+leave-active-class
+leave-to-class (2.1.8+)
+他们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css 结合使用十分有用。
+
+
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+<div id="example-3">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+  >
+    <p v-if="show">hello</p>
+  </transition>
+
+  new Vue({
+  el: '#example-3',
+  data: {
+    show: true
+  }
+})
+
+同时使用过渡和动画
+
+Vue为了知道过渡的完成，必须设置相应的事件监听器。它可以是transitioned或animationed，这取决于给元素应用的CSS规则。如果你使用其中任何一种，Vue能自动识别类型并设置监听。
+
+但是，在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。

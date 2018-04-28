@@ -1,0 +1,16 @@
+jsPlumb基本概念
+
+一、默认属性
+  Anchor: 锚点（连接点的位置），可以设置在任何没有锚点的目标上(endpoint)
+
+  Anchors: 设置在connect的源和目标点的连接点位置，默认是BottomCenter(Bottom)
+
+  Connector: 连接线（比如： ["Bezier", {curviness: 60}]）为贝塞尔曲线
+
+  ConnectionsDetachable: 是否在连接点可以用鼠标拖动[true/false]
+
+  Container: 容器
+
+  DoNotThrowErrors: 设置当锚点(Anchor)、端点(endpoint)和连接线(Connector)不存在的时候是否抛出异常
+
+  ConnectionOverlays: 连接线上的覆盖物
