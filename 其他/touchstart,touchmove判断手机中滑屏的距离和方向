@@ -1,0 +1,38 @@
+滑动屏幕，touchstart接触屏幕时触发，touchmove活动过程触发，touchend离开屏幕时触发，
+
+
+let startX, startY, endX, endY, distanceX, distanceY
+
+// 获取屏幕接触时的x和y
+document.body.addEventListener('touchstart', function(e) {
+  startX = e.changedTouches[0].pageX
+  startY = e.changedTouches[0].pageY
+}, false)
+
+然后获取滑动的坐标，并使用后面的坐标减去前面的坐标，通过获取的值判断其滑动方向。因为手滑动方向一般不是水平或者垂直的，所以可使用Math.abs()进行获取，比如，像右上角滑动，并往上滑动的距离大于往右的距离时，取其往上滑动的距离，即往上滑动。
+
+// 获取滑动屏幕时的x和y
+document.body.addEventListener('touchstart', function(e) {
+  endX = e.changedTouches[0].pageX
+  endY = e.changedTouches[0].pageY
+
+  // 获取滑动的距离
+  distanceX = endX - startX
+  distanceY = endY - startY
+
+  // 判断滑动方向
+  if (Math.abs(distanceX) > Math.abs(distanceY) && distanceX > 0) {
+    console.log('往右滑动')
+  } else 
+  if (Math.abs(distanceY) > Math.abs(distanceX) && distanceY > 0) {
+    console.log('往下滑动')
+  } else
+  if (Math.abs(distanceX) > Math.abs(distanceY) && distanceX < 0) {
+    console.log('往左滑动')
+  } else
+  if (Math.abs(distanceY) > Math.abs(distanceX) && distanceY < 0) {
+    console.log('往上滑动')
+  } else {
+    console.log('点击未滑动')
+  }
+}, false)

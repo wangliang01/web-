@@ -67,3 +67,11 @@ function throttle(fn, delay) {
     }
   };
 }
+
+
+1.通过监听 scroll 事件，检测滚动位置，根据滚动位置显示返回顶部按钮
+  throttle（节流），
+2.通过监听 resize 事件，对某些自适应页面调整DOM的渲染（通过CSS实现的自适应不再此范围内）
+  throttle（节流），
+3.通过监听 keyup 事件，监听文字输入并调用接口进行模糊匹配
+  debounce防抖
