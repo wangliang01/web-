@@ -37,6 +37,14 @@ JsBridge库集成
       }
   })
 
+  /**
+  * 函数描述：js调用webview事件
+  *
+  * WebViewJavascriptBridge.callHandler(method, data, callBack(response));
+  * @param method {string} 方法名
+  * @param data {Object} 参数
+  * @return {Object} 回调
+  */
   Js如果需要调用Java提供的方法时候，则需要调用这个Handler，而在注册时参数submitFromWeb将作为Js调用时使用的Key值。调用方式如下：
 
   WebViewJavaScriptBridge.callHandler(

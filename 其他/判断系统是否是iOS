@@ -1,0 +1,1 @@
+var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(navigator.userAgent);
