@@ -1,0 +1,22 @@
+组件com.wpy
+<template lang="wxml">
+    <view>  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class Com extends wepy.component {
+    components = {};
+
+    data = {};
+    methods = {};
+
+    events = {};
+    // Other properties
+}
+</script>
+
+<style lang="less">
+/** less **/
+</style>
+组件文件com.wpy中所声明的组件实例继承自wepy.component类，除了不需要config配置以及页面特有的一些生命周期函数之外，其属性与页面属性大致相同。

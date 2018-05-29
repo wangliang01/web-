@@ -1,0 +1,35 @@
+4. 组件代替模板和模块
+点这里查看官方文档
+
+// 原生代码:
+
+<!-- item.wxml -->
+<template name="item">
+  <text>{{text}}</text>
+</template>
+
+<!-- index.wxml -->
+<import src="item.wxml"/>
+<template is="item" data="{{text: 'forbar'}}"/>
+
+<!-- index.js -->
+var item = require('item.js')
+
+
+
+
+// WePY
+<!-- /components/item.wpy -->
+ <text>{{text}}</text>
+
+<!-- index.wpy -->
+<template>
+    <com></com>
+</template>
+<script>
+    import wepy from 'wepy';
+    import Item from '../components/item';
+    export default class Index extends wepy.page {
+        components = { com: Item }
+    }
+</script>

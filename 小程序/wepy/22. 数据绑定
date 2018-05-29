@@ -1,0 +1,18 @@
+数据绑定
+原生小程序的数据绑定方式
+原生小程序通过Page提供的setData方法来绑定数据，如：
+
+this.setData({title: 'this is title'});
+因为小程序架构本身原因，页面渲染层和JS逻辑层分开的，setData操作实际就是JS逻辑层与页面渲染层之间的通信，那么如果在同一次运行周期内多次执行setData操作时，那么通信的次数是一次还是多次呢？这个取决于API本身的设计。
+
+WePY数据绑定方式
+WePY使用脏数据检查对setData进行封装，在函数运行周期结束时执行脏数据检查，一来可以不用关心页面多次setData是否会有性能上的问题，二来可以更加简洁去修改数据实现绑定，不用重复去写setData方法。代码如下：
+
+this.title = 'this is title';
+
+需注意的是，在异步函数中更新数据的时候，必须手动调用$apply方法，才会触发脏数据检查流程的运行。如：
+
+setTimeout(() => {
+    this.title = 'this is title';
+    this.$apply();
+}, 3000);

@@ -1,0 +1,25 @@
+小程序入口app.wpy
+<script>
+import wepy from 'wepy';
+export default class extends wepy.app {
+    config = {
+        "pages":[
+            "pages/index/index"
+        ],
+        "window":{
+            "backgroundTextStyle": "light",
+            "navigationBarBackgroundColor": "#fff",
+            "navigationBarTitleText": "WeChat",
+            "navigationBarTextStyle": "black"
+        }
+    };
+    onLaunch() {
+        console.log(this);
+    }
+}
+</script>
+
+<style lang="less">
+/** less **/
+</style>
+入口文件app.wpy中所声明的小程序实例继承自wepy.app类，包含一个config属性和其它全局属性、方法、事件。其中config属性对应原生的app.json文件，build编译时会根据config属性自动生成app.json文件，如果需要修改config中的内容，请使用微信提供的相关API。

@@ -1,0 +1,47 @@
+组件通信与交互
+wepy.component基类提供$broadcast、$emit、$invoke三个方法用于组件之间的通信和交互，如：
+
+this.$emit('some-event', 1, 2, 3, 4);
+用于监听组件之间的通信与交互事件的事件处理函数需要写在组件和页面的events对象中，如：
+
+import wepy from 'wepy'
+
+export default class Com extends wepy.component {
+    components = {};
+
+    data = {};
+
+    methods = {};
+
+    // events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
+    events = {
+        'some-event': (p1, p2, p3, $event) => {
+               console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`);
+        }
+    };
+    // Other properties
+}
+
+
+$broadcast
+
+$broadcast事件是由父组件发起，所有子组件都会收到此广播事件，除非事件被手动取消。事件广播的顺序为广度优先搜索顺序，如上图，如果页面Page_Index发起一个$broadcast事件，那么按先后顺序依次接收到该事件的组件为：ComA、ComB、ComC、ComD、ComE、ComF、ComG、ComH。如下图：
+
+
+
+$emit
+
+$emit与$broadcast正好相反，事件发起组件的所有祖先组件会依次接收到$emit事件。如果组件ComE发起一个$emit事件，那么接收到事件的先后顺序为：组件ComA、页面Page_Index。如下图：
+
+
+
+$invoke
+
+$invoke是一个页面或组件对另一个组件中的方法的直接调用，通过传入组件路径找到相应的组件，然后再调用其方法。
+
+比如，想在页面Page_Index中调用组件ComA的某个方法：
+
+this.$invoke('ComA', 'someMethod', 'someArgs');
+如果想在组件ComA中调用组件ComG的某个方法：
+
+this.$invoke('./../ComB/ComG', 'someMethod', 'someArgs');

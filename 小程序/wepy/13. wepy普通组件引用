@@ -1,0 +1,34 @@
+普通组件引用
+当页面需要引入组件或组件需要引入子组件时，必须在.wpy文件的<script>脚本部分先import组件文件，然后在components对象中给组件声明唯一的组件ID，接着在<template>模板部分中添加以components对象中所声明的组件ID进行命名的自定义标签以插入组件。如：
+
+/**
+project
+└── src
+    ├── components
+    |   └── child.wpy
+    ├── pages
+    |   ├── index.wpy    index 页面配置、结构、样式、逻辑
+    |   └── log.wpy      log 页面配置、结构、样式、逻辑
+    └──app.wpy           小程序配置项（全局公共配置、公共样式、声明钩子等）
+**/
+
+// index.wpy
+
+<template>
+    <!-- 以`<script>`脚本部分中所声明的组件ID为名命名自定义标签，从而在`<template>`模板部分中插入组件 -->
+    <child></child>
+</template>
+
+<script>
+    import wepy from 'wepy';
+    //引入组件文件
+    import Child from '../components/child';
+
+    export default class Index extends wepy.component {
+        //声明组件，分配组件id为child
+        components = {
+            child: Child
+        };
+    }
+</script>
+需要注意的是，WePY中的组件都是静态组件，是以组件ID作为唯一标识的，每一个ID都对应一个组件实例，当页面引入两个相同ID的组件时，这两个组件共用同一个实例与数据，当其中一个组件数据变化时，另外一个也会一起变化。

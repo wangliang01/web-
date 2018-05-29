@@ -1,0 +1,31 @@
+原生小程序的目录结构：
+
+project
+├── pages
+|   ├── index
+|   |   ├── index.js    index 页面逻辑
+|   |   ├── index.json  index 页面配置
+|   |   ├── index.wxml  index 页面结构
+|   |   └── index.wxss  index 页面样式
+|   └── log
+|       ├── log.js      log 页面逻辑
+|       ├── log.json    log 页面配置
+|       ├── log.wxml    log 页面结构
+|       └── log.wxss    log 页面样式
+├── app.js              小程序逻辑
+├── app.json            小程序公共配置
+└── app.wxss            小程序公共样式
+
+
+
+使用WePY框架后的开发目录结构(主要为src目录的结构，dist目录除外)：
+
+    注：dist目录为WePY通过build指令生成的目录，除额外增加的npm目录外，其目录结构与原生小程序的目录结构类似。
+
+    
+project
+└── src
+    ├── pages
+    |   ├── index.wpy    index 页面逻辑、配置、结构、样式
+    |   └── log.wpy      log 页面逻辑、配置、结构、样式
+    └──app.wpy           小程序逻辑、公共配置、公共样式

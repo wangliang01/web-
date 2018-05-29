@@ -1,0 +1,24 @@
+如果存在，使用微信开发者工具-->添加项目，项目目录请选择项目根目录即可根据配置完成项目信息自动配置。
+
+如果不存在，建议手动创建该文件后再添加项目。project.config.json文件内容如下：
+
+{
+  "description": "project description",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "Project name",
+  "miniprogramRoot": "./dist"
+}
+es6: 对应关闭ES6转ES5选项，关闭。 重要：未关闭会运行报错。
+
+postcss: 对应关闭上传代码时样式自动补全选项，关闭。 重要：某些情况下漏掉此项也会运行报错。
+
+minified: 对应关闭代码压缩上传选项，关闭。重要：开启后，会导致真机computed, props.sync 等等属性失效。（注：压缩功能可使用WePY提供的build指令代替，详见后文相关介绍以及Demo项目根目录中的wepy.config.js和package.json文件。）
+
+urlCheck: 对应不检查安全域名选项，开启。 如果已配置好安全域名则建议关闭。

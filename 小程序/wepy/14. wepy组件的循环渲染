@@ -1,0 +1,42 @@
+组件的循环渲染
+1.4.6新增
+
+当需要循环渲染WePY组件时(类似于通过wx:for循环渲染原生的wxml标签)，必须使用WePY定义的辅助标签<repeat>，代码如下：
+
+/**
+project
+└── src
+    ├── components
+    |   └── child.wpy
+    ├── pages
+    |   ├── index.wpy    index 页面配置、结构、样式、逻辑
+    |   └── log.wpy      log 页面配置、结构、样式、逻辑
+    └──app.wpy           小程序配置项（全局样式配置、声明钩子等）
+**/
+
+// index.wpy
+
+<template>
+    <!-- 注意，使用for属性，而不是使用wx:for属性 -->
+    <repeat for="{{list}}" key="index" index="index" item="item">
+        <!-- 插入<script>脚本部分所声明的child组件，同时传入item -->
+        <child :item="item"></child>
+    </repeat>
+</template>
+
+<script>
+    import wepy from 'wepy';
+    // 引入child组件文件
+    import Child from '../components/child';
+
+    export default class Index extends wepy.component {
+        components = {
+            // 声明页面中要使用到的Child组件的ID为child
+            child: Child
+        }
+
+        data = {
+            list: [{id: 1, title: 'title1'}, {id: 2, title: 'title2'}]
+        }
+    }
+</script>

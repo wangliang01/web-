@@ -1,0 +1,27 @@
+针对原生API进行优化
+对小程序原生API进行promise处理，同时修复了一些原生API的缺陷，比如：wx.request的并发问题等。
+
+原生代码：
+
+onLoad = function () {
+    var self = this;
+    wx.login({
+        success: function (data) {
+            wx.getUserInfo({
+                success: function (userinfo) {
+                    self.setData({userInfo: userinfo});
+                }
+            });
+        }
+    });
+}
+
+
+基于WePY的代码：
+
+import wepy from 'wepy';
+
+async onLoad() {
+    await wepy.login();
+    this.userInfo = await wepy.getUserInfo();
+}

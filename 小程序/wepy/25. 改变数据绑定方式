@@ -1,0 +1,20 @@
+3. 改变数据绑定方式
+保留setData方法，但不建议使用setData执行绑定，修复传入undefined的bug，并且修改入参支持： this.setData(target, value) this.setData(object)
+
+点这里查看官方文档
+
+// 原生代码:
+
+<view> {{ message }} </view>
+
+onLoad: function () {
+    this.setData({message: 'hello world'});
+}
+
+
+// WePY
+<view> {{ message }} </view>
+
+onLoad () {
+    this.message = 'hello world';
+}
