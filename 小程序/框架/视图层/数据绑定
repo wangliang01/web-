@@ -1,0 +1,69 @@
+<view> {{ message }} </view>
+Page({
+  data: {
+    message: 'Hello MINA!'
+  }
+})
+
+控制属性(需要在双引号之内)
+<view wx:if="{{condition}}"> </view>
+Page({
+  data: {
+    condition: true
+  }
+})
+
+关键字(需要在双引号之内)
+true：boolean 类型的 true，代表真值。
+
+false： boolean 类型的 false，代表假值。
+
+<checkbox checked="{{false}}"> </checkbox>
+
+特别注意：不要直接写 checked="false"，其计算结果是一个字符串，转成 boolean 类型后代表真值。
+
+运算
+可以在 {{}} 内进行简单的运算，支持的有如下几种方式：
+
+三元运算
+<view hidden="{{flag ? true : false}}"> Hidden </view>
+算数运算
+<view> {{a + b}} + {{c}} + d </view>
+Page({
+  data: {
+    a: 1,
+    b: 2,
+    c: 3
+  }
+})
+
+
+
+逻辑判断
+<view wx:if="{{length > 5}}"> </view>
+字符串运算
+<view>{{"hello" + name}}</view>
+Page({
+  data:{
+    name: 'MINA'
+  }
+})
+数据路径运算
+<view>{{object.key}} {{array[0]}}</view>
+Page({
+  data: {
+    object: {
+      key: 'Hello '
+    },
+    array: ['MINA']
+  }
+})
+
+
+数组
+<view wx:for="{{[zero, 1, 2, 3, 4]}}"> {{item}} </view>
+Page({
+  data: {
+    zero: 0
+  }
+})
