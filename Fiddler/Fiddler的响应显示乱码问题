@@ -1,0 +1,7 @@
+fiddler中Response出现乱码， 这是因为HTML被压缩了， 我们可以通过两种方法去解压。
+
+
+方法1：点击Response Raw上方的"Response is encoded any may need to be decoded before inspection. click here to transform"按钮，该响应的乱码文字立刻正常显示中文。
+
+
+方法2：选中工具栏中的"Decode"。 这样会自动解压缩。Decode按钮为选中状态后，再次发送请求，响应都自动解压，显示中文，若不想自动解压，可取消选中Decode按钮；

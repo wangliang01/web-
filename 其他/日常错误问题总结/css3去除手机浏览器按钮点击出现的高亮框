@@ -1,0 +1,8 @@
+在工作中经常遇到在手机浏览器中浏览网页时，点击页面中的按钮或者是具备点击事件的元素，就会出现一个默认的高亮框，影响整体的感官体验。
+可以用一个简单的css3属性来解决：tap-highlight-color，最好加上webkit浏览器前缀。
+
+
+-webkit-tap-highlight-color: rgba(0,0,0,0);  
+-webkit-tap-highlight-color: transparent; /* For some Androids,个人感觉是低版本的安卓，4.0以下 */    
+
+如果你的一大div中包含了很多小的同类的小div，点击这些小的div要触发事件，你利用事件委托只给外层大的div绑定了点击事件（这样就只要绑定一次就够啦），那这个属性就会用上，当你点击某个小div时就不会出现整个大div被选中的感觉。

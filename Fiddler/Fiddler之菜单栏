@@ -1,0 +1,54 @@
+Fiddler菜单栏有8大项：
+File Edit Rules Tools View Help 注册Fiddler GeoEdge
+
+|--File
+    |--Capture Traffic  捕获流量
+    |--New Viewer  新建视图
+    |--Load Archive 加载存档
+    |--Recent Archive 近期档案
+    |--Save 保存
+    |--import sessions 导入会话
+    |--Export sessions 导出会话
+    |--Exit 退出
+
+
+
+
+|--Edit
+    |--Copy
+    |--Remove
+    |--Select All
+    |--Undelete 取消删除
+    |--pasted as sessions
+    |--Mark
+    |--Unlock for Editing 编辑解锁
+    |--Find sessions
+
+
+|--Rules
+    |--Hide Image Requests
+    |--Hide Connects
+    |--Automatic Breakpoints
+    |--Customize Rules
+    |--Require Proxy Authentication
+    |--Apply Gzip Encoding
+    |--Remove All Encoding
+    |--Hide 304s
+    |--Request Japanese Content
+    |--Automatically Authenticate
+    |--User-Agents
+    |--Performance
+
+
+
+
+|--Tools
+    |--Options
+    |--WinINET Options
+    |--Clear WinINET Cache
+    |--Clear WinINET Cookies
+    |--textWizard
+    |--Compare sessions
+    |--Reset Script
+    |--Sandbox
+    |--View IE Cache

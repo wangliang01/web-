@@ -1,0 +1,9 @@
+Vue页面跳外链，回退回来，在iOS页面不重新加载，安卓页面会重新加载
+
+如何处理？
+
+在跳外链的方法里监听popstate事件，重新加载页面
+
+window.addEventListener('popstate', () => {
+  self.location.reload()
+}, false)

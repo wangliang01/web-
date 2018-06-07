@@ -1,0 +1,6 @@
+<view>组件
+如果想要在view组件中动态地修改属性需要这样使用：
+ <view hover-class="{{hoverClass}}" hover-stop-propagation="{{hoverStopProgation}}" hover-start-time="{{hoverStartTime}}" hover-stay-time="300">你好</view>
+
+ 错误的写法：(不同于vue)
+  <view :hover-class="{{hoverClass}}" :hover-stop-propagation="{{hoverStopProgation}}" :hover-start-time="{{hoverStartTime}}" hover-stay-time="300">你好</view>
