@@ -1,0 +1,57 @@
+开发插件
+
+Vuejs插件范围没有限制，一般有以下几种：
+
+1.添加全局方法或者属性，如: vue-custom-element
+
+2. 添加全局资源：指令、过滤器、过渡等，如vue-touch
+
+3. 通过全局mixin方法添加一些组件选项，如： vue-router
+
+4. 添加Vue实例方法，通过把它们添加到Vue.prototype上实现 
+
+5. 一个库，提供自己的API，同时提供上面提到一个或多个功能， 如： vue-router
+
+Vuejs插件应当有一个公开的方法install, 这个方法和第一个参数是Vue构造器， 第二个参数是一个可选的配置对象，书写方式如下：
+
+const myPlugin = {}
+
+myPlugin.install = function(Vue, options) {
+   // 1. 添加全局方法或属性
+  Vue.myGlobalProp = 'yugasun';
+  Vue.myGlobalMethod = function() {
+    // 逻辑
+  }
+
+   // 2. 添加全局资源：
+  Vue.directive('my-directive', {
+    bind(el, binding, vnode, oldVnode) {
+      // 逻辑
+    }
+  });
+
+   // 3. 注入通用方法或属性给组件
+  Vue.mixin({
+    data(){
+      return {
+        // 通用数据,
+      };
+    },
+    created() {
+      // 逻辑
+    },
+  });
+
+  // 4. 添加实例方法
+  Vue.prototype.$myMethod = function(methodOptions) {
+    // 逻辑
+  };
+
+}
+
+
+使用插件
+插件使用起来很简单，只需要引入，然后通过调用 Vue.use() 方法就行了：
+import Vue from 'vue';
+import MyPlugin from './MyPlugin';
+Vue.use(MyPlugin, {someOption: true});

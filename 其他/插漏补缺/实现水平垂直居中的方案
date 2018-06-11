@@ -1,0 +1,41 @@
+1. absolute + translate
+
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%);
+}
+
+2.absolute + margin
+
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+3. flex
+父元素
+{
+  display: flex;
+  justity-content: center;
+  align-items: center;
+}
+
+子元素
+{
+  flex: 1;
+}
+
+4 hack
+  // 父元素
+  position:absolute;
+  // 子元素
+  li{
+      display: table-cell;/*盒模型变成表格的元素*/
+      vertical-align: middle;
+  }

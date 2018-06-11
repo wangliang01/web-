@@ -1,0 +1,9 @@
+var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(navigator.userAgent);
+if(isIOS){
+  //禁止web应用全屏显示时页面可以滚动
+  document.ontouchmove = function(e){
+      if (document.body.scrollHeight == document.body.clientHeight){
+          event.preventDefault();
+      } 
+  } 
+}  
