@@ -1,0 +1,261 @@
+1. -webkit-tap-highlight-color:rgba(255,255,255,0)可以同时屏蔽ios和android下点击元素时出现的阴影。
+备注：transparent的属性值在android下无效。
+
+2. -webkit-appearance:none可以同时屏蔽输入框怪异的内阴影。
+
+3. <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimun-scale=1, user-scalable=1"/>
+
+但是为了针对移动端进行开发，我们需要通过viewport来设置视口的宽度及其他属性。
+
+  width=device-width将视口宽度设置为设备宽度，而不是那个虚拟的宽度。
+  user-scalable为yes/no，或者1/0表示是否允许用户缩放。
+  initial-scale用于设置Web页面的初始缩放比例，设为1.0则将显示未经缩放的Web文档。>1将放大，<1将缩小
+  maximum-scale和minimum-scale用于设置用户对Web页面缩放比例的限制。值的范围为0.25至10.0之间。
+
+  <meta content="telephone=no" name="format-detection" />
+
+  meta标签表示：告诉设备忽略将页面中的数字识别为电话号
+
+4. 在项目开发过程中可以会遇到内容排列排列显示的布局，建议你放弃float，可以直接使用display:block; float会触发页面的重排
+
+5. 在触控手机上，为提升用户体验，尽可能的保证用户的可点击区域较大。
+
+6. 如何关闭iOS中键盘自动大写
+我们知道在iOS中，当虚拟键盘弹出时，默认情况下键盘是开启首字母大写的功能的，根据某些业务场景，可能我们需要关闭这个功能，移动版本webkit为input元素提供了autocapitalize属性，通过指定autocapitalize="off"来关闭键盘默认首字母大写。
+
+7. 打电话发短信
+<a href="tel:020-11811922">打电话给:0755-10086</a>
+<a href="sms:10086">发短信给: 10086</a>
+
+8. 移动端click屏幕产生200-300 ms的延迟响应
+click事件因为要等待确认是否是双击事件，会有300ms的延迟（两次点击事件间隔小于300ms就认为是双击），体验并不好。现在的解决方案，第一个就是采用touchstart或者touchend代替click。或者封装tap事件来代替click 事件，所谓的tap事件由touchstart事件+ touchmove（判断是否是滑动事件）+touchend事件封装组成。
+
+9. 图片优化
+9-1.base64编码图片替换url图片
+这个应该没什么好解释的，就是能不发请求的就不要发，对于一些小图标（我这做法是把8K以下的图标都转换成base64）之类的，可以将图片用base64，来减少请求的发送。尤其是在移动端，请求显得特别珍贵，在网速的不好的情况下，请求就是珍贵中的珍贵。
+
+9-2.图片压缩
+对于整个网站来说，图片是最占流量的资源之一，能不使用就不适用，图标可是使用base64编码，字体图标代替，SVG等来代替，使用就要选择最合适的格式，合适的尺寸，然后压缩--这里推荐腾讯推出的智图。
+PS：过度压缩图片大小影响图片显示效果，可能会使得图片变得模糊，一般来说，品质在60左右就差不多了！
+
+9-3.图片懒加载
+首屏加载的快慢，直接影响用户的体验，建议将非首屏的图片资源放到用户需要时才加载。这样可以大大优化首屏加载，减少首屏加载所需要的时间！
+ps：懒加载要使用js频繁操作dom，期间会导致大量重绘渲染，影响性能。
+
+9-4.img还是background
+图片的展示方式有两种，一种是以图片标签显示，一种是以背景图片显示！下面写了这两者的区别。
+img:html中的标签img是网页结构的一部分会在加载结构的过程中和其他标签一起加载。
+background：以css背景图存在的图片background会等到结构加载完成（网页的内容全部显示以后）才开始加载
+也就是说，网页会先加载标签img的内容，再加载背景图片background引用的图片。引入一张图片，那么在这个图片加载完成之前，img后的内容不会显示。而用background来引入同样的图片，网页结构和内容加载完成之后，才开始加载背景图片，网页内容能正常浏览，但是看不到背景图片。至于这两种，大家按照习惯，需求等权重因素选择！
+
+10. 快速回弹滚动
+在ios上，如果存在局部滚动，就要加这个属性了！如果不加，滚动会很慢，看起来也会有一卡一卡的感觉。
+
+-webkit-overflow-scrolling: touch;
+
+11. 谨慎使用fixed
+ios下fixed元素容易定位出错，软键盘弹出时，影响fixed元素定位，会发生元素错位（滚动一下又恢复），有时候会出现闪屏的效果。我也搜过一下这个问题，发现别人还遇到了我没遇到过的问题！真是，哎~。所以在手机上，不建议用fixed定位，使用absolute代替！如果一定要用，写好了之后，一定要多测试几次！
+
+12. 消除transition闪屏
+PS：这个问题，我近段时间开发，貌似不加上这个代码也没什么影响，但是以前就是要求加，就加上了，现在没加上，也没反馈有什么问题！
+
+.no-flash { 
+    -webkit-transform-style: preserve-3d; 
+    -webkit-backface-visibility: hidden; 
+    -webkit-perspective: 1000; 
+} 
+
+
+13. ios系统中去掉元素被触摸时产生的半透明灰色遮罩
+a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0;)}
+
+14. ios中去掉默认input默认样式
+input,button,textarea{-webkit-appearance: none;}
+
+15. 左右滑动，避免页面跟着滑动
+这个细节是我在基于vue开发焦点图的时候遇到的，后来自己找不到方法，直接在sf上提问了，大家可以去参考下：移动端轮播图，上下滑动的时候不触发页面的滚动
+ps：滑动我没有使用什么库，是我根据touchstart和touchend的移动距离来判断是左右滑动或者上下滑动！
+
+16. vue-router与微信分享的问题
+分享发送的连接是下面这样
+
+http://www.example.com/dist/html#/index?utm_source=share
+http://www.example.com/dist/html#/index.html/index?utm_source=share
+但是分享之后的实际连接是下面这样的，别人点击的分享出去的链接，就会打不开网页
+
+http://www.example.com/dist/html?from=xxxx#/index&utm_source=share
+http://www.example.com/dist/html#/index.html?from=xxxx/index&utm_source=share  
+
+解决方案
+1.自定义分享URL地址
+2.避免使用单文件应用
+
+17. ios Vue 跳外链，再返回，页面不重新渲染
+解决方案：
+  window.addEventListener('popstate', () => {
+    self.location.reload()
+  }, false)
+
+
+
+18. 终端交互优化
+
+对click事件say no
+弹性滚动
+上拉刷新
+tap事件基础
+touch触摸事件
+下拉加载
+
+300ms:
+移动web页面上的click事件响应都要慢上300ms
+用300ms判断是单击还是双击
+
+1）tap基础事件
+300ms延迟怎么破？tap事件代替click事件。自定义tap事件原理：
+在touchstart, touchmove的记录时间，手指位置，在touchend时进行比较，如果手指的位置为同一位置（或允许移动一个非常小的位移值）且时间间隔较短(一般认为是200ms), 且过程中未曾触发过touchmove，即可认为触发了手持设备上的"click", 一般称它为"tap"。所以在手机上，不建议用fixed定位，使用absolute代替！如果一定要用，写好了之后，一定要多测试几次！
+
+tap"点透"的bug：有两层，点击第一层的时候，如果点击的区域在第二层的范围内，那么第二层也会被触发。（原因与300ms有关）
+
+tap透传的解决方案：
+1）使用缓存动画，过渡300ms的延迟
+2）中间层dom元素的加入，让中间层接收这个穿透事件，稍后隐藏
+3）上下都使用tap事件，原理上解决tap穿透事件（但是不可避免原生标签的click事件，如a, input）
+4)改用FastClick的库
+
+
+(2) Touch基础事件
+触摸才是移动设备的交互的核心事件，支持多点触摸。
+touchstart：手指触摸屏幕触发（已经有手指放屏幕上不会出发）
+touchmove：手指在屏幕上滑动，连续触发
+touchend：手指离开屏幕时触发
+touchcancel：系统取消touch时候触发（不常用）eg：滑动页面时来了一个电话或者其他系统事件
+
+除常见的事件属性外，触摸事件包含专有的触摸属性：
+touches：跟踪触摸操作的touch对象数组
+targetTouches：特定事件目标的touch对象数组
+changeTouches：上次触摸改变的touch对象数组
+
+一个小BUG： android只会触发一次touchstart，一次touchmove，touchend不触发。（4.0，4.1有，4.2修复没有了，4.4开始又出现了）
+
+解决方案： 在touchmove中加入：event.preventDefault（），可fixedBug。
+
+但注意：event.preventDefault（）会导致默认行为不发生，如scroll，导致页面不滚动！如果页面带有滚动条，就需要考虑更换解决方案
+
+
+(3) 弹性滚动，下拉刷新
+①弹性滚动：当客户端的页面滚动到顶部或底部的时候，滚动条会收缩并让我们多滑动一定距离。通过缓冲反弹的效果，带给用户良好的体验。
+移动web页面也是拥有这样的能力的，但滚动有几种情况需要考虑：
+body层滚动：（系统特殊化处理）
+自带弹性滚动，overflow：hidden失效，GIF和定时器暂停。
+局部滚动：没有弹性滚动，没有滚动惯性，不流畅。
+局部滚动开启弹性滚动：
+
+body {
+    overflow:scroll;
+    -webkit-overflow-scrolling:touch;
+}
+但注意：android不支持原生的弹性滚动！但可以借助三方库iScroll来实现
+②下拉刷新：顶端下拉一小点距离，页面弹性滚动向下。
+④ 上拉加载：使用scroll事件，而不是touch事件（android有bug）
+
+
+
+19. 禁止长按 a，img 标签长按出现菜单栏
+使用 a标签的时候，移动端长按会出现一个 菜单栏，这个时候禁止呼出菜单栏的方法如下：
+
+CSS
+
+a, img {
+    -webkit-touch-callout: none; /*禁止长按链接与图片弹出菜单*/
+}
+
+a, img {
+    -webkit-touch-callout: none; /*禁止长按链接与图片弹出菜单*/
+}
+
+3.流畅滚动
+CSS
+
+body{
+    -webkit-overflow-scrolling:touch;
+}
+
+body{
+    -webkit-overflow-scrolling:touch;
+}
+
+20. ios系统中元素被触摸时产生的半透明灰色遮罩怎么去掉
+ios用户点击一个链接，会出现一个半透明灰色遮罩, 如果想要禁用，可设置-webkit-tap-highlight-color的alpha值为0，也就是属性值的最后一位设置为0就可以去除半透明灰色遮罩
+a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0)}
+
+
+21. 部分android系统中元素被点击时产生的边框怎么去掉
+android用户点击一个链接，会出现一个边框或者半透明灰色遮罩, 不同生产商定义出来额效果不一样，可设置-webkit-tap-highlight-color的alpha值为0去除部分机器自带的效果
+a,button,input,textarea{
+-webkit-tap-highlight-color: rgba(0,0,0,0)
+-webkit-user-modify:read-write-plaintext-only;
+}
+
+22. webkit表单输入框placeholder的颜色值能改变么
+input::-webkit-input-placeholder{color:#AAAAAA;}
+input:focus::-webkit-input-placeholder{color:#EEEEEE;}
+
+23. 禁止文本缩放
+当移动设备横竖屏切换时，文本的大小会重新计算，进行相应的缩放，当我们不需要这种情况时，可以选择禁止：
+html {
+-webkit-text-size-adjust: 100%;
+}
+
+24. 移动端如何清除输入框内阴影
+在iOS上，输入框默认有内部阴影，但无法使用 box-shadow 来清除，如果不需要阴影，可以这样关闭：
+input,
+textarea {
+border: 0; /* 方法1 */
+-webkit-appearance: none; /* 方法2 */
+}
+
+移动端禁止选中内容
+如果你不想用户可以选中页面中的内容，那么你可以在css中禁掉：
+.user-select-none {
+-webkit-user-select: none;  /* Chrome all / Safari all */
+-moz-user-select: none;     /* Firefox all （移动端不需要） */
+-ms-user-select: none;      /* IE 10+ */
+}
+
+25. 手机拍照和上传图片
+<input type=”file”>的accept 属性
+<!– 选择照片 –>
+<input type=file accept=”image/*”>
+<!– 选择视频 –>
+<input type=file accept=”video/*”>
+ios 有拍照、录像、选取本地图片功能
+部分android只有选取本地图片功能
+winphone不支持
+input控件默认外观丑陋
+
+26. 消除transition闪屏
+.css{
+/*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/
+-webkit-transform-style: preserve-3d;
+/*（设置进行转换的元素的背面在面对用户时是否可见：隐藏）*/
+-webkit-backface-visibility: hidden;
+}
+
+27. 开启硬件加速
+解决页面闪白
+保证动画流畅
+.css {
+-webkit-transform: translate3d(0, 0, 0);
+-moz-transform: translate3d(0, 0, 0);
+-ms-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+}
+设计高性能CSS3动画的几个要素
+尽可能地使用合成属性transform和opacity来设计CSS3动画，
+不使用position的left和top来定位
+利用translate3D开启GPU加速
+
+28. ios5+可以通过scrollTo(0,0)来自动隐藏浏览器地址栏。
+
+
