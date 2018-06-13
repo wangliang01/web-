@@ -1,0 +1,17 @@
+const app = new Vue({
+  el: '#app', 
+  template: '<div>{{text}}</div>',
+  data: {
+    text: 1
+  },
+  beforeCreate() {
+
+  },
+  created() {},
+  beforeMount() {},
+  mounted() {},
+  beforeUpdate() {},
+  updated() {},
+  beforeDestory() {},
+  destoryed() {}
+})

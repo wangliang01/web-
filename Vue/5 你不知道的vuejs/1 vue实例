@@ -1,0 +1,12 @@
+import Vue from 'vue'
+
+const app = new Vue({
+  el: '#app',
+  components: {App},
+  template: '<App/>'
+})
+
+
+这里面的el， 作为挂载点元素，也可以用另外的方式来实现 
+
+app.$mount('#app')

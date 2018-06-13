@@ -1,0 +1,50 @@
+import Vue from 'vue'
+
+const app = new Vue({
+  el: '#app',
+  components: {App},
+  template: '<App/>'
+})
+
+
+这里面的el， 作为挂载点元素，也可以用另外的方式来实现 
+
+app.$mount('#app')
+
+vue实例上的属性
+
+1)$data
+
+console.log(app.$data)
+
+
+// $props属性
+console.log('props:', app.$props)
+
+// $el
+console.log('el:', app.$el)
+
+// $options
+console.log('options:', app.$options)
+
+
+app.$options.render = (h) => {
+  return h('div', [], 'new render function')
+}
+
+// $root
+console.log('root:', app.$root)
+app.$root === app
+
+// $children
+console.log('children:', app.$children)
+
+// $slots, $scopedSlots
+console.log('slots, scopedSlots', app.$slots, app.$scopedSlots)
+
+
+// $ref
+console.log('ref:', app.$ref)
+
+// $isServer
+console.log('isServer:', app.$isServer)

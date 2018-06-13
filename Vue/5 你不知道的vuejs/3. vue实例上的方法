@@ -1,0 +1,36 @@
+// $watch()
+
+let unWatch = app.$watch('text', (newVal, val) => {
+   
+})
+
+// 通过$watch监听的属性，只能手动移除
+
+
+// 2秒后移除text属性的监听
+setIimeout(() => {
+  unWatch()
+}, 2000)
+
+// 如果写在组件内的监听属性，就不必使用移除监听的方法
+
+// 自定义事件 $on
+app.$on('test', (a, b) => {
+  console.log('自定义事件test')
+}) 
+
+// 触发自定义事件
+app.$emit('test', 1, 2)
+
+// $on, $emit 只有同时监听一个vue对象才能生效
+
+// $once  只监听一次
+
+// $forceUpdate() 强制更新
+
+// $set() 添加响应式的属性
+
+// $delete() 删除响应式的属性
+
+// $nextTick() 在dom更新时，将数据
+

@@ -1,0 +1,16 @@
+watch: {
+  firstName: {
+    handler(newName, oldName) {
+      this.fullName = newName + ' ' + this.lastName
+    },
+    immediate: true, // 立即执行一遍
+    deep: true //深检测
+  },
+  'obj.a': { // 可以直接监听对象上的某一个属性
+    handler(newName, oldName) {
+      console.log('ch ')
+    },
+    immediate: true, // 立即执行一遍
+    // deep: true //不必深检测，提高性能
+  }
+}
