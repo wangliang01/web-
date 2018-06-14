@@ -1,0 +1,24 @@
+v-text
+
+v-html
+
+v-show
+
+v-if
+
+v-else-if
+
+v-else
+
+v-bind
+
+v-on
+
+v-for
+
+v-model
+
+v-clack  : 在html还不能识别vue代码时，不显示
+
+v-once
+
