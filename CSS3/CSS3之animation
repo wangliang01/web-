@@ -1,0 +1,31 @@
+语法：
+
+animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+
+name: 指定要绑定到选择器上的关键帧的名称
+
+duration: 动画指定需要多少秒或毫秒完成
+
+timing-function: 设置动画将如何完成一个周期
+
+delay: 设置动画在启动前的延迟间隔
+
+iteration-count: 定义动画播放的次数
+
+direction: 指定是否应该轮流反向播放动画
+
+fill-mode: 规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式
+
+play-state: 指定动画是否正在运行或者已经暂停
+
+
+指定animation属性到一个选择器至少要给定两个属性：
+name: 规定动画的名称
+
+duation: 规定动画的时长
+
+
+CSS3 @keyframes规则
+
+@keyframes规则是创建动画。 @keyframes规则内指定一个css样式和动画将逐步从目前的样式更改为新的样式。
+

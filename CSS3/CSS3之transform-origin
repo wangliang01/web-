@@ -1,0 +1,10 @@
+语法
+transform-origin: x-axis y-axis z-axis;
+
+x-axis: left center right length %(5种取值)
+
+y-axis: top center bottom length %(5种取值)
+
+z-axis: length(1种取值)
+
+默认值： transform-origin: center center;

@@ -1,0 +1,50 @@
+rotate()
+
+正数：表示顺时针旋转多少度
+负数：表示逆时针旋转多少度
+
+
+认识的突破口： rotateX, rotateY, rotateZ
+
+rotateY(angle)
+angle为正数： 表示逆时针旋转多少度
+angle为负数： 表示顺时针旋转多少度
+
+3D transform中有下面这三个方法：
+rotateX(angle)
+rotateY(angle)
+rotateZ(angle)
+
+理解了这三个方法，后面更难懂的perspective就好下手了，可以说是突破口
+
+rotate旋转的意思， rotateX旋转X轴， rotateY旋转Y轴， rotateZ旋转Z轴
+
+必不可少的perspective属性
+
+perspective的中文意思是：透视，视角！
+
+perspective属性的存在与否决定了你所看到的是2次元还是3次元的，也就是2D transform还是 3D transform 这不难理解，没有透视，不成3D
+
+CSS3 3D transform中的透视点是在浏览器的前方
+
+
+translateZ帮你寻找透视位置
+如果说rotateX/rotateY/rotateZ可以帮助理解三维坐标，则translateZ则可以帮你理解透视位置。
+
+我们都知道近大远小的道理，对于没有rotateX以及rotateY的元素，translateZ的功能就是让元素在自己的眼前或近或远。比方说，我们设置元素perspective为201像素，如下：
+
+perspective: 201px;
+则其子元素，设置的translateZ值越小，则子元素大小越小（因为元素远去，我们眼睛看到的就会变小）；translateZ值越大，该元素也会越来越大，当translateZ值非常接近201像素，但是不超过201像素的时候（如200像素），该元素的大小就会撑满整个屏幕（如果父辈元素没有类似overflow:hidden的限制的话）。因为这个时候，子元素正好移到了你的眼睛前面，所谓“一叶蔽目，不见泰山”，就是这么回事。当translateZ值再变大，超过201像素的时候，该元素看不见了——这很好理解：我们是看不见眼睛后面的东西的！
+
+
+perspective属性的两种书写
+perspective属性有两种书写形式，一种用在舞台元素上（动画元素们的共同父辈元素）；第二种就是用在当前动画元素上，与transform的其他属性写在一起。如下代码示例：
+
+.stage {
+    perspective: 600px;
+}
+以及：
+
+#stage .box {
+    transform: perspective(600px) rotateY(45deg);
+}

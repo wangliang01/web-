@@ -1,0 +1,44 @@
+布局
+
+Nuxt.js允许你扩展默认的布局，或在layout目录下创建自定义的布局。
+
+默认布局
+
+可通过添加 layouts/default.vue文件来扩展应用的默认布局。
+
+默认布局如下：
+
+<template>
+
+  <nuxt/>
+
+</template>
+
+错误页面
+
+你可以通过编辑layouts/error.vue文件来定制化错误页面
+
+这个布局文件不需要包含<nuxt/>标签。你可以把这个布局文件当成是显示应用错误（404， 500等）的组件。
+
+举一个个性化错误页面的例子  layouts/error.vue
+
+<template>
+
+<template>
+  <div class="container">
+    <h1 v-if="error.statusCode === 404">页面不存在</h1>
+    <h1 v-else>应用发生错误异常</h1>
+    <nuxt-link to="/">首 页</nuxt-link>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['error'],
+  layout: 'blog' // 你可以为错误页面指定自定义的布局
+}
+</script>
+
+个性化布局
+
+layouts 根目录下的所有文件都属于

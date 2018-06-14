@@ -1,0 +1,9 @@
+前端架构技术方案目前来说有以下四种：
+
+1. 前端模板(Ajax + 字符串模板)
+
+2. MVVM(Vue React)
+
+3. Node模板（Express + ejs）
+
+4. SSR（Node + Vue SSR）Nuxt
