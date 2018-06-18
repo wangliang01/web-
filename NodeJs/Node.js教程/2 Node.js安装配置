@@ -1,0 +1,11 @@
+Node.js安装配置
+
+本章节我们将向大家介绍在window和Linux上安装Node.js的方法。
+
+Window 上安装Node.js
+你可以采用以下两种方式来安装。
+
+1、Windows 安装包(.msi)
+32 位安装包下载地址 : https://nodejs.org/dist/v4.4.3/node-v4.4.3-x86.msi
+
+64 位安装包下载地址 : https://nodejs.org/dist/v4.4.3/node-v4.4.3-x64.msi

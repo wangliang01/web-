@@ -1,0 +1,65 @@
+Node.js创建第一个应用
+如果我们使用PHP来编写后端的代码时，需要Apache或者Nginx的HTTP服务器，并配上mod_php5模块和php_cgi.
+
+从这个角度看，整个接收HTTP请求并提供Web页面的需求根本不需要PHP来处理。
+
+不过对Node.js来说，概念完全不一样了。使用Node.js时，我们不仅仅在实现一个应用，同时还实现了整个HTTP服务器。
+
+事实上，我们的Web应用以及对应的Web服务器基本上是一样的。
+
+在我们创建Node.js第一个"Hello World!"应用前，让我们先了解下Node.js应用是由哪几部分组成的：
+
+1、引入required模块：我们可以使用require指令来载入Node.js模块。
+
+2、创建服务器：服务器可以监听客户端的请求，类似于Apache, Nginx等Http服务器。
+
+3、接收请求与响应请求 服务器很容易创建，客户端可以使用浏览器或终端发送HTTP请求，服务器接收请求后响应数据。
+
+创建Node.js应用
+
+步骤一、 引入require模块
+
+我们使用require指令来载入http模块，并将实例化的HTTP赋值变量http,实例如下：
+
+var http = require('http')
+
+步骤二、创建服务器
+
+接下来我们使用http.createServer()方法创建服务器，并使用listen方法绑定8888端口。函数通过request,response参数来接收和响应数据。
+
+实例如下，在你的项目的根目录下创建一个叫server.js,并写入以下文件。
+
+var http = require('http')
+
+const server = http.createServer(function(request, response) {
+  // 发过http头部
+  // HTTP状态值
+  // 内容类型: text/plain
+  response.writeHead(200, {
+    'Content-Type': 'text/plain'
+  })
+
+  response.end('Hello World!\n')
+})
+
+server.listen(8888)
+
+// 终端打印如下信息
+
+console.log('Server running at http://127.0.0.1:8888/')
+
+以上代码我们完成了一个可以工作的HTTP服务器
+
+使用node命令执行以上的代码：
+
+node server.js  
+
+// Server running at http://127.0.0.1:8888/
+
+接下来，打开浏览器访问http://127.0.0.1:8888/,你会看到一个写着"Hello World"的网页。
+
+分析Node.js的HTTP服务器：
+
+  第一行请求(require)Node.js自带的http模块，并且把它赋值给http变量。
+
+  接下来我们调用http模块提供的函数：createServer.这个函数会返回一个对象，这个对象有一个叫做listen的方法，这个方法有一个数值参数，指定这个HTTP服务器监听的端口号。

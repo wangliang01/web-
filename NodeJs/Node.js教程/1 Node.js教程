@@ -1,0 +1,27 @@
+Node.js教程
+简单来说，Node.js就是运行在服务端的JavaScript。
+
+Node.js是一个基于Chrome JavaScript运行时建立的一个平台。
+
+Node.js是一个事件驱动I/O服务湍JavaScript环境，基于Google的V8引擎，V8引擎执行JavaScript的速度非常快，性能非常好。
+
+谁适合阅读本教程？
+
+如果你是一个前端程序员，你不懂得像PHP,Python或Ruby等动态编程语言，然后你想创建自己的服务，那么Node.js是一个非常好的选择。
+
+Node.js是运行在服务端的JavaScript，如果你熟悉JavaScript，那么你将会很容易的学会Node.js。
+
+当然，如果你是后端程序员，想部署一些高性能的服务，那么学习Node.js也是一个非常好的选择。
+
+学习本教程前你需要了解
+
+在继续本教程之前，你应该了解一些基本的计算机编程术语。如果你学习过JavaScript, PHP, Java等编程语言，将有助于你更快的了解Node.js教程。
+
+使用的版本
+
+我们可以使用以下命令查看当前的Node版本：
+
+node -v
+
+第一个node.js程序： Hello World!
+

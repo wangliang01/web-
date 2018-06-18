@@ -1,301 +1,568 @@
-一、不要小瞧HTML5
-  Audio和Video
-  Web storage
-  离线存储
-  WebSocket
-  地理定位
-  Communication
-  Web Worker
-  requestAnimationFrame
-  摄像头
-  全屏
-  HTML5拖放实现
-
-二、CSS3
-  CSS实用概要
-  CSS实用Tips
-  CSS三大特性
-  盒模型（box-sizing）
-  BFC
-  Flex
-  探究CSS解析原理
-  详谈层合成
-  CSS Modules使用详解
-
-三、你真的懂移动端吗
-  Native App
-    React Native
-
-  Hybird App 
-    Ionic
-    Cordova
-    Phonegap
-
-  Web App 
-  Weex
-  小程序
-  关于Hbuilder
-  移动端Touchend事件不触发解决方案
-
-四、PWA（渐进式WEB增强）
-
-  官网
-  第一本 PWA 中文书
-  PWA（Progressive Web App）初探总结
-  讲讲 PWA
-
-五、WebAssembly
-  WebAssembly，Web的新时代
-  来谈谈WebAssembly是个啥？为何说它会影响每一个Web开发者？
-  WebAssembly 系列（四）WebAssembly 工作原理
-  如何评论浏览器最新的 WebAssembly 字节码技术？
+HTML5
+  初级 ☆
+    语义化
+    Audio 和 Video
+    Web Storage
+  中级 ☆☆
+    离线存储
+    地理定位
+    WebSocket
+    HTML5 摄像头
+    HTML5 全屏
+    HTML5 拖放实现
+    HTML5 全屏滑动组件
+  高级 ☆☆☆
+    Communication
+    Web Worker
+    requestAnimationFrame
+    requestIdleCallback
+  扩展
+    HTML5 API 大盘点 ☆☆
 
 
-六、小程序
-  快速上手小程序
-  细数小程序的坑
-  小程序开发 Tips
-
-七、Canvas、SVG、WebGL
-  Canvas
-  WebGl
-  走进 SVG
-  SVG 类库 snap.svg.js，像操作 DOM 一样操作 SVG 资源
-
-
-八、动画
-  CSS3 动画
-  CSS3 动画原理
-  JS 动画
-  如何检测页面滚动并执行动画
-
-九、JS 从哪里下手
-  原型与原型链
-  作用域与作用域链
-  Event Loop
-  反思闭包
-  垃圾回收
-  堆和栈
-  继承
-  我所理解的 call 和 apply
-  掌握 JS 模板引擎
-  js之强大的正则表达式
-  掌握 JS Stack Trace
-  ES6
-  Promise
-  XHR or Fetch API ?
-  TypeScript
-  何谓 JS 挖矿
-  JS 之强大的正则表达式
-  30S JS
-
-十、模块化编程
-  CMD
-  SeaJS
-  AMD
-  Requirejs
-  JS 模块化编程之彻底弄懂 CommonJS 和 AMD/CMD！
-  AMD 和 CMD 的区别有哪些？
+CSS
+  初级 ☆
+    CSS 实用概要
+    CSS 实用 Tips
+    CSS 三大特性
+    盒模型
+    box-sizing
+    IconFont
+  中级 ☆☆
+    BFC
+    Flex
+    Grid layout
+    PostCSS
+    预编译
+    SASS
+    LESS
+    Stylus
+    CSS3 动画
+    Animate CSS
+    All Animation CSS3
+    Transform
+    Translate
+    如何检测页面滚动并执行动画
+  高级 ☆☆☆
+    CSS4
+    CSS3 动画原理
+    探究 CSS 解析原理
+    详谈层合成（composite）
+    CSS Modules 使用详解
+  扩展
+    30s CSS ☆
 
 
-十一、强迫自己学习源码
-  Lodash 源码分析（一）“Function” Methods
-  Webpack 源码
-  React 源码剖析系列 － 不可思议的 react diff
-  React 源码解析
-  解密 JQuery
-  Promise 的实现及解析
-  浅析 Redux-Saga 实现原理
-  Antd 源码解读
-  自己动手做一个 Vue
-  vue-come-true
-  Vue.js 源码学习笔记
+JS
+  初级 ☆
+    原型与原型链
+    作用域与作用域链
+    Event Loop
+    反思闭包
+    call 和 apply
+    正则表达式
+    XHR or Fetch API ?
+    为什么要有 ES6
+    introduction to ES6 by example
+    ES6 标准入门
+    ECMAScript 6 - 阮一峰
+  中级 ☆☆
+    JS 模板引擎
+    垃圾回收
+    堆和栈
+    继承
+    掌握 JS Stack Trace
+    ES6
+    Generator
+    Promise
+    Module
+    Class
+  高级 ☆☆☆
+    TypeScript
+    You-Dont-Know-JS
+    Up & Going
+    Scope & Closures
+    this & Object Prototypes
+    Types & Grammar
+    Async & Performance
+    ES6 & Beyond
+    exploring ES6
+    JavaScript 如何工作
+    对引擎、运行时、调用堆栈的概述
+    在 V8 引擎里 5 个优化代码的技巧
+    内存管理 + 处理常见的4种内存泄漏
+    事件循环和异步编程的崛起 + 5个如何更好的使用 async/await 编码的技巧
+    深入剖析 WebSockets 和拥有 SSE 技术 的 HTTP/2，以及如何在二者中做出正确的选择
+    对比 WebAssembly + 为什么在某些场景下它比 JavaScript 更合适
+    Web Worker 的内部构造以及 5 种你应当使用它的场景
+  扩展
+    何谓 JS 挖矿 ☆
+    30S JS ☆☆
 
-十二、算法和数据结构对前端同等重要
-  掌握排序算法
-  初探加密算法
 
-
-十三、框架学习必不可少
+主流框架
   Angular
-    依赖注入
-    指令 Directive
-    剖析 Angularjs 语法
+    依赖注入 ☆
+    指令 Directive ☆☆
+    剖析 Angularjs 语法 ☆☆
   Vue
-    Mint-UI
-    Element.UI
-    VUE2
-    VUEX
-    Axios
+    Mint-UI ☆
+    Element.UI ☆
+    VUE2 ☆☆
+    VUEX ☆☆
+    Axios ☆
     Vue-Router
-    Vue-Loader
+    Vue-Router 实现原理 ☆☆☆
+    Vue-Loader ☆☆
+    Vue.js 技术揭秘 ☆☆☆
   React
-    create-react-app
-    探路 Roadhog
-    Redux
-    Diff 算法
-    虚拟 Dom
-    Redux-Saga
-    TakeLatest
-    Dva
-    React 16 新特性
-    React-Router@4
-    React 性能优化
-    Ant Design
-  从头实现一个 koa 框架
-  Express
+    Ant Design ☆☆
+    虚拟 Dom ☆☆
+    Diff 算法 ☆☆☆
+    create-react-app ☆☆
+    Dva ☆☆
+    探路 Roadhog ☆☆
+    Redux ☆☆
+    Redux-Saga ☆☆☆
+    TakeLatest ☆☆☆
+    React 16 新特性 ☆☆
+    React-Router@4 ☆☆
+    React 性能优化 ☆☆☆
+    UmiJS ☆☆
+    Next.js ☆☆
+    Next.js 使用指南1－基本规则
+    Next.js 使用指南2－路由与加载
+    Next.js 使用指南3－高级配置
 
 
-十四、努力向全栈奋斗
-  Nodejs，Express，Koa，Mongo，Redis
-  Nginx
-  PM2 初体验
-  Nodejs 事件循环机制
-  Stream
-  Buffer
-  多进程
-  内存相关
-  消息队列
-  数据库
-
-
-十五、Python
-  Python 入门指南
-  Python 官方文档
-  Cook Book
-  Tornado
-  Jinja2
-  …
-
-
-十六、设计模式
-  单例模式
-  简单工厂模式
-  观察者模式
-  适配器模式
-  代理模式
-  桥接模式
-  外观模式
-  访问者模式
-  策略模式
-  模版方法模式
-  中介者模式
-  迭代器模式
-  备忘录模式
-  职责链模式
-  享元模式
-  状态模式
-
-十七、关于 HTTP
-  TCP
-  UDP
-  HTTP 协议入门
-  HTTP2
-  HTTPS
-
-
-十八、函数式编程
-  什么是函数式编程思维？
-  我眼中的 JavaScript 函数式编程
-  参数个数 Arity
-  高阶组件 Higher-Order Functions (HOF)
-  偏应用函数 Partial Application
-  柯里化 Currying
-  闭包 Closure
-  自动柯里化 Auto Currying
-  函数合成 Function Composition
-  Continuation
-  纯函数 Purity
-  副作用 Side effects
-  幂等 Idempotent
-  Point-Free Style
-  断言 Predicate
-  约定 Contracts
-  范畴 Category
-  …
-
-
-十九、优化
-  方式
-    精简、打包、优化
-    减少 HTTP 请求
-    缓存
-    如何优化高德地图（AMap）Marker 动画
-    Web 优化之 Request
-    高性能网站建设的14个原则
-  工具
-    YSlow
-    Performance
-
-二十、DOM
-  JavaScript HTML DOM
-二十一、兼容
-  再谈 IE 浏览器兼容问题
-二十二、缓存
-  HTML5 离线存储
-  HTML 和 HTTP 头文件 设置
-  Meta
-  Expires
-  Last-Modified / If-Modified-Since
-  Etag / If-None-Match
-  Nginx 缓存
-  当然，缓存的方式还有很多，上面主要列出一些常用的，推荐阅读：彻底弄懂 HTTP 缓存机制及原理。
-
-二十三、跨域
-  JSONP
-  CORS
-  Nginx
-二十四、事件模型
-  观察者模式
-  DOM0 级模型
-  IE 事件模型
-  DOM2 级模型
-  JQuery Event 模型
-  JS事件模型
-二十五、Web 安全
-  Web 安全之 XSS 和 CSRF
-  Web 安全的三个攻防姿势
-  XSS 的原理分析与解剖
-  对于 XSS 和 CSRF 你究竟了解多少
-  CSRF 攻击的应对之道
-二十六、项目构建
-  Grunt
-  Gulp
-  Webpack
-  Webpack 4
-  Parcel
-二十七、版本管理 Git
-  Git 学习资源汇总
-  Git 常规操作
-  如何配置 Git 对应多个 Repository
-  Git 实践系列一：初探
-二十八、代码规范
-  ESLint
-  JSHint
-二十九、应该知道 Nginx
-  Nginx
-三十、DNS
-  例解 DNS 递归/迭代名称解析原理
-  浏览器输入网址后台是如何运作的
-三十一、CDN
-  什么是CDN？
-三十二、V8 引擎
-  Google V8 引擎运用了哪些优秀的算法？
-  V8 引擎详解
-  Google V8
-三十三、Linux
+    
+优化
+初级 ☆
+合并
+压缩
+混淆
+Css sprits
+减少 HTTP 请求
+Gzip
+Keep-Alive
+DNS
+中级 ☆☆
+高性能网站建设的 14 个原则
+Web 优化之 Request
+如何优化高德地图（AMap）Marker 动画
+网站性能优化实战——从 12.67s 到 1.06s 的故事
+Web前端优化及工具集锦
+搜索引擎优化 SEO
+高级 ☆☆☆
+彻底弄懂 HTTP 缓存机制及原理
+缓存
+HTML5 离线存储
+HTML 和 HTTP 头文件设置
+Meta
+Expires
+Last-Modified / If-Modified-Since
+Etag / If-None-Match
+Nginx 缓存
+关键路径渲染优化
+工具
+YSlow
+Performance
+Google PageSpeed
+Web服务器端
+Nodejs
+基础 web 框架
+Express ☆☆
+Koa ☆☆
+hapijs ☆☆
+restify
+fastify
+thinkjs
+nextjs ☆☆
+高度集成 web 框架
+egg ☆☆☆
+nest
+thinkjs
+loopback
+sails ☆☆
+PM2 初体验 ☆
+Forever ☆☆
+nohup ☆☆
+Nodejs 事件循环机制: 结合libuv和 nodejs 官网的blog
+Stream ☆☆
+Buffer ☆☆
+多进程 ☆☆
+eleme node-interview ☆☆☆
+node debug ☆☆
+内存相关 ☆☆☆
+js snapshot 相关 ☆☆☆
+deno ☆☆
+nexus 搭建 npm 私服 ☆☆☆
+Nginx ☆☆☆
+消息队列 ☆☆☆
+nodejs 结合 dubbo 服务 node-zookeeper-dubbo ☆☆☆
+thrifty -> nodejs实例 ☆☆
+nodejs-learning-guide ☆☆☆
+源码学习
+Lodash 源码分析（一）“Function” Methods ☆☆☆
+Webpack 源码 ☆☆☆
+React 源码剖析系列 － 不可思议的 react diff ☆☆☆
+React 源码解析 ☆☆☆
+解密 JQuery ☆☆☆
+Promise 的实现及解析 ☆☆☆
+浅析 Redux-Saga 实现原理 ☆☆☆
+Antd 源码解读 ☆☆☆
+自己动手做一个 Vue ☆☆☆
+vue-come-true ☆☆☆
+Vue.js 源码学习笔记 ☆☆☆
+高效阅读 Github 源代码 ☆
+从头实现一个 koa 框架 ☆☆☆
+产品设计
+软件
+PS ☆
+AI ☆
+精品 MAC 应用分享 ☆
+视觉网站
+Behance ☆☆
+Dribbble ☆☆
+原型工具
+Axure ☆
+Sketch ☆
+前端类库
+JS 类库
+jQuery ☆
+zepto ☆
+underscore ☆☆
+lodash ☆☆
+UI 库
+Bulma
+EasyUI ☆
+Bootstrap ☆
+Meterial Design ☆☆
+Wired Elements(手绘风格 UI 库)
+移动端
+Native App
+React Native ☆☆
+Weex ☆☆
+NativeScript
+Hybird App
+Ionic ☆☆
+Cordova ☆☆
+Phonegap ☆☆
+Web App ☆
+响应式布局
+rem ☆
+webview
+页面通信 ☆
+原理 ☆☆
+关于 Hbuilder ☆
+移动端 Touchend 事件不触发解决方案 ☆
+PWA
+官网 ☆☆
+第一本 PWA 中文书 ☆☆
+PWA（Progressive Web App）初探总结 ☆
+讲讲 PWA
+React 同构应用 PWA 升级指南 ☆
+WebAssembly
+WebAssembly，Web 的新时代 ☆☆
+来谈谈 WebAssembly 是个啥？为何说它会影响每一个 Web 开发者？ ☆
+WebAssembly 系列（四）WebAssembly 工作原理 ☆☆☆
+如何评论浏览器最新的 WebAssembly 字节码技术？ ☆☆
+小程序
+快速上手小程序 ☆☆
+细数小程序的坑 ☆☆
+小程序开发 Tips ☆☆
+Canvas
+Canvas 实现单机版贪吃蛇 ☆☆☆
+WebGL
+WebGL技术储备 ☆☆
+WebGL的实际使用 ☆☆
+WebGL 3D版俄罗斯方块 ☆☆☆
+SVG
+走进 SVG ☆☆
+SVG 类库 snap.svg.js ☆☆
+graphql
+graphql
+apollo
+apollo-blog 需要翻墙
+模块化编程
+CMD ☆
+SeaJS ☆
+AMD ☆
+Requirejs ☆
+JS 模块化编程之彻底弄懂 CommonJS 和 AMD/CMD！ ☆
+AMD 和 CMD 的区别有哪些？ ☆
+算法
+初探加密算法 ☆☆☆
+算法分析 密码: as75 ☆☆☆
+程序员实用算法 密码: mmap ☆☆☆
+对称加密
+DES ☆☆☆
+3DES ☆☆☆
+TDEA ☆☆☆
+Blowfish ☆☆☆
+RC2 ☆☆☆
+RC4 ☆☆☆
+RC5 ☆☆☆
+IDEA ☆☆☆
+SKIPJACK ☆☆☆
+AES ☆☆☆
+非对称加密
+RSA ☆☆☆
+ECC（移动设备用） ☆☆☆
+Diffie-Hellman ☆☆☆
+El Gamal ☆☆☆
+DSA（数字签名用） ☆☆☆
+Hash 加密
+MD2 ☆☆☆
+MD4 ☆☆☆
+MD5 ☆☆☆
+HAVAL ☆☆☆
+SHA ☆☆☆
+数据结构
+数组 ☆
+栈 ☆
+队列 ☆
+链表 ☆☆
+树
+二叉树 ☆☆☆
+图 ☆☆☆
+堆 ☆☆☆
+散列表 ☆☆☆
+链表
+单向链表 ☆☆☆
+双向链表 ☆☆☆
+环链表 ☆☆☆
+...
+数据库
+MySQL ☆☆☆
+Redis ☆☆☆
+Memcached ☆☆☆
+包管理
+npm ☆
+cnpm ☆
+yarn ☆
+homebrew ☆
+bower ☆
+Python
+初级 ☆
+Python 入门指南
+Python 官方文档
+中级 ☆☆
+30s Python
+爬虫
+Scrapy
+Web 框架
+Tornado
+Jinja2
+Flask
+Django
+高级 ☆☆☆
+Cook Book
+分布式
+Celery
+移动端
+Kivy
+数据分析
+Pandas
+可视化
+Matplotlib
+Seaborn
+Plotly
+Bokeh
+机器学习
+Tensorflow
+PyTorch
+MxNet
+设计模式
+单例模式 ☆
+简单工厂模式 ☆
+观察者模式 ☆
+适配器模式 ☆☆
+代理模式 ☆☆
+桥接模式
+外观模式
+访问者模式
+策略模式
+模版方法模式
+中介者模式
+迭代器模式
+备忘录模式
+职责链模式
+享元模式
+状态模式
+常用的 Javascript 设计模式
+网络协议
+TCP ☆☆☆
+UDP ☆☆☆
+HTTP 协议入门 ☆
+HTTP2 ☆☆☆
+HTTPS ☆☆☆
+计算机网络的 7 层协议 ☆☆☆
+函数式编程
+什么是函数式编程思维？ ☆☆☆
+我眼中的 JavaScript 函数式编程 ☆☆☆
+参数个数 Arity
+高阶组件 Higher-Order Functions (HOF)
+偏应用函数 Partial Application
+柯里化 Currying
+闭包 Closure
+自动柯里化 Auto Currying
+函数合成 Function Composition
+Continuation
+纯函数 Purity
+副作用 Side effects
+幂等 Idempotent
+Point-Free Style
+断言 Predicate
+约定 Contracts
+范畴 Category
+JavaScript 函数式编程术语大全
+...
+DOM
+JavaScript HTML DOM ☆☆
+跨域
+JSONP ☆☆
+CORS ☆☆
+Nginx ☆☆
+事件模型
+观察者模式 ☆☆
+DOM0 级模型 ☆☆
+IE 事件模型 ☆☆
+DOM2 级模型 ☆☆
+JQuery Event 模型 ☆☆
+JS 事件模型 ☆☆
+安全
+Web 安全之 XSS 和 CSRF ☆☆☆
+Web 安全的三个攻防姿势 ☆☆☆
+XSS 的原理分析与解剖 ☆☆☆
+对于 XSS 和 CSRF 你究竟了解多少 ☆☆☆
+CSRF 攻击的应对之道 ☆☆☆
+SQL 注入 ☆☆☆
+HTTPS ☆☆☆
+内网渗透 ☆☆☆
+DDos 攻击 ☆☆☆
+点击劫持 ☆☆
+Session 劫持 ☆☆
+短信接口攻击 ☆☆
+Git
+Git 学习资源汇总 ☆
+Git 常规操作 ☆
+如何配置 Git 对应多个 Repository ☆
+Git 实践系列一：初探 ☆
+代码规范
+ESLint ☆
+JSHint ☆
+styleLint ☆
+Nginx
+Nginx ☆☆☆
+DNS
+例解 DNS 递归/迭代名称解析原理 ☆☆☆
+浏览器输入网址后台是如何运作的 ☆☆
+CDN
+什么是 CDN？ ☆☆
+V8 引擎
+Google V8 引擎运用了哪些优秀的算法？ ☆☆☆
+V8 引擎详解 ☆☆☆
+Google V8 ☆☆☆
+V8 并发标记
 Linux
-  掌握 Linux 命令 Grep
-  Linux 实用命令
-  Mac 下查看端口占用情况
-三十四、跨平台桌面端 Electron
-  初探 Electron - 理论篇
-  初探 Electron - 升华篇
-  初探 Electron - 实践篇1
-  初探 Electron - 实践篇2
-三十五、测试
-  你了解软件测试吗？
-三十六、抓包工具
-  Fiddler
-  Charles
-  Postman
+ls/cd/rm/cat/chmod/chown/useradd/df/du/ps/top/head/tail ☆☆
+Linux ☆☆
+掌握 Linux 命令 Grep ☆☆
+Linux 实用命令 ☆☆
+Mac 下查看端口占用情况 ☆☆
+网络操作
+curl
+netstat
+lsof
+ifconfig
+ssh
+tcpdump
+iptables
+grep ☆☆
+sed ☆☆
+awk ☆☆☆
+Electron
+初探 Electron - 理论篇 ☆☆
+初探 Electron - 升华篇 ☆☆
+初探 Electron - 实践篇 1 ☆☆
+初探 Electron - 实践篇 2 ☆☆
+抓包工具
+Fiddler ☆☆
+Charles ☆☆
+Postman ☆☆
+HttpWatch ☆☆
+测试
+单元测试
+Jasmine ☆☆☆
+mocha ☆☆☆
+chai ☆☆☆
+Karma ☆☆☆
+软件测试
+你了解软件测试吗？ ☆☆
+部署
+Docker
+Docker 构建统一的前端开发环境 ☆☆
+私服推荐 Nexus ☆☆☆
+大型企业级推荐 harbor ☆☆☆
+Docker 底层技术 ☆☆☆
+Jenkins ☆☆☆
+浏览器
+浏览器工作原理 ☆☆☆
+what-happens-when(输入 URL 后浏览器发生了什么) ☆☆
+再谈 IE 浏览器兼容问题 ☆☆
+数据可视化
+图表 ☆☆
+echarts
+highcharts
+g2
+地图 ☆☆
+Google Map
+Mapbox
+高德
+百度
+腾讯
+蜂鸟室内地图
+前端工程化
+我们是如何做好前端工程化和静态资源管理 京东 ☆☆☆
+百度 fis ☆☆
+Scrat ☆☆
+Grunt ☆☆
+Gulp ☆☆
+Webpack
+Webpack 4 ☆☆☆
+如何十倍提高你的 webpack 构建效率 ☆☆☆
+Browserify ☆☆
+Parcel ☆☆
+Babel
+babel-runtime 使用与性能优化
+babel-polyfill 使用与性能优化
+物联网
+ruff ☆☆☆
+ruff入门应用开发 ☆☆☆
+要想成为一名物联网工程师，需要学习哪些知识？☆
+技术杂谈
+一个程序员的成长之路 - 剖析别人，总结自己 ☆☆☆
+张云龙，全民直播CTO，也是个前端工程师
+
+秒杀系统优化思路 ☆☆☆
+尽量将请求拦截在系统上游（越上游越好）, 读多写少的常用多使用缓存（缓存抗读压力）
+
+客户端高可用建设体系
+2000万日订单背后：美团外卖客户端高可用建设体系
+
+缓存架构设计 ☆☆☆
+微博应对日访问量百亿级的缓存架构设
+
+前端重构方案 ☆☆
+规范、技术选型、性能优化、构建工具、开发效率
+
+Taro - 多端开发框架 ☆☆
+京东多端统一开发框架 - Taro
+
+你可能不知道的前端知识点 ☆☆
+V8 并发标记 ☆☆☆
+引擎V8推出“并发标记”，可节省60%-70%的GC时间
+
+面试
+30s 面试
