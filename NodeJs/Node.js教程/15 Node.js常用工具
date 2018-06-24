@@ -1,0 +1,33 @@
+Node.js常用工具
+util是一个Node.js核心模块，提供常用函数的集合，用于弥补核心JavaScript的功能过于精简的不足。
+
+util.inherits
+util.inherits(constructor, superConstructor)是一个实现对象间原型继承的函数。
+
+JavaScript的面向对象特性是基于原型的，与常见的基于类的不同。JavaScript没有提供对象继承的语言级别特性，而是通过原型复制来实现的。
+
+在这里我们只介绍util.inherits的用法，示例如下：
+
+子类只继承父类原型上定义的函数，不会继承父类本身的属性与方法。
+
+util.inspect
+util.inspect(object, [showHidden], [depth], [colors])是一个将任意对象转换为字符串的方法，通常用于调试和错误输出。它至少接受一个参数object，即要转换的对象。
+
+showHidden是一个可选的参数，如果值为true,将会输出更多隐藏信息。
+
+depth表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多少。如果不指定depth,默认会递归2层，指定为null表示将不限递归层数完整遍历对象，如果color值为true，输出格式将以ANSI颜色编码，通常用于在终端显示更漂亮的效果。
+
+
+util.isArray(object)
+如果给定的参数'object'是一个数组返回true, 否则返回false
+
+
+util.isRegExp(object)
+如果给定参数'object'是一个正则表达式返回true,否则返回false
+
+
+util.isDate(object)
+如果给定的参数'object'是一个日期返回true,否则返回false
+
+util.isError(object)
+如果给定参数'object'是一个错误对象返回true,否则返回false
