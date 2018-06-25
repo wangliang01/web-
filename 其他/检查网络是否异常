@@ -1,0 +1,10 @@
+navigator.onLine  
+
+// true  表示网络正常
+
+// false 表示网络异常
+
+
+if (!navigator.onLine) {
+  alert('网络异常，请检查您的网络情况')
+}
