@@ -99,6 +99,18 @@ beforeRouteEnter (to, from, next) {
   })
 }
 
+beforeRouteEnter (to, from, next) {
+  console.log(this);  //undefined，不能用this来获取vue实例
+  console.log('组件路由钩子：beforeRouteEnter');
+  next(vm => {
+    console.log(vm);  //vm为vue的实例
+    console.log('组件路由钩子beforeRouteEnter的next');
+  });
+}
+
+next(vm=>{console.log(‘next’) }) 
+这个里面的代码很晚执行，执行时机在组件mounted周期之后
+
 注意 beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。
 
 beforeRouteUpdate (to, from, next) {
@@ -131,3 +143,13 @@ beforeRouteLeave (to, from , next) {
 10.调用全局的 afterEach 钩子。
 11.触发 DOM 更新。
 12.用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
+
+
+执行时机：
+由首页进入user页面
+global beforEach > router beforeEnter > component beforeRouteEnter > global beforeResolve > global afterEach > mounted
+
+由user回到首页
+component beforeRouteLeave => global beforeEach => global beforeResolve => global afterEach
+
+排除beforeRouteUpdate，其余六个导航钩子的执行时机其实很好理解。大体按照leave、before、enter、resolve、after的顺序并全局优先的思路执行。beforeRouteUpdate的触发是在动态路由情形下，比如 path: '/user/:userName' 这条路由，当页面不变更只动态的改变参数userName时，beforeRouteUpdate便会触发。

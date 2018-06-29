@@ -81,5 +81,32 @@ position - 文件读取的起始位置，如果position的值为null, 则会从�
 callback - 回调函数，有三个参数err, bytesRead, buffer, err为错误信息， bytesRead表示读取的字节数， buffer为缓冲区对象。
 
 
+关闭文件
 
+语法
+以下为异步模式下关闭文件的语法格式:
+fs.close(fd, callback)
+
+该方法使用了文件描述符来读取文件。
+
+参数
+参数使用说明如下：
+  fd - 通过fs.open()方法返回的文件描述符。
+  callback - 回调函数，没有参数。
+
+
+
+截取文件
+语法
+以下异步模式下截取文件的语法格式如下：
+fs.ftruncate(fd, len, callback)
+该方法使用了文件描述蔡来读取文件。
+
+参数
+参数使用说明如下：
+  fd - 通过fs.open()方法返回的文件描述符。
+  len - 文件内容截取的长度。
+  callback - 回调函数，没有参数。
+
+  
 
