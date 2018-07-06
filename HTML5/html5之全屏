@@ -1,0 +1,40 @@
+html5实现全屏
+现在主流的浏览器都支持全屏，但是各家实现不一。下面是主流浏览器实现方法：
+
+// W3C 提议
+element.requestFullscreen()
+element.exitFullscreen()
+
+// Webkit (works in Safari5.1 and Chrome 15)
+element.webkitRequestFullScreen();
+element.webkitCancelFullScreen();
+ 
+// Firefox 10+
+element.mozRequestFullScreen();
+element.mozCancelFullScreen();
+
+
+//进入全屏
+function requestFullScreen(element) {
+    var de = document.querySelector(element) || document.documentElement;
+    if (de.requestFullscreen) {
+        de.requestFullscreen();
+    } else if (de.mozRequestFullScreen) {
+        de.mozRequestFullScreen();
+    } else if (de.webkitRequestFullScreen) {
+        de.webkitRequestFullScreen();
+    }
+}
+//退出全屏
+function exitFullscreen(element) {
+    var de = document.querySelector(element) || document.documentElement;
+    if (de.exitFullscreen) {
+        de.exitFullscreen();
+    } else if (de.mozCancelFullScreen) {
+        de.mozCancelFullScreen();
+    } else if (de.webkitCancelFullScreen) {
+        de.webkitCancelFullScreen();
+    }
+}
+
+HTML5全屏API 相对比较简单，但是浏览器的差异性导致很丑的代码，并且不能保证它们不会再改变。如果你不想自己维护代码，你可以使用screenfull.js 这样的类库，它可以平滑过渡这些差异。
