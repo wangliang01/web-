@@ -1,0 +1,42 @@
+禁止用户屏幕旋转。
+
+这点可以肯定的说是做不到的，之前因为有项目需要禁止屏幕旋转，所以网上查阅了大量的资料，发现根本没有解决办法，在移动版webkit中根本做不到。苹果api也说明了，我们为了让用户在safari中正常的浏览网页，我们必须保证用户的设备处于任何一个方位时，safari都能够正常的显示网页内容（也就是自适应），所以我们禁止开发者阻止浏览器的orientationchange事件，所以ios是禁止阻止orientationchange事件的，而Android也一样，也是无法禁止屏幕旋转，所以在webapp里是做不到了。但是可以利用orientationchange事件判断方向，横屏时的显示方式与竖屏时的显示方式，写成两种样式。
+
+html部分:
+
+
+<div class="landscape-tips" style="display: none"> 为了更好的视觉体验，请在竖屏下进行操作。 </div>
+
+
+css部分：
+
+@media all and (orientation : landscape) {
+ 
+/*横屏时*/
+ 
+}
+ 
+@media all and (orientation : portrait){
+ 
+/*竖屏时*/
+ 
+}
+
+
+js部分：
+
+<script>
+    //横竖屏提示
+    window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+        if (window.orientation === 180 || window.orientation === 0) {
+            //竖屏时
+            
+        }
+        if (window.orientation === 90 || window.orientation === -90 ){
+            //横屏时
+            
+        }
+    }, false);
+</script>
+
+//移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。 

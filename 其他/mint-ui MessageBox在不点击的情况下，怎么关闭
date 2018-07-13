@@ -1,0 +1,3 @@
+MessageBox.close(false)
+
+当用户点击回退，弹框还存在，可以使用MessageBox.close()来处理

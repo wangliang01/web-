@@ -1,0 +1,46 @@
+链接： https://blog.csdn.net/gitchat/article/details/79324147
+
+1. 在src目录下建comps，放置组件库全部文件，在根目录main.js文件里加入：
+import wlui from './comps/index'
+
+Vue.use(wlui)
+
+2.接着需要对 webpack 配置文件稍作一下调整，在 build 目录新增三个文件：
+package.config.js
+package.dev.config.js 
+package.prod.config.js 
+
+在根目录 package.json 里添加三个 scripts：
+
+"scripts": {   
+   …    
+   "package:dev": "webpack —config build/package.dev.config.js",   
+   "package:prod": "webpack —config build/package.prod.config.js",
+   "package": "npm run package:prod && npm publish && npm run build" 
+}
+
+目录结构为：
+
+|
+|--assets
+|--comps
+|--router
+|--views
+|--App.vue
+|--main.js
+
+修改组件库的 index.js 为入口文件，这里的 package 不是组件目录，是 npm run package:prod 最终生成的压缩目录。
+
+（2）package.json 的 main 配置是
+
+当从 npm 安装包后，告诉 node_modules 查找引用的路径。
+
+（3）调整 dist 目录生成到 docs 文档内，这样的做法是放到 github pages 上可以同时查看文档和示例：
+
+总体分为 3 块，把各个组件都放在 components 目录内，公共样式放在 styles，index.js 作为入口文件。
+
+首先 components 是所有的组件集合，以 button 组件目录为例：
+
+一般就是 .vue、.scss、.js 三种类型文件组成，具体的实现在第 3 点开始写第一个组件详细介绍。
+
+再看 styles 目录，应该从名字童鞋们可以看懂都是表示什么意思，样式组织我用的是 BEM 规范，分为 normalize（reset 样式）、varibles（各种变量定义，例如字体、背景颜色、按钮颜色等）、icon（图标类），mixin（方法函数）、index 为入口文件，样式写法建议直接看线上 styles 库：https://goo.gl/Tss1Ry，最终会是这样：

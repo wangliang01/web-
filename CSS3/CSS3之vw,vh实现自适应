@@ -1,0 +1,105 @@
+1. 认识视口单位(Viewprt units)
+
+首先，我们要了解什么是视口。
+
+在业界，极为推崇的一种理论是Peter-Paul Koch（江湖人称"PPK大神"）提出的关于视口的解释——在桌面端，视口指的是在桌面端，指的是浏览器的可视区域；而在移动端较为复杂，它涉及到三个视口：分别是Layout Viewport(布局视口)、Visual Viewport(视觉视口)、Ideal Viewport。
+
+而视口单位中的“视口”，在桌面端，毫无疑问指的就是浏览器的可视区域；但是在移动端， 它指的则是三个Viewport中的Layout Viewport。
+
+视口单位中的"视口"
+
+根据CSS3规范，视口单位主要包括以下4个：
+
+vw: 1vw等于视口宽度的1%
+vh: 1vh等于视口高度的1%
+vmin: 选取vw和vh中最小的那个
+vmax: 选取vw和vh中最大的那个
+
+视口单位区别于%单位，视口单位是依赖于视口的尺寸，根据视口尺寸的百分比来定义的；而%单位则是依赖于元素的祖先元素。
+
+用视口单位度量，视口宽度为100vw, 高度为100vh（左侧为竖屏情况， 右侧为横屏情况）
+
+例如， 在桌面端浏览器视口尺寸为650px, 那么1vw = 650 * 1% = 6.5px（这是理论推算的出，如果浏览器不支持0.5px，那么实际渲染结果可能是7px）。
+
+
+
+著作权归作者所有。
+商业转载请联系作者获得授权,非商业转载请注明出处。
+链接:http://caibaojian.com/vw-vh.html
+来源:http://caibaojian.com
+
+做法一：仅使用vw作为CSS单位
+在仅使用 vw 单位作为唯一应用的一种 CSS 单位的这种做法下，我们遵守：
+
+1.对于设计稿的尺寸转换为vw单位，我们使用Sass函数编译
+
+//iPhone 6尺寸作为设计稿基准
+$vm_base: 375; 
+@function vw($px) {
+    @return ($px / 375) * 100vw;
+}
+2.无论是文本还是布局高宽、间距等都使用 vw 作为 CSS 单位
+
+.mod_nav {
+    background-color: #fff;
+    &_list {
+        display: flex;
+        padding: vm(15) vm(10) vm(10); // 内间距
+        &_item {
+            flex: 1;
+            text-align: center;
+            font-size: vm(10); // 字体大小
+            &_logo {
+                display: block;
+                margin: 0 auto;
+                width: vm(40); // 宽度
+                height: vm(40); // 高度
+                img {
+                    display: block;
+                    margin: 0 auto;
+                    max-width: 100%;
+                }
+            }
+            &_name {
+                margin-top: vm(2);
+            }
+        }
+    }
+}
+3.1物理像素线（也就是普通屏幕下 1px ，高清屏幕下 0.5px 的情况）采用 transform 属性 scale 实现。
+
+.mod_grid {
+    position: relative;
+    &::after {
+        // 实现1物理像素的下边框线
+        content: '';
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        background-color: #ddd;
+        height: 1px;
+        left: 0;
+        right: 0;
+        top: 0;
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            -webkit-transform: scaleY(0.5);
+            -webkit-transform-origin: 50% 0%;
+        }
+    }
+    ...
+}
+4.对于需要保持高宽比的图，应改用 padding-top 实现
+
+.mod_banner {
+    position: relative;
+    padding-top: percentage(100/700); // 使用padding-top
+    height: 0;
+    overflow: hidden;
+    img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        left: 0;
+        top: 0; 
+    }
+}

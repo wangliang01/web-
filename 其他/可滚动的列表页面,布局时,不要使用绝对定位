@@ -1,0 +1,9 @@
+可滚动的列表页面,布局时,不要使用绝对定位,会在部分手机发生抖动.
+
+可以使用flex进行布局替换
+
+
+防止抖动代码    已测360 GOOGLE 
+添加在CSS中（最底部即可）
+
+html, body {height:100%;overflow:auto;margin: 0;}

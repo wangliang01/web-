@@ -1,0 +1,43 @@
+通过window.orientation来判断设备横竖屏
+function checkOrient() {
+        
+    if (window.orientation == 0 || window.orientation == 180){
+        var screenOrientation = 'portrait';
+    }
+    else if (window.orientation == 90 || window.orientation == -90){
+        var screenOrientation = 'landscape';
+    }
+    return screenOrientation;
+}
+// 添加事件监听
+**现在大部分的手机是支持:orientationchange事件，如果不支持用：resize 
+window.addEventListener(“onorientationchange” in window ? “orientationchange”:”resize”, checkOrient, false)
+
+
+addEventListener('load', function(){
+    checkOrient();
+    window.onorientationchange = checkOrient;
+});
+
+注：landscape是横向，portrait是纵向
+
+
+
+function orient() {
+    if (window.orientation == 90 || window.orientation == -90) {
+        //ipad、iphone竖屏；Andriod横屏
+
+    } else if (window.orientation == 0 || window.orientation == 180) {
+        //ipad、iphone横屏；Andriod竖屏
+
+    }
+}
+
+**现在大部分的手机是支持:orientationchange事件，如果不支持用：resize 
+window.addEventListener(“onorientationchange” in window ? “orientationchange”:”resize”,orient,false)
+
+屏幕方向对应的window.orientation值： 
+ipad：90或 - 90横屏 
+ipad：0或180竖屏 
+Andriod：0或180横屏 
+Andriod：90或 - 90竖屏
