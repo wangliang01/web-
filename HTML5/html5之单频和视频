@@ -1,0 +1,192 @@
+使用HTML5音频和视频
+
+嵌入媒体
+在html中嵌入媒体：
+
+<video src="http://v2v.cc/~j/theora_testsuite/320x240.ogg" controls>
+  你的浏览器不支持 <code>video</code> 标签.
+</video>
+
+src属性可以设置为一个音频文件的URL或者本地文件的路径。
+
+
+<audio src="audio.ogg" controls autoplay loop>
+你的浏览器不支持audio标签
+</audio>
+
+controls : 为网页中的音频显示标准的HTML5控制器。
+autoplay : 使音频自动播放。
+loop : 使音频自动重复播放。
+
+<audio src="audio.mp3" preload="auto" controls></audio>
+
+preload属性用来缓冲audio元素的大文件，有三个属性值可供设置：
+
+"none" 不缓冲文件
+"auto" 缓冲音频文件
+"metadata" 仅仅缓冲文件的元数据
+
+
+可以用 <source> 标签来指定多个文件，以为不同浏览器提供可支持的编码格式。例如：
+
+<video controls>
+  <source src="foo.ogg" type="video/ogg">
+  <source src="foo.mp4" type="video/mp4">
+  Your browser does not support the <code>video</code> element.
+</video>
+
+当浏览器支持Ogg格式的时候， 该代码会播放Ogg文件。 如果浏览器不支持Ogg，浏览器会播放MPEG-4 file。参见列表 audio和video元素支持的媒体格式 来查看不同浏览器对视频音频编码格式的支持情况。
+
+你也可以指定视频文件需要的视频编解码器的值；这样允许浏览器做出更加正确的决定：
+
+<video controls>
+  <source src="foo.ogg" type="video/ogg; codecs=dirac, speex">
+  Your browser does not support the <code>video</code> element.
+</video>
+
+在这里，我们指定video标签使用Dirac和Speex的视频编解码器。如果浏览器支持Ogg，但是不支持指定的编解码器，则视频不会被加载。
+
+如果类型属性没有被指定，媒体类型将返回至服务器然后检查浏览器是否可以解决；如果不能被执行，就检查下一个来源。如果没有任何一个指定的来源元素可以使用，则分派一个错误事件给video标签。如果指定了类型属性，那么将会与浏览器能够播放的类型做对比，如果其没有被识别，甚至不会被向服务器发出询问；相反，下一个来源会被同时检查。
+
+
+媒体回放控制
+当你已经用新的元素将媒体嵌入 HTML 文档以后，你就可以用 JavaScript 代码 采用编程的方式来控制它们。比如说，如果你想（重新）开始播放，可以写如下的代码：
+
+var v = document.getElementsByTagName("video")[0];
+v.play();
+头一行是取得当前文档中第一个视频元素，下一行调用了该元素的 play() 方法， 这一方法在实现媒体元素的接口中定义。
+
+控制一个 HTML5 音频播放器的播放、暂停、增减音量等则直接了当：
+
+<audio id="demo" src="audio.mp3"></audio>
+<div>
+  <button onclick="document.getElementById('demo').play()">播放声音</button>
+  <button onclick="document.getElementById('demo').pause()">暂停声音</button>
+  <button onclick="document.getElementById('demo').volume+=0.1">提高音量</button>
+  <button onclick="document.getElementById('demo').volume-=0.1">降低音量</button>
+</div>
+
+终止媒体下载
+停止媒体播放很简单，只要调用 pause() 方法即可，然而浏览器还会继续下载媒体直至媒体元素被垃圾回收机制回收。
+
+以下是即刻停止媒体下载的方法：
+
+var mediaElement = document.getElementById("myMediaElementID");
+mediaElement.pause();
+mediaElement.src='';
+//or
+mediaElement.removeAttribute("src"); 
+
+通过移除媒体元素的 src 属性（或者直接将其设为一个空字符串——这取决于具体浏览器）， 你可以摧毁该元素的内部解码，从而结束媒体下载。removeAttribute() 操作并不干净， 而将<video>元素的 'src' 属性设为空字符串可能会引起我们不想要的请求（Mozilla Firefox 22）。
+
+
+在媒体中查找
+媒体元素支持在媒体的内容中从当前播放位置移到某个特定点。 这是通过设置元素的属性currentTime的值来达成的；有关元素属性的详细信息请看HTMLMediaElement 。 简单的设置那个你希望继续播放的以秒为单位时间值。
+
+你可以使用元素的属性seekable来决定媒体目前能查找的范围。它返回一个你可以查找的TimeRanges 时间对象。
+
+var mediaElement = document.getElementById('mediaElementID');
+mediaElement.seekable.start();  // 返回开始时间 (in seconds)
+mediaElement.seekable.end();    // 返回结束时间 (in seconds)
+mediaElement.currentTime = 122; // 设定在 122 seconds
+mediaElement.played.end();      // 返回浏览器播放的秒数
+
+
+在给一个<audio>或者<video>元素标签指定媒体的URI的时候，你可以选择性地加入一些额外信息来指定媒体将要播放的部分。要这样做的话，需要附加一个哈希标志("#")，后面跟着媒体片段的描述。
+
+一条指定时间范围的语句：
+
+#t=[starttime][,endtime]
+时间值可以被指定为秒数（如浮点数）或者为以冒号分隔时/分/秒格式（像2小时5分钟1秒表示为2:05:01）。
+
+一些例子：
+
+http://foo.com/video.ogg#t=10,20
+指定视频播放范围为从第10秒到第20秒.
+http://foo.com/video.ogg#t=,10.5
+指定视频从开始播放到第10.5秒.
+http://foo.com/video.ogg#t=,02:00:00
+指定视频从开始播放到两小时.
+http://foo.com/video.ogg#t=60
+指定视频从第60秒播放到结束.
+
+
+
+备选项
+在HTML之间，例如，不支持HTML5媒体的浏览器可以处理媒体元素的开始和结束标记.你可以利用这一点给这些浏览器添加一些备项。
+
+此节给视频提供了两个可能的备选项，在各种情况下，如果浏览器支持HTML5视频，它就会被使用，否则，会使用备选项。
+
+使用Flash
+<video> 标签不被支持时可以使用Flash播放Flash格式的影像。
+
+<video src="video.ogv" controls>
+    <object data="flvplayer.swf" type="application/x-shockwave-flash">
+      <param value="flvplayer.swf" name="movie"/>
+    </object>
+</video>
+
+注意不要在object标签中加入class、id以兼容IE以外的浏览器。
+
+使用Java 小程序播放Ogg视频
+这里有一个名为Cortado的Java小程序，在不支持HTML5视频的浏览器你可以用它作为备选项来播放Ogg视频:
+
+<video src="my_ogg_video.ogg" controls width="320" height="240">
+  <object type="application/x-java-applet" width="320" height="240">
+     <param name="archive" value="cortado.jar">
+     <param name="code" value="com.fluendo.player.Cortado.class">
+     <param name="url" value="my_ogg_video.ogg">
+     <p>You need to install Java to play this file.</p>
+  </object>
+</video>
+如果你没有给cortado object元素创建一个备用的子元素，像上面的 <p> 元素，没有安装java的Firfox3.5设备就会错误的通知用户需要安装一个插件才能查看页面内容.
+
+
+
+错误处理
+Requires Gecko 2.0(Firefox 4 / Thunderbird 3.3 / SeaMonkey 2.1)
+Geocko2.0首发(Firefox 4 / Thunderbird 3.3 / SeaMonkey 2.1), 错误处理已经被修订符合HTML5的最新版规范。 取缔把错误事件发送给媒体元素自生的方式，现在把它交付给子代中的 <source>元素对应导致错误的来源。
+
+这使你可以查到是哪个资源加载失败，哪个是可用的。
+
+<video>
+<source id="mp4_src"
+  src="video.mp4"
+  type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+</source>
+<source id="3gp_src"
+  src="video.3gp"
+  type='video/3gpp; codecs="mp4v.20.8, samr"'>
+</source>
+<source id="ogg_src"
+  src="video.ogv"
+  type='video/ogg; codecs="theora, vorbis"'>
+</source>
+</video>
+由于专利限制，Firefox不支持MP4和3GP，ID为“mp4_src"和"3gp_src"的 <source> 元素在Ogg资源加载之前将会接收到错误事件。这些资源会根据出现的顺序尝试被加载，一旦有一个资源加载成功，剩下的资源就不会被加载。
+
+没有资源加载成功时的检测
+检测是否所有的子<source> 元素都加载失败，检查媒体元素的networkState属性值。如果值为HTMLMediaElement.NETWORK_NO_SOURCE，就可以知道所以的资源都加载失败了。
+
+如果这时你通过插入一个新的 <source> 元素作为媒体元素的子元素的方法添加一个新资源，Gecko会尝试加载指定的资源。
+
+没有资源可用时显示备用内容
+另一个显示视频的备用内容的方法是在最后一个source元素上增加一个错误处理器。
+
+<video controls>
+  <source src="dynamicsearch.mp4" type="video/mp4"></source>
+  <a href="dynamicsearch.mp4">
+    <img src="dynamicsearch.jpg" alt="Dynamic app search in Firefox OS">
+  </a>
+  <p>Click image to play a video demo of dynamic app search</p>
+</video>
+
+
+var v = document.querySelector('video'),
+    sources = v.querySelectorAll('source'),
+    lastsource = sources[sources.length-1];
+lastsource.addEventListener('error', function(ev) {
+  var d = document.createElement('div');
+  d.innerHTML = v.innerHTML;
+  v.parentNode.replaceChild(d, v);
+}, false);
