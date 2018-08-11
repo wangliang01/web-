@@ -1,0 +1,83 @@
+前言
+大家都知道 ，js是单线程，顺序执行的，通过事件循环来处理异步，而且稍有开发经验的同学也知道， 利用setTimeout,setInterval以及Promise可以延时代码的执行，如果在node.js中，大家会用process.nextTick来让代码在下一个周期执行，或者在Vue中，会利用Vue.nextTick保证DOM全部更新完毕后再执行回调函数，但是，如果他们放在一起呢？执行顺序又会是怎么样的呢？
+
+来个样例
+
+聪明的你知道下面代码的执行顺序吗？
+
+console.log('script start')
+
+setTimeout(() => {
+  console.log('setTimeout')
+}, 0)
+
+console.log('script end')
+
+执行结果为：
+script start 
+script end 
+setTimeout
+
+因为setTimeout会加入队列，延时执行，的确没错，那我们再看看下面的例子呢？
+
+console.log('script start')
+
+setTimeout(() => {
+  console.log('setTimeout')
+}, 0)
+
+Promise.resolve().then(() => {
+  console.log('promise1')
+}).then(() => {
+  console.log('promise2')
+})
+
+console.log('script end')
+
+
+呃，这个问题好像难住了一部分同学，因为他们会有这样的想法：
+
+  setTimeout和Promise到底谁先执行呢？听说Promise是异步的，但setTimeout也是异步的，而且延时为0，这可怎么好？
+
+结果为：
+script start 
+script end 
+promise1 
+promise2
+setTimeout 
+
+为啥Promise先执行呢？
+
+大家都知道，js是基于事件循环来处理事件的，用户的一些操作会放到事件队列里面，js引擎会在合适的时候执行队列里面的操作。济我们这里用到了“合适的时候”这个限定词，是因为js单线程，如果某段js执行时间过长，那么它会阻塞主线程的执行，所以setTimeout也并不是说一定会精确的执行。
+
+在js引擎里面，队列还分为Task队列（也有人叫做MacroTask）和MicroTask队列，MicroTask队列会优先于Task执行，比如常见的点击事件，setImmediate, setTimeout, MessageChannel等会放入到Task队列，但Promise以及MutationObserver会放到MicroTast队列。同时，js引擎在执行microTask队列的时候，如果期间又加入了新的microTask，则该MicroTask会加入到之前的MicroTask队列的尾部，保证MicroTask先于Task队列执行0
+
+
+const checkDuration = () => {
+  const start = Date.now()
+
+  let setTimeoutDuration = 0
+
+  let promiseDuration = 0
+
+  setTimeout(() => {
+    setTimeoutDuration = Date.now() - start
+  }, 0)
+
+  Promise.resolve().then(() => {
+    promiseDuration = Date.now() - start
+  })
+
+  setTimeout(() => {
+    console.log('setTimeout耗时：', setTimeoutDuration)
+    console.log('promiseDuration: ', promiseDuration)
+  }, 100)
+}
+
+我在chrome上会输出：
+setTimeout耗时： 3
+promise耗时: 1
+
+在Task队列中：
+setImmediate > MessageChannel > setTimeout
+

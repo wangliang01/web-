@@ -1,0 +1,41 @@
+Mock.mock()
+
+数据模板是必填项，用于生成模拟数据
+
+Mock.mock(rurl?, rtype? template|function(options))
+根据数据模板生成模拟数据。
+
+Mock.mock(template)
+根据数据模板生成模拟数据
+
+Mock.mock(rurl, template)
+记录数据模板，当拦截到匹配rurl的Ajax请求时，将根据数据模板template生成模拟数据，并作为响应数据返回。
+
+Mock.mock(rurl, function(options))
+记录用于生成响应数据的函数。当拦截到匹配rurl的Ajax请求时，函数function(options)将被执行，并把执行结果作为响应数据返回。
+
+Mock.mock(rurl, rtype, function(options))
+记录用于生成响应数据的函数，当拦截到匹配rurl和rtype的Ajax请求时，函数function(options)将被执行，并把执行结果作为响应数据返回。
+
+rurl
+可选。
+
+表示需要拦截的 URL，可以是 URL 字符串或 URL 正则。例如 /\/domain\/list\.json/、'/domian/list.json'。
+
+rtype
+可选。
+
+表示需要拦截的 Ajax 请求类型。例如 GET、POST、PUT、DELETE 等。
+
+template
+可选。
+
+表示数据模板，可以是对象或字符串。例如 { 'data|1-10':[{}] }、'@EMAIL'。
+
+function(options)
+可选。
+
+表示用于生成响应数据的函数。
+
+options
+指向本次请求的 Ajax 选项集，含有 url、type 和 body 三个属性

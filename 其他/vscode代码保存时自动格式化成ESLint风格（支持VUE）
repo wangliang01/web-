@@ -1,0 +1,36 @@
+一、问题
+vscode的默认的代码格式化ctrl+shift+f 无法通过eslint的代码风格检查是一个非常蛋疼的问题
+
+同样在进行vue项目开发的时候，使用eslint代码风格检查是没啥问题的，但是eslint自动格式化是我想去搞出来的。
+
+在保存的时候，能够使得vscode代码自动格式化成eslint风格的代码，并且支持在html和vue中的代码
+
+二、解决
+1、安装 eslint 插件
+1.png
+
+2、打开用户配置
+文件 -> 首选项 -> 设置
+
+在用户设置中填写如下配置：
+
+{
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "html",
+      "autoFix": true
+    },
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ]
+}
+eslint.autoFixOnSave 用来进行保存时自动格式化，但是默认只支持 javascript .js 文件
+
+eslint.validate 用来配置作用的文件类型。
+
+这里很坑的一点是，eslint插件的配置说明中，直接写的是"eslint.validate": [ "javascript", "javascriptreact", "html" ],因此我想当然一开始写的是"eslint.validate": [ "javascript", "javascriptreact", "html", "vue" ]，明显是不起作用的。

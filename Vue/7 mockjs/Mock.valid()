@@ -1,0 +1,14 @@
+Mock.valid()
+
+Mock.valid(template, data)
+校验真实数据data是否与数据模板template匹配。
+
+template
+必选。
+
+表示数据模板，可以是对象或字符串。例如 { 'list|1-10':[{}] }、'@EMAIL'。
+
+data
+必选。
+
+表示真实数据。

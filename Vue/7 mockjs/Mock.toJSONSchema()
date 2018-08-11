@@ -1,0 +1,16 @@
+Mock.toJSONSchema()
+
+
+Mock.toJSONSchema( template )
+Mock.toJSONSchema( template )
+把 Mock.js 风格的数据模板 template 转换成 JSON Schema。
+
+template
+必选。
+
+表示数据模板，可以是对象或字符串。例如 { 'list|1-10':[{}] }、'@EMAIL'。
+
+var template = {
+    'key|1-10': '★'
+}
+Mock.toJSONSchema(template)
