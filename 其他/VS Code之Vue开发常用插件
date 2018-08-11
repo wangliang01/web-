@@ -1,0 +1,44 @@
+Auto Close Tag 自动补全html标签
+Auto Rename Tag 同步更改html尾标签
+
+ESLint ESlint语法提示
+settings.json 文件
+"eslint.nodePath": "E:/WebStorm", // 应用路径
+"eslint.validate": [
+"javascript",
+"javascriptreact",
+"vue" // 添加vue文件支持
+]
+
+File Peek 文件路径跳转
+settings.json 文件
+"file_peek.activeLanguages": [
+"typescript",
+"javascript",
+"python",
+"vue" // 添加vue支持
+],
+"file_peek.searchFileExtensions": [
+".js",
+".ts",
+".html",
+".css",
+".scss",
+".vue" // 添加vue支持
+]
+
+HTML CSS Support css语法提示
+HTML Snippets html标签提示
+
+JavaScript (ES6) snippets ES6语法快捷键支持
+
+language-stylus stylus语法提示
+Stylus stylus CSS语法提示-->主要支持vue文件下stylus
+
+Path Autocomplete 文件自动路径提示
+
+VS Color Picker color: #fff 自动提示
+
+Vue 2 Snippets vue快捷键提示
+VueHelper
+vetur

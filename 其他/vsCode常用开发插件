@@ -1,38 +1,32 @@
-Beautify
+Auto Close Tag 自动闭合HTML标签
 
-CSS Peek
+Auto Rename Tag 修改HTML标签时，自动修改匹配的标签
 
-Debugger for Chrome
+Document This 注释文档生成
 
-Fuzzy Definitions
+ESLint ESLint插件，高亮提示
 
-Git History
+File Peek 根据路径字符串，快速定位到文件
 
-HTML CSS Support
+Beautify 可以格式化JSON|JS|HTML|CSS|SCSS,比内置格式化好用
 
-HTML Snippets
+Git History(git log) 查看git log
 
-npm intellisense
+HTML CSS Support 让 html 标签上写class智能提示当前项目所支持的样式（支持vue,内置不支持）
 
-openChrome
+HTML Snippets 超级实用且初级的 H5代码片段以及提示
 
-Path intellisense
+npm Intellisense 导入模块时，提示已安装模块名称
 
-Prettier -Code formatter
-
-Quokka.js
+Path Intellisense 路径完成提示
 
 Sublime Commands
 
-Vetur
+Vetur 目前比较好的Vue语法高亮
 
 View in Browser
 
-vscode-fileheader
-
-vue-Beautify
-
-VueHelper
+VueHelper Vue2代码段（包括Vue2 api、vue-router2、vuex2）
 
 wepy Snippets
 
