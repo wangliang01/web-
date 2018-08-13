@@ -35,3 +35,5 @@ wpy-beautify
 file-size  描述文件大小
 
 Bracket Pair Colorizer 让括号拥有独立的颜色，易于区分
+
+Less IntelliSense	less变量与混合提示
