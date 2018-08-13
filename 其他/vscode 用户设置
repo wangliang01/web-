@@ -33,7 +33,10 @@
     "git.ignoreLimitWarning": true,
     // 配置语言的文件关联(如: "*.extension": "html")。 这些关联的优先级高于已安装语言的默认关联。
     "files.associations": {
-        "*.vue": "vue"
+      "*.vue": "vue",
+      "*.wpy": "vue",
+      "*.wxml": "html",
+      "*.wxss": "css"
     },
     "vetur.format.defaultFormatter.html": "js-beautify-html",
 
