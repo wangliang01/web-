@@ -1,20 +1,17 @@
-var qcArray = function (arr) {
-  let res = []
-  console.log('qcArray')
-  for (let i = 0; i < arr.length; i++) {
-    let flag = true
-    for (let j = 0; j < res.length; j++) {
-      if (arr[i] === res[j]) {
-        flag = false
-        break;
-      }
-    }
-    if (flag) {
-      res.push(arr[i])
-    }
-  }
-  console.log(res)
-  return res
- }
+var p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => {
+    reject('fail')
+  }, 3000);
+})
 
- qcArray([1, 4, 3, 2, 2, 3, 4, 5])
+var p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => {
+    resolve(p1)
+  }, 1000);
+})
+
+p2.then(res => {
+  console.log('resolved', res)
+}).catch(err => {
+  console.log('rejected', err)
+})

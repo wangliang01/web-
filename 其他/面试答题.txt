@@ -108,3 +108,85 @@
   Array.prototype.qcArray = function(arr) {
     return [...new Set(arr)]
   }
+
+  8.常见的伪数组有：1）通过DOM方法获取的dom元素集合; 2)nodeList 3）函数中的arguments对象
+
+  将伪数组转变成数组的方法有： 1) Array.prototype.slice.call() 2) [].slice.call()
+
+  9.字符串的方法有：charAt(index) charCodeAt(index) charPointAt(index) indexOf(char) lastIndexOf(char) slice(start, end)  substring(start, end) substr(start, length) toUpperCase() toLowerCase()  match() replace() search() concat() split()
+
+  ES6扩展的方法  includes()  startsWith() endsWith()  padStart()  padEnd() trim() trimLeft() trimRight() 模板字符串 fixed()
+
+  10. slice(start, end) substring(strat, end)  都是接受两个索引，唯一的区别是slice可以接收负值，而substring会将负值都默认作为0处理
+
+  而substr(start, length) 接受一个索引，一个长度值，都不能为负数
+
+  11. 1）先判断这个数是否是Number类型，再用isNaN判断
+    2） 将变量与自身进行比较
+
+  12. undefined, null, 0, -0, NaN, ""
+
+  13. 1)创建一个对象， 将this指向这个对象， 执行构造函数中的代码， 返回这个对象
+
+  14. 1）原型链式继承
+      核心原理： 子类的原型指向父类的实例
+      优点：实现了让子类去继承父类及父类的原型链上的属性和方法
+      缺点：1）不能实现多继承， 2）不能传参 3） 要在子类的原型上添加方法，必须写在核心代码之后，否则不生效
+
+      2）借用构建函数式继承
+      核心原理：在子类中重新执行一遍父类的构造函数
+      优点：1）可以实现多继承 2）可以传参
+      缺点： 1）只能继承父类实例上的属性和方法，而不能我不懂父类原型上的属性和方法
+
+      3）组合式继承
+      核心原理： 1）在子类中重新执行一遍父类的构造函数
+                2）子类的原型指向父类的实例
+                3）将父类的contructor指向子类的构造函数
+
+      优点：所有原型式继承和借用构造函数式继承的优点
+      缺点：1）父类的构造函数被执行了两遍，消耗性能， 2）子类实例上的属性和方法在父类实例上也存在一份，占用了内存
+
+      4）原型式继承
+      原型式继承跟前面三种有一点区别，前面三种都是构造函数继承，而原型式继承是对象之间的继承
+      function create(a) {
+        function F{}
+        F.prototype = a
+        return new F()
+      }
+
+      var b = create(a)
+
+      在ES5中，新增了一个方法，也中create(),用来创建一个对象
+
+
+      5）寄生式继承
+      function B() {
+        var b = create(a)
+        b.name = ''
+        b.age = ''
+        return b
+      }
+
+      6)组合寄生式继承
+      核心原理：解决组合式的那两个小问题  B.prototype.__proto__ = A.prototype
+      var p = Object.create(A.prototype)
+      B.prototype = p
+      p.constructor = B
+
+    15. !!
+
+    16. 如果构造函数中显示地返因return ,看返回的结果是否是一个对象，如果是一个对象，则直接返回这个对象，如果不是一个对象，则忽略
+
+    17.
+
+    18 async 异步下载， defer 延迟执行
+
+    19. promise的实例
+      function a () {
+        return Promise((resolve, reject) => {
+
+          ...
+        })
+      }
+
+      Promise.resolve() Promise.reject() Promise.then() Promise.catch() Promise.all([])
