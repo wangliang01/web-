@@ -1,0 +1,37 @@
+1. 安装chrome浏览器
+    目前最好的浏览器
+
+2.安装Git
+    命令行工具
+
+3.安装node
+    集成npm,前端必备
+
+4.搜狗五笔
+    打字专用，拼音不好，没办法
+
+5.vscode
+    超强大的代码编辑器
+
+6.filder
+    前端抓包工具
+
+7.重装ssh
+
+    1)、首先我得重新在git设置一下身份的名字和邮箱（因为当初都忘了设置啥了，因为遇到坑了）进入到需要提交的文件夹底下（因为直接打开git Bash，在没有路径的情况下，根本没！法！改！刚使用git时遇到的坑。。。）
+
+    git config --global user.name "yourname"
+
+    git config --global user.email“your@email.com"
+
+    注：yourname是你要设置的名字，your@email是你要设置的邮箱。
+
+
+    2)、删除.ssh文件夹（直接搜索该文件夹）下的known_hosts(手动删除即可，不需要git）
+
+
+    3)、git输入命令
+
+    $ ssh-keygen -t rsa -C "your@email.com"（请填你设置的邮箱地址）
+
+    4)、打开https://github.com/，登陆你的账户，进入设置
