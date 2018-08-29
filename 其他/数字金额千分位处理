@@ -1,0 +1,75 @@
+function formatMoney(money) {
+  let value = ''
+  // 将money的值转成字符串
+  money = String(money)
+
+  // 将money以小数点分成两部分： 整数部分和小数部分
+  let moneyLeft = money.split('.')[0]
+
+  let moneyRight = money.split('.')[1]
+
+  // 对整数部分转成数组并反转
+  let moneyLeftArray = moneyLeft.split('').reverse()
+
+  console.log(moneyLeftArray)
+
+  // 对整数部分进行千分位处理
+  let temp = ''
+  for(let i = 0; i < moneyLeftArray.length; i++) {
+    if ((i + 1) % 3 === 0 && i !== moneyLeftArray.length - 1) {
+      temp += moneyLeftArray[i] + ','
+    } else {
+      temp += moneyLeftArray[i]
+    }
+  }
+
+  console.log('temp', temp)
+  // 将数组反转转回字符串
+  let tempArray = temp.split('').reverse()
+
+  let left = ''
+
+  tempArray.forEach(item => left += item);
+  console.log(left)
+  if (moneyRight) {
+    value = left + '.' + moneyRight
+  } else {
+    value = left
+  }
+
+  return value
+
+
+
+}
+
+
+
+
+
+参考别人的方案1
+假设输入为1234567.89，正则中先提取出数额的整数部分n=1234567
+然后对n继续使用正则替换，(\d)表示要查找一个数字，?=是正向肯定预查，标明要查找的这个数字符合的条件，即后面跟着至少一组连续三个数字并结束。1后面跟着234、567两组，4后面跟着567一组。正则后面的g表示查找全部符合条件的进行替换，没有g只会找到1就停止。
+对得到的1和4进行替换得到’1,’和’4,’，1234567变成1,234,567。
+返回的替换后的整数与小数部分拼接，输出1,234,567.78。
+function get_thousand_num(num) {
+    return num.toString().replace(/\d+/, function (n) { // 先提取整数部分
+        return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) { // 对整数部分添加分隔符
+            return $1 + ",";
+        });
+    });
+}
+
+参考别人的方案2
+因为上面的方案较难理解，自己写了一个简单点的。分了2种情况，一种是以1234567为例子，先字符串截取得到前面的1，然后对后面的234和567替换为’,234’与’,567’，然后拼接得到1,234,567。另一中是位数刚好是3的倍数的，比如123456789，然后替换得到’,123,456,789’，然后字符串截取得到123,456,789。
+
+function get_thousand_num(num) {
+    return (num || 0).toString().replace(/\d+/, function (n) {
+        var len = n.length;
+        if (len % 3 === 0) {
+            return n.replace(/(\d{3})/g, ',$1').slice(1);
+        } else {
+            return n.slice(0, len % 3) + n.slice(len % 3).replace(/(\d{3})/g, ',$1');
+        }
+    });
+}

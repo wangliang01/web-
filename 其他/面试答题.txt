@@ -2,7 +2,7 @@
  * @Author: wangliang
  * @Date: 2018-08-13 19:43:00
  * @Last Modified by: wangliang
- * @Last Modified time: 2018-08-14 07:14:03
+ * @Last Modified time: 2018-08-14 10:47:06
  */
 
 面试答题
@@ -32,7 +32,6 @@
   ES3:
   Array.prototype.qcArray = function (arr) {
   let res = []
-  console.log('qcArray')
   for (let i = 0; i < arr.length; i++) {
     let flag = true
     for (let j = 0; j < res.length; j++) {
@@ -47,6 +46,37 @@
   }
   console.log(res)
   return res
+ }
+
+ Array.prototype.qcArray = function(arr) {
+   let res = []
+    for (let i = 0; i < arr.length; i++) {
+      let flag = true
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] === arr[j]) {
+          flag = false
+          break;
+        }
+      }
+      if (flag) {
+        res.push(arr[i])
+      }
+    }
+    return res
+ }
+
+
+ Array.prototype.qcArray = function(arr) {
+   for (let i = 0; i < arr.length; i++) {
+     for (let j = i + 1; j < arr.length; j++) {
+       if (arr[i] === arr[j]) {
+         arr.splice(j, 1)
+         i--
+         break;
+       }
+     }
+   }
+   return arr
  }
 
   ES5：
@@ -108,3 +138,50 @@
   Array.prototype.qcArray = function(arr) {
     return [...new Set(arr)]
   }
+
+8. 1)html集合（iframe, image）或者nodelist, 2）arguments对象, 3)jquery对象
+
+  可以通过Array.prototype.slice.call(obj) 将伪数组转成数组  也可以用[].slice.call(obj)
+
+9. 字符串常用的方法有：
+  concat(), split(), slice(), substr(), substring(), toUpperCase(), toLowerCase(), charAt(), charCodeAt(), indexOf(), lastIndexOf(), match() replace() search()
+
+  ES6: includes(), startsWith() endsWith(), fixed() padStart() padEnd() 模板字符串, charPointAt(), repeat(), trim(), trimLeft(), trimRight()
+
+10. slice(start, end) substring(start, end), substr(start, length)
+
+slice()参数中可以接收负值，而substring, substr如果参数中有负值，则按0处理
+
+11. 有两种方法： 1) a === a   如果为false , 则表明 a 的值为 false 2)  先判断是否是数字， 再使用isNaN()判断
+
+12. undefined, null, 0, -0, NaN, ""
+
+13. !!temp  将一个变量转成Boolean值
+
+14. new操作符执行时会发生四个过程： 1）创建一个新对象， 2）将作用域绑定到新对象上，即确定this指向， 3）执行函数中的代码， 4）将新对象返回
+
+15.如果new操作符中显示地返回return, 如果返回值不是一个对象，则忽略，如果返回的是一个对象，则返回这个对象
+
+16.继承的实现方式有：
+  1）原型链继承：
+  核心： 子类的原型指向父类的实例
+
+  例子：
+  // 父类
+  function Parent() {
+    this.sayName = function() {
+      console.log('您的名字：', this.name)
+    }
+  }
+
+  // 子类
+  function Child(name) {
+    this.name = name
+  }
+
+  // 子类的原型指向父类的实例
+  Child.prototype = new Parent()
+
+  var child = new Child('zhangsan')
+
+  child.sayName()

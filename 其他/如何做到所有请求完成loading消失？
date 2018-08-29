@@ -1,0 +1,43 @@
+比较好的方式是全局统一拦截器，js是单线程的，所以使用一个变量记录下当前进行中的请求
+
+let requestingCount = 0;
+
+const handleRequestLoading = () => {
+  if (!requestingCount) {
+    store.commit('setLoadingShow', true)
+  }
+  requestingCount++
+}
+const handleResponseLoading = () => {
+  requestingCount--
+  if (!requestingCount) {
+    store.commit('setLoadingShow', false)
+  }
+}
+
+instance.interceptors.request.use(config => {
+  handleRequestLoading()
+  return config
+}, () => {
+  handleResponseLoading()
+})
+
+instance.interceptors.response.use(response => {
+  handleResponseLoading()
+  return response
+}, error => {
+  handleResponseLoading()
+})
+
+
+  一般的方法，使用promise, async 等
+function getUserAccount() {
+  return axios.get('/user/12345');
+}
+
+function getUserPermissions() {
+  return axios.get('/user/12345/permissions');
+}
+
+axios.all([getUserAccount(), getUserPermissions()])
+.then(axios.spread(function (acct, perms) {

@@ -1,1 +1,24 @@
 var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(navigator.userAgent);
+
+
+getDeviceType() {
+        let ua = window.navigator.userAgent,
+          app = window.navigator.appVersion;
+        if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+          // ios端
+          console.log("ios端");
+          this.deviceType = '2'
+          return
+        } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
+          // android端
+          console.log("android端");
+          this.deviceType = '1'
+          return
+        } else if (ua.match(/MicroMessenger/i) == "MicroMessenger") {
+          // 微信浏览器
+          console.log("微信浏览器");
+          this.deviceType = '3'
+        } else {
+          //　其他
+          this.deviceType = '0'
+        }
