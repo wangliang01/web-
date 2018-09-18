@@ -1,0 +1,7 @@
+vue项目安装依赖包报错：
+Downloading https://chromedriver.storage.googleapis.com/2.41/chromedriver_win32.zip
+Saving to C:\Users\WANGLI~1\AppData\Local\Temp\chromedriver\chromedriver_win32.zip
+ChromeDriver installation failed Error with http(s) request: Error: connect ETIMEDOUT 216.58.220.208:443
+
+解决办法：
+npm install chromedriver --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
