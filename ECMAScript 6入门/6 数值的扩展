@@ -1,0 +1,69 @@
+二进制和八进制表示法
+Number.isFinite(), Number.isNaN()
+Number.parseInt(), Number.parseFloat()
+Number.isInteger()
+Number.EPSILON
+安全整数和 Number.isSafeInteger()
+Math 对象的扩展
+指数运算符
+
+1. 二进制和八进制表示法
+ES6提供了二进制和八进制数值的新的写法，分别用前缀0b(或0B)和0o(或0O)表示。
+0b111110111 === 503
+0o767 === 503
+
+如果要将二进制，八进制，十六进制转成十进制，要使用Number方法。
+Number(0b111)
+Number(0o10)
+
+2.Number.isFinite(), Number.isNaN()
+Number.isFinite()用来检查一个数值是否为有限的，即不是Infinity
+Number.isFinite(14) // true
+Number.isFinite('-15') // false
+
+注意，如果参数类型不是数值，Number.isFinite一律返回false
+Number.isNaN()用来检查一个值是否为NaN.
+
+
+3. Number.parseInt(), Number.parseFloat()
+
+
+4. Number.isInteger()
+Number.isInteger()用来判断一个数值是否为整数。
+
+Number.isInteger(25.0) // true
+
+注意， 由于JavaScript采用IEEE754标准，数值存储为64位双精度格式，数值精度最多可以达到53个二进制位（个隐藏位与52个有效位）。如果数值的精度超过这个限度，第54位及后面的位就会被丢弃，这种情况下，Number.isInteger可能会误判。
+
+Number.isInteger(3.000000000000000000004) // true
+
+上面代码中，Number.isInteger的参数明明不是整数，但是会返回true。原因就是这个小数的精度达到了小数点后16个十进制位，转成二进制位超过了53个二进制位，导致最后的那个2被丢弃了。
+
+类似的情况还有，如果一个数值的绝对值小于Number.MIN_VALUE（5E-324），即小于 JavaScript 能够分辨的最小值，会被自动转为 0。这时，Number.isInteger也会误判。
+
+Number.isInteger(5E-324) // false
+Number.isInteger(5E-325) // true
+上面代码中，5E-325由于值太小，会被自动转为0，因此返回true。
+
+Math.trunc() § ⇧
+Math.trunc方法用于去除一个数的小数部分，返回整数部分。
+
+Math.sign()
+Math.sign方法用来判断一个数到底是正数、负数、还是零。对于非数值，会先将其转换为数值。
+
+它会返回五种值。
+
+参数为正数，返回+1；
+参数为负数，返回-1；
+参数为 0，返回0；
+参数为-0，返回-0;
+其他值，返回NaN。
+
+
+Math.cbrt()
+Math.cbrt方法用于计算一个数的立方根。
+
+指数运算符
+ES2016 新增了一个指数运算符（**）。
+
+这个运算符的一个特点是右结合，而不是常见的左结合。多个指数运算符连用时，是从最右边开始计算的。
