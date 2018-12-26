@@ -1,0 +1,35 @@
+跨域
+
+什么是跨域？
+
+跨域是浏览器针对js所作的同源策略限制
+
+什么是同源策略
+
+同协议，同域名，同端口
+
+为什么要设置跨域
+
+基于安全角度考虑， 接口请求， dom查询
+
+那我们如何来处理跨域问题
+
+纯前端的跨域
+
+window.name + (iframe)
+
+document.domain + iframe 主域相同，子域不同
+
+postMessage + iframe
+
+前端与后端的跨域
+
+jsonp
+
+cors(跨域资源共享)
+
+代理(nginx)
+
+中间件（nodejs中间件代理）
+
+websocket协议跨域

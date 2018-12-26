@@ -1,0 +1,11 @@
+[Vue warn]: Failed to mount component: template or render function not defined.
+
+found in
+
+---> <Anonymous>
+       <App> at src/App.vue
+         <Root>
+
+以前引用组件的方式是  const HelloWorld = import('@/components/HelloWorld')
+
+现在要这样引用: const HelloWorld = require('@/components/HelloWorld').default

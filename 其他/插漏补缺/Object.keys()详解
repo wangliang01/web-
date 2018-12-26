@@ -1,5 +1,4 @@
-给一个框底部加一个阴影：
-box-shadow: 0 5px 5px -5px #ccc; 
+
 
 详解box-shadow:
 
